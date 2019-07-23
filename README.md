@@ -381,6 +381,3 @@ So box sizing border box, really really useful
 ### Properties Worth to Remember
 
 * color, backgroud-color, display, padding, border, margin, width, height.
-
-
-
