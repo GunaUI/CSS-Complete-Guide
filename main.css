@@ -1,32 +1,151 @@
-body {
-    font-family: sans-serif;
+#product-overview {
+    background: url("freedom.jpg");
+    width: 100%;
+    height: 528px;
+    padding: 10px;   
 }
 
-nav {
-    margin-bottom: 16px;
-    background: #fa923f;
-    padding: 8px 0;
+.section-title {
+    color: #2ddf5c;
+    text-align: center;
 }
 
-a {
-    text-decoration: none;
+#product-overview h1 {
     color: white;
-    margin: 10px;
+    font-family: 'Anton', sans-serif;
 }
 
-a.active {
-    color: #521751
+.plan_list{
+    width: 80%;
+    margin: auto; /* To center the plan elements*/
+    text-align: center;
 }
 
-a:not(.active) {
-    color: blue
+.plan {
+    background-color: #d5ffdc;
+    text-align: center;
+    padding: 16px;
+    margin: 8px;
+    display: inline-block; /* To make sure all plans fit in the same row */
+    width: 30%;
+    vertical-align: middle /* To make sure all plans vertically aligned in the middle */
 }
 
-.main-section {
-    height: 800px;
-    border: 1px solid #ccc;
+.plan--highlighted{
+    /* this helper class to highligh the recommended plan*/
+    background-color: #19b84c ;
+    color: #fff ;  /* text color*/
+    /*  The next thing that I want to do or that I want to add is I want to add a little drop shadow behind the plan.*/
+    /* The box-shadow property allows you to define a drop shadow or an inset shadow by adding inset as the first keyword
+    and then adding the same parameters as I'm going to show you but here I will not add an inner shadow, so I will remove
+    that and then the other values which you would also add for an inset shadow then are the positioning of the shadow on the x-axis 
+    so here I will pick 2 pixels, on the y-axis I will also pick 2 pixels here.*/
+
+    /* so it's positioned 2 pixels to the right and to the bottom of the original shape. */
+
+    /* Then you can define the blurriness, here I will pick 2 pixels too
+    and the spread, so how much the shadow should actually  spread beyond the borders you define with the first two values */
+
+    /* And the you add shadow color  I want to use a transparent black and for that, here's a second new thing, a color function.*/
+
+    /* We thus far always defined colors with either a word, like red or a hashtag. Now actually, there are more ways of defining 
+    colors than that and color functions are one other way,*/
+
+    /* for example you can use the rgb function to define a color by setting its red, green and blue value which is a value between 0 and 255.*/
+    /*  there's an alternative to rgb, there is rgba. Rgba also allows you to add a fourth argument, 
+    the alpha channel which defines the transparency of this color*/
+    /* here I will set this to .5 which means it has transparency of 50%. If you add 1 here, this will mean it's fully opaque actually
+    so it's not transparent, if you use zero here, it's fully transparent*/
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.5) ;
+}
+
+.plan__annotation{
+    /* this helper class to highligh the recommended plans subtitle*/
+    background-color: #fff ;
+    color: #19b84c;
+    padding: 8px; 
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.5) ;
+    border-radius: 4px 4px 4px 4px; /* round the border corners - topLeft topRight bottomRight bottomLeft */
+}
+
+.plan__title{
+    color: #0e4f1f;
+}
+
+.plan__price{
+    color: #858585;
+}
+
+.plan--highlighted .plan__title{
+    color: #fff;
+}
+
+/* now I'm using a combinator to target only the planned price classes in an element which has the plan highlighted class.*/
+.plan--highlighted .plan__price{
+    color: #0e4f1f;
+}
+
+.plan__features {
+    list-style: none; /* list style none removes the bullet points, */
+    margin: 0;
+    padding: 0;
+}
+
+.plan__feature {
+    margin: 8px 0; /* 8px for top and bottom and 0 for right and left , this is to add some space between the items */
+}
+
+
+
+#key-features{
+    background-color: #ff1b68;
+    margin-top: 80px;
     padding: 16px;
 }
-.highlighted{
-    border: 2px solid #fa923f;
+/* let's target the section titled class with that descendant combinator, 
+you could also use to direct child combinator(>) as a side note because the element with the second class is a direct child
+ but I'll use the descendant here */
+#key-features .section-title {
+    color: #fff;
+    margin: 32px;
 }
+
+.key-feature__list{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.key-feature{
+    display: inline-block; /* To make sure all key features are in one line */
+    width: 30%; /* why not 33? Because of the inline block bug, not really a bug but of that behavior where whitespace in between also gets a width
+    and therefore 33% would actually not fill the entire width but a little bit more and hence we would have an ugly line break, with 30%*/
+    vertical-align: top;
+}
+
+.key-feature__image{
+    background-color: #ffcede;
+    width: 128px;
+    height: 128px;
+    border: 2px solid #242424;
+    border-radius: 50%; /* we have to set a border radius of course to turn the edges to rounded corners and to get a perfect circle, */
+    /* now I want to center that circle horizontally. There's a nice trick you can use with the margin property. */
+    margin: 0 auto;
+    /* Well you can just set margin auto or zero auto because it only matters to left and right but doesn't
+    hurt if you set it into all directions and auto will automatically fill the available space to the left
+    and right equally to center the element horizontally.*/
+}
+
+.key-feature__description{
+    text-align: center;
+    font-weight: bold;
+    color: #fff;
+    font-size: 20px;
+}
+
+/* h1 {
+    font-family: sans-serif;
+} */
+
+
