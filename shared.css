@@ -7,10 +7,16 @@ body {
     margin: 0;
 }
 
+/* html{
+    margin : 30px;
+} */
+
 .main-header {
+    position: fixed;
     width: 100%;
     background: #2ddf5c;
     padding: 8px 16px;
+    z-index: 1;
 }
 
 .main-header > div {
