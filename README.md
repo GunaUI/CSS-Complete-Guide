@@ -1,745 +1,1314 @@
 # CSS-Complete-Guide
 
-## Section 6:  Positioning Elements with CSS
+## Section 7:  Understanding Background Images & Images
 
-* the position property which as the name says right here, allows us to change the position of elements on our website
+###  Understanding "background-size"
 
-* we've worked with the display property for example and we saw that this allows us to change the default behavior of the way our elements are displayed, so block level, inline and inline block for example but with the position property, we can really change the actual position of an element on our website.
+* we need to position and size it, both can be done with the background property if you're using a background image but that's the first thing I want to dive in.
 
-### Why Positioning will Improve our Website ?
+* Right now we always used background either with an image or with a solid color, we use the same notation but background here actually is just a shorthand, we could replace the background here with background-image
+```css
+#product-overview {
+    /* background: url("freedom.jpg"); */
+    background-image: url("freedom.jpg");
+    background-color: red; 
+    width: 100%;
+    height: 528px;
+    padding: 10px;   
+}
+```
+* here we used botj background-image and  background-color what will happen did background-color going to replace/over-ride image ?? NO !!! it won't 
 
-* Now where could we add the position property now? As I said, a property that allows us to change the position of some elements. Well actually we could change the position of our navigation bar 
+* you see the color flash but you also see the image and we have to temporarily remove the image background to see the solid color because it turns out you can define multiple backgrounds, only one solid color though, multiple images are possible but we'll dive into this later in the module and therefore, you can create both an image and a color, the image will be in front of the color though.
 
-* Now you might say what's wrong with it, it's a fine navigation bar and I would agree partially but if we scroll down, we see that the navigation bar disappears.
+*  Now there are more background properties we can use and for sizing, background size seems to be appropriate.Now background size takes a couple of different values,
+```css
+#product-overview {
+    /* background: url("freedom.jpg"); */
+    background-image: url("freedom.jpg");
+    /* background-color: red;  */
+    background-size : 100px;
+    width: 100%;
+    height: 528px;
+    padding: 10px;   
+}
+```
+* lets add background-size : 100px; and reload (Refer : background-1)
 
-* So adding a fixed navigation bar definitely is something we should change or we should add right here. Additionally, the background image or more specifically, the slogan right here is not presented the best way. Generally, we should change the position inside this image.That's what I want to change on the starting page,
+* if we reload, we see many small images. Now each image actually has a width of 100 pixels because if we only set one value here, this refers to the width of the image and by default, it's then repeated.
 
-### Understanding Positioning - The Theory
+* Now we can turn off that repeating or control it with background-repeat. You can set it to no repeat to don't repeat the image,
+```css
+#product-overview {
+    /* background: url("freedom.jpg"); */
+    background-image: url("freedom.jpg");
+    /* background-color: red;  */
+    background-size : 100px;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 528px;
+    padding: 10px;   
+}
+```
+* Now we got only one 100px width image in the top left corner.(refer : background-2);
 
-* So why do we have to position our elements or how does it work so far actually?
+* or you set it to repeat x, to only repeat the image on the x-axis, if you now reload, you see there are plenty of images on the x-axis but only in one row because we don't repeat it on the y-axis (Refer : background-3)
+```css
+#product-overview {
+    /* background: url("freedom.jpg"); */
+    background-image: url("freedom.jpg");
+    background-size : 100px;
+    background-repeat: repeat-x;
+    width: 100%;
+    height: 528px;
+    padding: 10px;   
+}
+```
+* if you saved as repeat-y it will be repeated only in one column.(Refer : background-4)
 
-* Well, to understand this, we can imagine the following HTML and body elements and inside this body element we have three divs for example, three block level elements in our case  (Refer image position1)
+* However let's set this back to no repeat and let's increase the width to let's say 300 pixels. Now if we reload, we can get one bigger image.It doesn't fit into our container though, so this is not the solution I want to end with.
 
-* and as we know, the general behavior of these block level elements is the way it is displayed right here (Refer image position1),
+* Before I dive into a solution that works for us here, let me show what you can do if you set a second value here, let's say to 100 pixels. If you do that, you set the width and height of the image.
+```css
+#product-overview {
+    /* background: url("freedom.jpg"); */
+    background-image: url("freedom.jpg");
+    background-size : 300px 100px;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 528px;
+    padding: 10px;   
+}
+```
 
-* occupying the entire space available in the row where they are positioned and because of that, being displayed one after another (Refer image position1).
+* If you don't set it, the height has automatically adjusted to keep the aspect ratio, if you do set a value here, the image is forced into these dimensions,so it may very well be distorted 
 
-* This basically is due to the fact that these are block level elements and that these elements are following the document flow which is basically the flow of a normal HTML document that we have right here.
+* Now besides pixel values, you can also set percentage values like percentage for the width and height.
+```css
+#product-overview {
+    /* background: url("freedom.jpg"); */
+    background-image: url("freedom.jpg");
+    background-size : 50% 100%; /* width height */
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 528px;
+    padding: 10px;   
+}
+```
 
-* Now the question is, is there already some property applied automatically maybe which makes sure that this document flow is followed or will be followed by the elements?
+* if you don't want to distort it, you can set the first value to auto. Now the width will be set automatically and it will keep the aspect ratio.
+```css
+#product-overview {
+    /* background: url("freedom.jpg"); */
+    background-image: url("freedom.jpg");
+    background-size : auto 100%; /* auto width and 100% height */
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 528px;
+    padding: 10px;   
+}
+```
+* That of course as you can see leads to the image not occupying the full container in our case because the container happens to have a different aspect ratio in our app and for most web projects, this will probably be the case, you rarely have a perfect fit of container and image.
 
-* The answer is yes it is, the position property is applied automatically or by default in our HTML code, specifically a value for this position property of static is applied.
+*  Now these were a couple of solutions, please note that in the case where we had a width of 100% and a height of auto or undefined,
+```css
+#product-overview {
+    /* background: url("freedom.jpg"); */
+    background-image: url("freedom.jpg");
+    background-size : 100% ; /* 100% width and height of auto or undefined */
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 528px;
+    padding: 10px;   
+}
+```
+* that the image actually takes the full width of the container, it does not overlap to the left or right but it also does not overlap to the top and bottom, even though there the image height does not match the container height.(refer : background-5).The image is automatically cropped and this is also something we can control, we can control how it is cropped.
 
-* As I said, this is the default value, so if you specify nothing, this is what happens and this will basically lead to the case that we saw so far on a website and also to the situation that we can see on the left, so basically everything works as intended.
+* Before we do that though, let's also find out one other way of defining the background size.
 
-* Now there might be situations where you want to change this normal document flow of your elements,what could that mean?
+* Besides manually setting the width and height, you get some predefined keywords and a very useful one is cover.
 
-* Well for example, it might be the case that you want to position this first div right here in the right upper part or right upper corner of the HTML element or you might want to position the second div in the left upper corner of the body element.(Refer Image Position2)
+```css
+#product-overview {
+    /* background: url("freedom.jpg"); */
+    background-image: url("freedom.jpg");
+    background-size : cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 528px;
+    padding: 10px;   
+}
+```
+* if you reload, essentially does the same as 100% here (refer : background-6), so it sets the width to the container width. However covered does not exactly do that,cover finds out which part of your container, so width or height is the important one to be aligned to your image.
 
-* Now that's of course just some examples, basically you could want to position any element on more or less any position on your website.
+* Put in other words, our image here actually has an aspect ratio where it's wider than it's high, so it has landscape mode, the same is true for our container.So cover automatically finds out that it should set the width to 100% because the height will then have some excess space because the image, just as the container, has a height that's less than the width.
 
-* Now this is actually possible but not with this default value, for that you have to specify a position property with a value of absolute, relative, fixed or sticky.
+* If you had a portrait mode container, the opposite would be the case. Put into other words which make this clear, cover is a setting that will ensure that your image always fills the entire container, it will even zoom in if your image is smaller than the container. So cover is the best setting if you want to ensure that there never is any whitespace anywhere in your container. 
 
-* Now sticky is great out right here because sticky is a rather new value for this property and therefore the browser support is not the best, nevertheless we'll of course have a look at it and see how it works
+* An alternative to this is contain. Contain actually ensures that the full image is visible in the container because right now, the image is cropped, we don't see all the parts of the image, this becomes clear if we reload with the sizes set to contain.
+```css
+#product-overview {
+    /* background: url("freedom.jpg"); */
+    background-image: url("freedom.jpg");
+    background-size : contain;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 528px;
+    padding: 10px;   
+}
+```
+* We also see that now there is some super whitespace on the right (refer : background-7) because with contain, what happens is that the image actually doesn't fill the entire container because contain does not make sure that the entire container is filled, like cover does, instead it ensures that the entire image is possible and if that means that there is some remaining space in the container, so be it.
 
-* we need the position property in combination with a value different, that's really important, different from the default value which is static to be able to change the actual position of our elements on the website.
+* So contain and cover are two very useful predefined settings which you use instead of manually setting the size in many cases, in reality, to control how your image is displayed in the surrounding container.
 
-* That's not everything of course because with that, with these values, we just specify that we want to change the position.
+* Now with both contain and cover, we have the case that we might want to position the image because with cover, we fill the entire container but if you watch the rocks again, you don't see them here (ie full image). Well maybe you want to fill the entire container but show less of the sky and more of the rock, so of the bottom of our image. This is something we can control with background position.
 
-* but we of course also have to specify how we want to change the position, so where are these elements should be displayed. For that, we must think about some additional concepts.
+### Working with "background-position"
 
-* we can again imagine our website like this (position1 image 1st div) and now focus onto this element right here because let's say that we apply the position property for this element with a value that is not equal to static, keep that in mind already.
+* We had a look at background size,  now let's position the image and as I said, we can do it as with background position.
 
-* Now with that, we basically told our element, hey come on move to another position and the element probably asked ok but where should I move to and for that, we have four different options.
+*  Background position has a couple of ways of using it,the simplest usage is to define a pixel value,
+```css
+#product-overview {
+    /* background: url("freedom.jpg"); */
+    background-image: url("freedom.jpg");
+    background-size : cover;
+    background-repeat: no-repeat;
+    background-position: 20px; /* defines x-axis */
+    width: 100%;
+    height: 528px;
+    padding: 10px;   
+}
+```
+* we reload, what we can see is that the image is moved to the right by 20 pixels.(refer : background-position1), The first value defines the x-axis, it defines how the left edge of the image should be positioned relative to the left edge of the surrounding.
 
-* We have top and bottom and we have left and right (Refer Position3)
+* Can also define second value as 50px this is now the same for the top edge of the image and the top edge of the container. Now there is some whitespace at the top too (refer : background-position2)
+```css
+#product-overview {
+    /* background: url("freedom.jpg"); */
+    background-image: url("freedom.jpg");
+    background-size : cover;
+    background-repeat: no-repeat;
+    background-position: 20px 50px; /* defines x-axis and y-axis */
+    width: 100%;
+    height: 528px;
+    padding: 10px;   
+}
+```
+* Now we can also use percentage values, for example we can set 10%
+```css
+#product-overview {
+    /* background: url("freedom.jpg"); */
+    background-image: url("freedom.jpg");
+    background-size : cover;
+    background-repeat: no-repeat;
+    background-position: 10%; /* defines with percentage */
+    width: 100%;
+    height: 528px;
+    padding: 10px;   
+}
+```
+* now the result might surprise you. If you reload, actually there's no whitespace on the left (refer : background-position3) because this now actually works a bit different,
 
-*  Now of course we could also use this in a combination like top and left, bottom and right or maybe all of these depending on what you want to achieve on the website,
+* with the percentage values, you can define how much of the excess space, so of the parts of the image that do not make it into the container, how these parts should be distributed.
 
-* with these properties, you change the position of the elements in your document flow, that's important.So these properties refer to the initial position in the document flow, that's the first thing
+* Now regarding the width, the full image is displayed in the container, it's not cropped on either the left or the right,
 
-* but there is one other important concept that we have to understand because if we apply top 20 pixels now to our elements right here, well what does this mean, what do these 20 pixels top refer to?
+* so we can enter whatever we want here for the first value, it will not change the way the image is displayed.
 
-* Well there are different options. One option will be that this declaration refers to the element itself. What does this mean? Well basically it says please take the current position of my element and move it up by 20 pixels,
+* So let's set it to 0% which means the left part of the excess space, of which we have none is perfectly aligned to the left edge of the container,
 
-* Another option could be though that the 20 pixels refer to a distance for example, so let's say it should be 20 pixels from the top of our viewport or of our HTML element, of our body element or of more or less any other element.So as you can see, we have a lot of options right here and all these options refer to the so-called positioning context.
+* however this becomes clearer if we also set the top. The second value now again refers to the y-axis and if we set 10% here, this means that 10% of our excess space should actually go over the top.
+```css
+#product-overview {
+    /* background: url("freedom.jpg"); */
+    background-image: url("freedom.jpg");
+    background-size : cover;
+    background-repeat: no-repeat;
+    background-position: 0% 10%; /* defines with percentage for x and y axis */
+    width: 100%;
+    height: 528px;
+    padding: 10px;   
+}
+```
+* If we reload, this will actually lead to our image being pushed down because and that's something you have to know.(refer : background-position4)
 
-* So this basically means, what does my positioning change that I want to achieve refer to? So that's the pure theory,
+* the default if you only set one value, is 50%. So if I set 50 and I reload, we get the exact same result (refer : background-position5) as if we said no second value at all. 50% means of the parts of the image that do not fit into the container, so that are cropped of, 50% will be cropped at the bottom and 50% will be cropped at the top.
+```css
+#product-overview {
+    /* background: url("freedom.jpg"); */
+    background-image: url("freedom.jpg");
+    background-size : cover;
+    background-repeat: no-repeat;
+    background-position: 50%; /* defines with percentage for x and y axis */
+    width: 100%;
+    height: 528px;
+    padding: 10px;   
+}
+```
+* If we set this to 10%, only 10% will be cropped at the top which means that more parts are cropped at the bottom, so the image is effectively pushed down in its container.
 
-* let's now get a little bit more into a practical example, not by jumping back to our website immediately but by going to an intermediate project, so kind of a hybrid between theory and practice and play around with the property.
+* If we set this to 100% on the other hand, all the content that has to be cropped will be cropped at the top and nothing will be cropped at the bottom (Refer : background-position6), so this results in the bottom edge of the image being perfectly aligned to the bottom edge of the container and everything is cropped at the top.
 
-* Specifically, I would like to show you what the exact behavior of the static value and especially of the fixed value is.
+* This is how you can control the positioning.
 
-### Working with the "fixed" Value
+* Now manually setting this is possible but there also is a predefined value  "center", it's the same as if you set 50%, 50%.
+```css
+#product-overview {
+    /* background: url("freedom.jpg"); */
+    background-image: url("freedom.jpg");
+    background-size : cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: 528px;
+    padding: 10px;   
+}
+```
 
-* Refer fixed-Position folder 
+* So if you set center, it's perfectly centered because it means of the parts of the image that do not fit into the container, no matter if it's on the y or x-axis, 50% will be cropped on the left and right and top and bottom, so that the center of the image is the center of the container (refer : background-position7 ).
+
+* You can also set this to left top for example,
+```css
+#product-overview {
+    background-image: url("freedom.jpg");
+    background-size : cover;
+    background-repeat: no-repeat;
+    background-position: left top;
+    width: 100%;
+    height: 528px;
+    padding: 10px;   
+}
+```
+* this means that the left part of the image, the left edge of the image is positioned on the left edge of the container, so no cropping happens on the left and that the top of the image is aligned to the top of the container, so no cropping at the top. This could be translated with 0% 0%.(refer : background-position8)
+
+* On the other hand, we can set this to left bottom to say left should be aligned and bottom, no cropping is happening at the bottom 
+```css
+#product-overview {
+    background-image: url("freedom.jpg");
+    background-size : cover;
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    width: 100%;
+    height: 528px;
+    padding: 10px;   
+}
+```
+
+* you can even combine that with percentage values, so you could say to the left we want to crop 10%, to the bottom we want to crop 20% 
+```css
+#product-overview {
+    background-image: url("freedom.jpg");
+    background-size : cover;
+    background-repeat: no-repeat;
+    background-position: left 10% bottom 20%; /*left we want to crop 10%, to the bottom we want to crop 20% */
+    width: 100%;
+    height: 528px;
+    padding: 10px;   
+}
+```
+
+* this gives you full control over how you position your image. Now for our page here, I think this setting is actually quite nice, so I will stick to that.
+
+### The "background" Shorthand - Theory
+
+* Refer : css-background-properties.pdf
+
+### Applying "background" Origin, Clip & Attachment
+
+* Let's start with background origin, it's a bit comparable to box sizing, the values you can assign are very similar though there is an extra value. 
+
+* Let's temporarily add some dashed border around your image ( "border: 5px dashed red;") you could see white space in left and right but top and right border placed on the image.(Refer background-origin-1)
+
+* The reason for this is that on the left and right, the images fit into the container but as you can see, the border doesn't seem to be part of the container width. On the top and bottom, the border also isn't part of the container but on the top and bottom we actually have excess space on our image, so we crop it and that in turn seems to happen after the border, now that's exactly what we can control with properties like background origin.
+```css
+#product-overview {
+    background-image: url("freedom.jpg");
+    background-size : cover;
+    background-repeat: no-repeat;
+    background-position: left 10% bottom 20%;
+    background-origin: border-box; /* Here we added  border-box as background-origin*/
+    width: 100%;
+    height: 528px;
+    padding: 10px;   
+    margin-top : 43px;
+    border: 5px dashed red;
+    position: relative;
+}
+```
+* we save and we reload, now you see the image also goes beneath or below the border on the left and right (Refer : background-origin-2) because we now basically define what the container is for our background property.  By default, it's not the border box and therefore we have that whitespace.
+
+* So what is the default then, is it content box? Let's assign content box and reload
+```css
+#product-overview {
+    /* background: url("freedom.jpg"); */
+    background-image: url("freedom.jpg");
+    background-size : cover;
+    background-repeat: no-repeat;
+    background-position: left 10% bottom 20%; 
+    background-origin: content-box; /* Here we added  content-box as background-origin*/
+    width: 100%;
+    height: 528px;
+    padding: 10px;   
+    margin-top : 43px;
+    border: 5px dashed red;
+    position: relative;
+}
+```
+* now we see we even got some more whitespace inside of our image in left and right (Refer : background-origin-3) because if we hover over our section here which holds the image, we see that it's got some padding (Refer : background-origin-4),that green area on the left and right and top and bottom.
+
+* So content box just as for box sizing means the content without border and padding. So now the container which defines the width and height of our image is just a container without border and any padding.
+
+* So the default actually is something we can't set on box sizing, the background-origin: padding-box; , this means the container including content and padding but not the border.
+
+* Now however one other thing we can notice is that it always, no matter what we defined, went beneath the border for top and bottom because there, we were not talking about setting the height of the container but we simply had the effect that we had excess image and we cropped that but the cropping wasn't affected by background origin.
+
+* instead is set with background clip, here we can also set it to border box. if we save that and we reload, we get the same behavior as before.
+```css
+#product-overview {
+    background-image: url("freedom.jpg");
+    background-size : cover;
+    background-repeat: no-repeat;
+    background-position: left 10% bottom 20%;
+    background-origin: border-box;
+    background-clip: border-box;  /* here we added background-clip */
+    width: 100%;
+    height: 528px;
+    padding: 10px;   
+    margin-top : 43px;
+    border: 5px dashed red;
+    position: relative;
+}
+```
+* instead of border-box lets add padding-box 
+```css
+#product-overview {
+    background-image: url("freedom.jpg");
+    background-size : cover;
+    background-repeat: no-repeat;
+    background-position: left 10% bottom 20%;
+    background-origin: border-box;
+    background-clip: padding-box;  /* here we added background-clip as  padding-box*/
+    width: 100%;
+    height: 528px;
+    padding: 10px;   
+    margin-top : 43px;
+    border: 5px dashed red;
+    position: relative;
+}
+```
+
+* If we change it to padding box however and we now reload, (Refer : background-clip-1) now you see the border is empty, so no image beneath it at the top and bottom too.
+
+* So with background clip, we define where the image actually should be clipped if necessary and now it's clipped after the padding 
+
+*  of course we could also set this to "content-box" to clip it before the padding, 
+```css
+#product-overview {
+    background-image: url("freedom.jpg");
+    background-size : cover;
+    background-repeat: no-repeat;
+    background-position: left 10% bottom 20%;
+    background-origin: border-box;
+    background-clip: content-box;  /* here we added background-clip as  content-box*/
+    width: 100%;
+    height: 528px;
+    padding: 10px;   
+    margin-top : 43px;
+    border: 5px dashed red;
+    position: relative;
+}
+```
+* so now we got this whitespace around it (Refer : background-clip-2). 
+
+* So background clip actually overwrites background origin you could say. and it's also important for defining how it should be, well not just positioned and sized but also how it should be clipped.
+
+* Now the last thing we saw in the slides is background attachment.
+
+* Now we won't actually see this in action here and it's a property you rarely use. With that you can define how scrolling would behave in a container that has a background image but that is not fixed itself. Now this container here isn't fixed but relative but we can't scroll inside of it 
+
+* and on the packages page, we have a container where we can scroll in it but the container itself is fixed to the page, so we also won't see effect there.
+
+* Background attachment would allow you to set fixed, scroll or local as a value.
+
+* and this defines whether the image scrolls with the other content of the container,
+
+* for local, that would be the case, 
+
+* for scroll however, the image would stay in place and the content would scroll over it, above it
+
+* and for fixed, the image would not be fixed to the container but to the viewport.So you should have an effect where if you scroll the entire page with the container where the image is inside, the image should stay in place.
+
+### Using the "background" Shorthand on our Project
+```css
+#product-overview {
+            /*  image URL          position            /size repeat    origin and clip (here both have same value or else we will have two values) */
+    background: url("freedom.jpg") left 10% bottom 20%/cover no-repeat border-box;
+    /* background-image: url("freedom.jpg");
+    background-size: cover;
+    background-position: left 10% bottom 20%; */
+    /* background-repeat: no-repeat;
+    background-origin: border-box;
+    background-clip: border-box; */
+    width: 100%;
+    height: 528px;
+    padding: 10px;
+    margin-top: 43px;
+    /* border: 5px dashed red; */
+    position: relative;   
+}
+```
+###  Styling Images
+
+* In the last lectures, we worked a lot with background images and for a good reason because positioning background images really gives you a lot of flexibility.
+
+* It's actually harder to style normal images as you will see, so let's dive into that because it's harder but of course not impossible.
+
+* Let's start with a logo for our page. Right now, we only have text here, why don't we use an image instead?
 
 ```html
-<body>
-    <div class="parent">
-        <div class="child-1">Navigation Bar</div>
-        <div class="child-2">Background Image</div>
-        <div class="child-3">Features</div>
-    </div>
-</body>
+<a href="index.html" class="main-header__brand">
+    <img src="./images/uhost-icon.png" alt="UHost - Your favourite hosting company">
+</a>
 ```
-* I want to focus on two these three divs right here to show you how the position property works.
 
-* For that, I will not start with the position property though but with this top, right, bottom and left properties that we saw, so these properties that allow us to change to position of our elements in the document flow
+* If we save and reload its really big (Refer : icon-1), yes it's a relatively big icon I'd say, at least we can clearly see it but it might be a little bit too big for our page here.
 
-* because at the moment, keep that in mind, we have the default positioning value applied and the default value is static and if we now add another selector right here, which could be parent child 1, so I'm referring to this element right here now, this navigation bar element and if I now say I want to change the position by top 100 pixels,
+* So we definitely need to style that and that's exactly what we are going to do.
+
+* let us add some height of 22px and reload our page we didn't see any changes
 
 ```css
-.parent .child-1 {
-  top : 100px;
+.main-header__brand {
+    color: #0e4f1f;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 22px;
+    height: 22px;
 }
 ```
- * let's just assume that you want to do that and if I reload the page, you can see that, nothing happens and that's the first important thing.(Refer Position4)
+* The reason is and that's important that by setting a height on a container and keep in mind, main header brand is just the container, not the image element itself.By setting a height on the container, the image will not be affected because the default behavior and that's really important now,
 
- * All the positioning changes we want to apply right now are only possible if you apply a value that is different from static, so different from the default value, keep that in mind.
+* the default behavior is if you enter an image tag and you point to an image, then the default height and width of the original image will be used and will be entered into your document, no matter which width and height you set for the surrounding element.
 
- * However if we get rid of that top property now and change it to position fixed, as I said, the value I want to focus on 
+* So in our case here if we have a look at our image, you'll see it it has dimensions of 186 x 190. 
 
- ```css
-.parent .child-1 {
-  position : fixed;
-}
-```
-* and now go back to our website, well we can see that the behavior already changed.
+* but the anchor tag which is much smaller than that .. but it doesn't much about that. img tag height will make sure about image height not the anchor tag's height.
 
-* Actually we see two interesting things, the first thing see is of course that the width of the element decreased significantly, it almost looks like an inline element now, we will talk about that in a few seconds.(Refer Position5)
+* To make the image care, we can of course follow two routes.
 
-* Let's focus on to the maybe second thing (Background Image) that we can't see right here because the element now is now basically not existing for the other elements anymore, as we can see it(Refer Position5)the second element, so our background image, that's what it's called element now overtook this position the navigation bar element had. We can still see the navigation bar element right here but the background image is exactly at the same position
-
-* And this happens because by applying position fixed to the navigation bar element, we took it out of the actual document flow.
-
-* This simply means that for all the other elements here, this navigation bar element is no longer existing because we applied this (fixed) declaration to it.
-
-* Now what about the width now, did we create an inline element right here now?
-
-* Well let's quickly find that out by going back right here and maybe changing the width to let's say 400 pixels because as we learned throughout the course already, for inline elements, changing the width has no impact.
+* First of all, we need to select it, that's always the case. So let's use our main header brand class here and then let's select the image. You could of course also add a class to the image, here I will simply use the descendant selector to select any images in main header brand,
 
 ```css
-.parent .child-1 {
-  position : fixed;
-  width: 400px;
+.main-header__brand img{
+    height: 22px;
 }
 ```
-* So if you do that and reload it, we can see that the width of our element changed (Position6), therefore we did not create an inline element now,we basically have an element which behaves like an inline block element actually.
+* If we do that and we reload, now we see the image is much smaller (Refer : icon-2).
 
-* we took the element out of the document flow and we changed the general behavior from a block level element to a rather inline block element style.
-
-* However, the element is called navigation bar, how could we now create the navigation bar with this position property that we applied?
-
-* Well, if we now go back and maybe remember these top, bottom, left, right properties again, maybe these have an impact right now,
+* Now besides doing that, what we could do is of course set 100%, this would mean it should take the height of the surrounding container, which happens to be our brand that sets the height of 22 pixels. However, this does not work. (Refer : icon-3).
 
 ```css
-.parent .child-1 {
-  position : fixed;
-  width: 400px;
-  top:100px;
+.main-header__brand img{
+    height: 100%;
 }
 ```
 
-* let's see what happens. As you can see, the element moved down a bit (Refer Position7) but so far, it's not clear what this element refers to,that's this (top:100px;) positioning context.
+* Height 100% on the image will again lead it to use its original height, not the height defined by the container, that's important to understand,
 
-* Let's maybe change the value to "top:0;" because with 0, we should immediately see what this element depends on and as we can see, the element basically seems to be sticked kind of near the border of the HTML element (Refer Position8) but kind of, it doesn't exactly fit, let's go back right here and let's now remove the margin from our element,maybe this makes things clearer. 
-
-```js
-.parent .child-1 {
-  position : fixed;
-  width: 400px;
-  top:100px;
-  margin: 0;
-}
-```
-* If we reload that and if it now becomes evident. As you can see  (Refer Position9), the navigation bar is not dependent on the HTML element,
-
-* but if we scroll down, we can see that this element now basically has the viewport as the position in context (fixed to the top even after screen scrolled down - (Refer Position10)). So basically, the position of this element (Fixed element) only depends on the viewport.
-
-* I can prove this to you if I go back and change top to bottom for example
-
-```js
-.parent .child-1 {
-  position : fixed;
-  width: 400px;
-  bottom:100px;
-  margin: 0;
-}
-```
-* if you have a look at it right now, you can see that now this bar is sticked to the bottom (Refer Position11), same thing can of course be applied if we change it to left or right.
-
-* So the important thing now is that this now always refers or relates to the viewport and that's of course really cool
-
-* if we now increase the width to 100% 
-```js
-.parent .child-1 {
-  position : fixed;
-  width: 100%;
-  bottom:100px;
-  margin: 0;
-}
-```
-* because we would like this navigation bar to occupy the entire space available, like that, well then this should look fine.(Refer Position12)
-
-* but right here we have a problem because we can see that the border is kind of located outside of our viewport(Refer Position12 - navigation Right border).
-
-* Now we had such an issue already, do you know how we can solve this now? Well you probably know, we can simply add the box sizing with a value of border box.
+* so we should really set the final value we want to have on the image here. Now let's find out if that's also the case for the width, in case we're not setting the height but let's say we're setting a width of 20 pixels on the surrounding container.
 
 ```css
-.parent .child-1 {
-  position : fixed;
-  width: 400px;
-  bottom: 100px;
-  margin: 0;
-  box-sizing: border-box; /* Important !!!!  */
+.main-header__brand {
+    color: #0e4f1f;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 22px;
+    /* height: 22px; */
+    width: 22px;
 }
 ```
-* so if we now reload the page, we can see that our navigation bar is positioned perfectly and always sticks to 100% of the width of our viewport (Refer Position13).
+* If we set nothing on the image, nothing changes,
 
-* So that's how easy it is to add a navigation bar, a fixed navigation bar to our website. 
-
-* there is one more thing that I would like to show you because I talked about inline elements already and so far we only used block level elements, what would happen now though if I change the div, so the navigation bar div to an inline element, a span for example?
-
-*  the selector to span but the navigation bar still sticks to the top. So that's also important to keep in mind, you can apply this positioning property no matter if you have a block level element or an inline element.
-
-### Creating a Fixed Navigation Bar - in our uHost website 
-
-* let's now make sure that our navigation up here also becomes a fixed navigation bar which is always visible.
+* if we go to the image and we set width to 100% and then we reload, also nothing changes.
 
 ```css
-.main-header {
-    position: fixed;
-    width: 100%;
-    background: #2ddf5c;
-    padding: 8px 16px;
+.main-header__brand img{
+    /* height: 100%; */
+    width : 100%;
 }
 ```
-* we have just add added position as fixed, It actually looks quite fine immediately, 
 
-* this might raise a question in your case because in the previous chapter, we added the top zero and left zero declarations to make sure that the navigation bar is stick to the left top of the viewport. why not here ?? 
+* So percentage values on the image don't help us here because they don't respect the surrounding container.
 
-* Now the reason for that was that we had a margin in our HTML element, if I add a HTML selector right here like that and add a margin of for example 30px so that it becomes really clear like that
+* Now actually the reason for that simply is that our surrounding container is an inline element itself, it's just an anchor tag.
 
 ```css
-/* Dummy just for understanding*/
-html{
-    margin : 30px;
+.main-header__brand {
+    color: #0e4f1f;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 22px;
+    /* height: 22px; */
+    display: inline-block;
 }
 ```
-* If you reload you could not now the navigation not possitioned correctly.
+* If we set it to inline block instead and now we reload, now the image does respect this container style,(Refer icon-4) so it was not the image but the fact that the anchor tag was not a block or inline block element.
 
-* That's what you always have to keep in mind, as soon as you add a margin to the HTML element or the body element or basically any parent element of your header, then you have to add the top zero and left zero declarations in case you want to stick this navigation bar to the left top of your page,
+* So this is important to understand, with using images it depends on whether you use it nested in an inline element, in which case 100% will simply use the default dimension, the default or height of the image
+
+* or if you use it inside a block level element where it will use the container width or height.
+
+* So now with that back, we now can set 100% as a height and it will use the height of our container here.
 
 ```css
-/* Dummy just for understanding*/
-.main-header {
-    position: fixed;
-    top:0;
-    left:0;
-    width: 100%;
-    background: #2ddf5c;
-    padding: 8px 16px;
+.main-header__brand img{
+    height: 100%; 
 }
 ```
-*  If you reload you could see the navigation bar stick to the top and left exactly. 
+* So with that, we style the image and this is about all we can do regarding styling already. All the fancy things we could do for background images, with the different positioning modes and sizing modes, with cover and so on, are not really possible with normal images.
 
-### Using "position" to Add a Background Image
+* You can always find some hacky solutions with negative paddings or margins to position an image in a certain way, but that is bit hacky not recommenede
 
-* Now we want to add a background image to packages page. we first need an element that contains this actual background image.
+* Now therefore if you want to do some more complex styling on an image, I recommend using background image.
 
-* Next we'll dive deeper into background images in the next video, so I will keep it rather short in this video because the focus really is on the position property, so in case some things might be unclear, don't worry, we'll dive into that in the next module.
+* The downside of background image just is as it's not part of your normal document flow, it doesn't have its own HTML elements that clearly signals that it's an image, it's worse for accessibility.So background images should really just be used as such, backgrounds.
 
-* However, we could add this containing element maybe right here,
+*  If you got an image in your normal document flow, you should go with the normal image but then you often don't have to set more than the width or the height. Of course you can still set anything else like borders and so on,
+
+* I'm just talking about the positioning and sizing where you are limited, regarding all the other things, you can of course set everything you want.
+
+### Adding the Customers Page to our Website
+
+* We added cutomer page just refer customer folder.
+
+### Working on the Image Layout
+
+* In Html we have the following 
 
 ```html
-<body>
-    <div class="background"></div>
-    <header class="main-header">
-        ....
-        ....
+<div class="testimonial__image-container">
+    <img src="../images/customer-1.jpg" alt="Mike Statham - Customer" class="testimonial__image">
+</div>
 ```
-* we have our background image inside images folder which is same level on the packages folder, now we need to add this image to our background and for that,
+* Currently we have some huge image (refer: layout1)
+
+* lets add testimonial__image-container css
+
+```css 
+.testimonial__image-container {
+    width: 65%;
+     display: inline-block; /* we wouldn't see any effect unless we also set the container, the image container to display inline block as you learned over the last lectures, then the image will respect the width of the parent or else it won't */
+}
+.testimonial__image {
+    width: 100%;
+}
+```
+* With this if we reload, we indeed decreased the size of our images, so that's much better.(refer: layout2).Still, they don't fit into one line with our other text.
+
+* Now if we inspect that however, so the testimonial info class that is, we see that it also does have the inline block display style. So theoretically, we could fit it into one line with our other image container, for that however, we have to go to testimonial info 
+
+```css
+.testimonial__info {
+    text-align: right;
+    padding: 14px;
+    display: inline-block;
+    vertical-align: middle;
+    width: 30%; /* here we added width */
+  }
+```
+
+* If we now reload, now the text is next to the image, it's not aligned in the middle but it's next to it (refer: layout3). Now why does it have that strange positioning though?
+
+* The reason for this simply is that our info container has vertical align middle, our image container which is its adjacent inline block element doesn't have it, so it's not positioned correctly
+
+```css 
+.testimonial__image-container {
+    width: 65%;
+     display: inline-block; 
+     vertical-align: middle; /* To position this in the middle*/
+}
+```
+*  we reload, now the text actually is positioned next to our testimonial image.(Refer: layout4)
+
+* by the way also notice that of course right now, our page is only partly responsive, for small screens this looks really awkward and for big screens, we got huge images but this is something we can control once we reach the responsive design lectures.
+
+* so what else can we do here? Well how about a shadow behind these images?
+
+* We can go to our image container now because we want to add that shadow to the block level element and add box shadow
+
+```css
+.testimonial__image-container {
+    width: 65%;
+    display: inline-block;
+    vertical-align: middle;
+    box-shadow: 3px 3px 3px rgba(0,0,0,0.3); 
+  }
+```
+
+*  If we now reload, our image does have that nice shadow which looks all right. Now we also got that annoying whitespace at the bottom of the image though, this is simply an inline element bug (layout5).
+
+* we can get rid of it by going to our testimonial image and setting vertical align on the image, not on the container but on the image to top or bottom, it actually will both work.
+
+```css
+.testimonial__image {
+    width: 100%;
+    vertical-align: top;
+  }
+```
+* Now with that, it gets rid of that whitespace (layout6), so that's a nice trick to keep in mind. If you've got an image in a surrounding container and the image of course is an inline element, you can get rid of that whitespace that is introduced to that inline element behavior by adding vertical align top,an alternative would be to set the image to display block.This would also fix it, it would turn it to a block level element and hence remove any whitespace after Both works, I'll use the vertical align top solution.it.Now with that, this looks quite nice in my opinion,got a nice page (layout6).
+
+* what about that second image, can't we improve the box shadow of that? It does have it, you can see it below the image but wouldn't it be nice to have a little bit more box shadow on the left and right here too? (refer : layout7)
+
+* We can actually add this by going back to the customers.css file and adding a fourth value to the box shadow, the spread.
+
+```css
+.testimonial__image-container {
+    width: 65%;
+    display: inline-block;
+    vertical-align: middle;
+    box-shadow: 3px 3px 3px 3px rgba(0,0,0,0.3); 
+  }
+```
+
+* you'll see there's a tiny shadow to the left and top too in second image(refer : layout 8). because spread simply defines how much the box shadow leaves its border, so how much it adds to the left, right and top and bottom
+
+* Maybe we need more blur now, yes this looks better.
+
+```css
+.testimonial__image-container {
+    width: 65%;
+    display: inline-block;
+    vertical-align: middle;
+    box-shadow: 3px 3px 5px 3px rgba(0,0,0,0.3); /* here we increased blur to 5px; */
+  }
+```
+
+* yes this looks better.So this is the final state with which I want to end(refer : layout9)
+
+* Now keep in mind, background images actually give you more flexibility, you can position them easier, you can do more with them but you should only use them for backgrounds because of accessibility.
+
+* Again, the responsive part is something we'll extensively cover in the responsive layout section.
+
+### Understanding Linear Gradients
+
+* let's move onwards to linear gradients and for that, I'll go back to my main.css file and that background image we have on the starting page.
+
+* Let's say we want to add a linear gradient instead of that image, later we'll also combine it with the image but for now, let's use just the linear gradient.
+
+* The first important thing you've got to know is that gradients, both linear and radial ones are treated as images.
+
+* So if you were to use the subproperties and not the shorthand, you would add a gradient by targeting background image or in the shorthand version, you simply add it instead or additional to images because we can have multiple background images, not just one but more about multiple backgrounds also at a later part.
+
+* For now, let's simply overwrite the background we set here with a linear gradient.
+
+* We add one by using the linear gradient function CSS
+
+```css
+#product-overview {
+    /*background: url("./images/freedom.jpg") left 10% bottom 20%/cover no-repeat border-box;*/
+    /* background-image: url("freedom.jpg");
+    background-size: cover;
+    background-position: left 10% bottom 20%; */
+    /* background-repeat: no-repeat;
+    background-origin: border-box;
+    background-clip: border-box; */
+    background-image : linear-gradient();
+    width: 100%;
+    height: 528px;
+    padding: 10px;
+    margin-top: 43px;
+    /* border: 5px dashed red; */
+    position: relative;   
+}
+```
+* Now the linear gradient function consists of two parts in the end, you can add more than two arguments but that simply is because you can define multiple colors across which you want to transition
+
+* but the first argument always is the direction of the gradient.You can omit it, in which case the first argument would be a color, so the simplest possible gradient is red blue for example
+
+```css
+#product-overview {
+    /*background: url("./images/freedom.jpg") left 10% bottom 20%/cover no-repeat border-box;*/
+    /* background-image: url("freedom.jpg");
+    background-size: cover;
+    background-position: left 10% bottom 20%; */
+    /* background-repeat: no-repeat;
+    background-origin: border-box;
+    background-clip: border-box; */
+    background-image : linear-gradient(red, blue);
+    width: 100%;
+    height: 528px;
+    padding: 10px;
+    margin-top: 43px;
+    /* border: 5px dashed red; */
+    position: relative;   
+}
+```
+
+* if you save that, you get a gradient from red to blue, as you see the default is vertically, so by default, it simply is a perfect line from top to bottom and it transitions from red smoothly to blue.(refer: gradient1)
+
+* Now I just mentioned, the first argument can be a color but normally it's the direction. You can for example
+
+```css
+#product-overview {
+    /*background: url("./images/freedom.jpg") left 10% bottom 20%/cover no-repeat border-box;*/
+    /* background-image: url("freedom.jpg");
+    background-size: cover;
+    background-position: left 10% bottom 20%; */
+    /* background-repeat: no-repeat;
+    background-origin: border-box;
+    background-clip: border-box; */
+    background-image : linear-gradient(to bottom, red, blue); /* here we added direction*/
+    width: 100%;
+    height: 528px;
+    padding: 10px;
+    margin-top: 43px;
+    /* border: 5px dashed red; */
+    position: relative;   
+}
+```
+* This looks strange at first but this is a syntax understood by CSS, it simply means that from top to bottom, so you can save this and reload and you get the same result as before.(refer: gradient1)
+
+* You can also say to left button and now it will be a diagonal,
+
+```css
+#product-overview {
+    /*background: url("./images/freedom.jpg") left 10% bottom 20%/cover no-repeat border-box;*/
+    /* background-image: url("freedom.jpg");
+    background-size: cover;
+    background-position: left 10% bottom 20%; */
+    /* background-repeat: no-repeat;
+    background-origin: border-box;
+    background-clip: border-box; */
+    background-image : linear-gradient(to left bottom, red, blue); /* here we added direction*/
+    width: 100%;
+    height: 528px;
+    padding: 10px;
+    margin-top: 43px;
+    /* border: 5px dashed red; */
+    position: relative;   
+}
+```
+
+* now you see it starts in the top right and goes to the left bottom, that's the transition. (refer: gradient2). 
+
+* Of course as you might guess, you could say to left top, to right top and so on and this simply defines where your colors start and where they go to.
+
+* Now you can also define an angle with degrees, so you could say 30 degrees and now your transition or your gradient would have a 30 degree angle.(refer: gradient3). 
+
+```css
+#product-overview {
+    /*background: url("./images/freedom.jpg") left 10% bottom 20%/cover no-repeat border-box;*/
+    /* background-image: url("freedom.jpg");
+    background-size: cover;
+    background-position: left 10% bottom 20%; */
+    /* background-repeat: no-repeat;
+    background-origin: border-box;
+    background-clip: border-box; */
+    background-image : linear-gradient(30deg, red, blue); /* here we added direction*/
+    width: 100%;
+    height: 528px;
+    padding: 10px;
+    margin-top: 43px;
+    /* border: 5px dashed red; */
+    position: relative;   
+}
+```
+
+* Now if you set it to zero degrees and you reload, you start at the bottom actually.(refer: gradient4)
+
+```css
+#product-overview {
+    /*background: url("./images/freedom.jpg") left 10% bottom 20%/cover no-repeat border-box;*/
+    /* background-image: url("freedom.jpg");
+    background-size: cover;
+    background-position: left 10% bottom 20%; */
+    /* background-repeat: no-repeat;
+    background-origin: border-box;
+    background-clip: border-box; */
+    background-image : linear-gradient(0deg, red, blue); /* here we added direction*/
+    width: 100%;
+    height: 528px;
+    padding: 10px;
+    margin-top: 43px;
+    /* border: 5px dashed red; */
+    position: relative;   
+}
+```
+* So unlike the folder you start at the top, zero degrees simply means a perfect line coming from the bottom, therefore 180 degrees would be your default where you start at the top and you can of course define any angle you want or use that to left bottom notation.
+
+* Now besides that, you could also define multiple colors, as many as you want basically.you could also use that hex code here and the same is true for rgb or hsl functions, you could use these too.
+
+* A special gradient or a special way of using gradients is to also implement transparency,
+
+```css
+#product-overview {
+    /*background: url("./images/freedom.jpg") left 10% bottom 20%/cover no-repeat border-box;*/
+    /* background-image: url("freedom.jpg");
+    background-size: cover;
+    background-position: left 10% bottom 20%; */
+    /* background-repeat: no-repeat;
+    background-origin: border-box;
+    background-clip: border-box; */
+    background-image : linear-gradient(180deg, red, transparent); /* here we added transparancy*/
+    width: 100%;
+    height: 528px;
+    padding: 10px;
+    margin-top: 43px;
+    /* border: 5px dashed red; */
+    position: relative;   
+}
+```
+* for eg you could transition from red to transparent and if you do that, well then you actually see we fadeout to transparent, (refer : gradient5)
+
+* You can of course also transition to rgba color for example, like this with some transparency inside of it.
+
+```css
+#product-overview {
+    /*background: url("./images/freedom.jpg") left 10% bottom 20%/cover no-repeat border-box;*/
+    /* background-image: url("freedom.jpg");
+    background-size: cover;
+    background-position: left 10% bottom 20%; */
+    /* background-repeat: no-repeat;
+    background-origin: border-box;
+    background-clip: border-box; */
+    background-image : linear-gradient(180deg, red, rgba(0,0,0,0.5)); /* here we added transparancy with rgba color */
+    width: 100%;
+    height: 528px;
+    padding: 10px;
+    margin-top: 43px;
+    /* border: 5px dashed red; */
+    position: relative;   
+}
+```
+* Now we would transition from red to this transparent black grey color.(refer : gradient6)
+
+* this is how you can use linear gradients, you can do even more than that though. Besides specifying multiple colors, you can also define where these colors should start and stop,
+
+```css
+#product-overview {
+    /*background: url("./images/freedom.jpg") left 10% bottom 20%/cover no-repeat border-box;*/
+    /* background-image: url("freedom.jpg");
+    background-size: cover;
+    background-position: left 10% bottom 20%; */
+    /* background-repeat: no-repeat;
+    background-origin: border-box;
+    background-clip: border-box; */
+    background-image : linear-gradient(180deg, red 70%, blue 80%, rgba(0,0,0,0.5));
+    width: 100%;
+    height: 528px;
+    padding: 10px;
+    margin-top: 43px;
+    /* border: 5px dashed red; */
+    position: relative;   
+}
+```
+
+* Now if you reload, 70% of the gradient is red, a perfect red I should say and then it transitions into blue and then the other color. Of course you can also define stops here too, you could say 80% blue, this simply now means that after 80% of the gradient, the blue will already be done.(refer : gradient7)
+
+* If you enter a value smaller than the 70% of the red here and you then reload, you'll see you got simply a hard edge because there's no room for transition
+because when the blue part enters, it's already too late to put it like this. It should have started at 60%, it can only start after 70 but therefore, there is no smooth transition.(refer : gradient8)
+
+* So this is how you can play around with the colors and how you can control when which color transitions into what. This is the linear gradient,
+
+### Applying Radial Gradients
+
+* let's add another background image, this time with the radial gradient function.
+
+```css
+#product-overview {
+    /*background: url("./images/freedom.jpg") left 10% bottom 20%/cover no-repeat border-box;*/
+    /* background-image: url("freedom.jpg");
+    background-size: cover;
+    background-position: left 10% bottom 20%; */
+    /* background-repeat: no-repeat;
+    background-origin: border-box;
+    background-clip: border-box; */
+    background-image: radial-gradient(red, blue);
+    width: 100%;
+    height: 528px;
+    padding: 10px;
+    margin-top: 43px;
+    /* border: 5px dashed red; */
+    position: relative;   
+}
+```
+* The radial gradient function as the name suggests allows you to define a radial gradient,so not one that starts at one edge and goes to another one but one that starts at a certain shape and then transitions to all the areas around it.
+
+* Let's start with a simple gradient again, red blue because we can clearly see that. If we reload, this is our default radial gradient, positioned in the middle by default and the shape is an ellipse,it's not a circle, it's an ellipse (Refer : radial1);
+
+* Of course here too, you can define multiple colors like green and the shape will simply be kept and now we have a red ellipse going to a blue ellipse going to a green ellipse,(Refer : radial2);
+
+* Now of course you can also change the shape, for example you can add a first argument that can be circle, that's the alternative, the only alternative you have to the ellipse, you can set it to be a circle instead of an ellipse.
+
+```css
+#product-overview {
+    background-image: radial-gradient(center, red, blue, green);
+    width: 100%;
+    height: 528px;
+    padding: 10px;
+    margin-top: 43px;
+    position: relative;   
+}
+```
+
+* If you now reload and watch closely, you see it now indeed is a perfect circle, no longer an ellipse.(Refer : radial3).
+
+* Now of course you can also change the position, where it should start.
+
+* Right now, it was always centered but maybe you don't want that, you can add at attribute here and say at top.
+
+```css
+#product-overview {
+    background-image: radial-gradient(center at top, red, blue), green;
+    width: 100%;
+    height: 528px;
+    padding: 10px;
+    margin-top: 43px;
+    position: relative;   
+}
+```
+
+* if you do that and you reload, now you see the center of the circle is right in the middle of the top,(Refer : radial4).
+
+* you can also say @top left to put it to the top left.
+
+```css
+#product-overview {
+    background-image: radial-gradient(center at top left, red, blue, green);
+    width: 100%;
+    height: 528px;
+    padding: 10px;
+    margin-top: 43px;
+    position: relative;   
+}
+```
+
+* Now the center of the circle is in the top left and then the radial gradient starts from there (Refer : radial5). 
+
+* You can also enter custom values here,you could say 20%, 50%,
+
+```css
+#product-overview {
+    background-image: radial-gradient(center at 20% 50%, red, blue, green);
+    width: 100%;
+    height: 528px;
+    padding: 10px;
+    margin-top: 43px;
+    position: relative;   
+}
+```
+* if you do that you actually see it's moved 20% from the left, so the circle of the innermost shape is 20% from the left and 50% from the top.So this is basically how you know it, first value is the x-axis, second value is the y-axis,(Refer : radial6).of course you can also use pixels here.
+
+* now what's missing? The missing piece of course is the size,
+
+* you can define the size by for example adding 20 pixels after a circle.
+
+```css
+#product-overview {
+    background-image: radial-gradient(center 20px at 20% 50%, red, blue, green);
+    width: 100%;
+    height: 528px;
+    padding: 10px;
+    margin-top: 43px;
+    position: relative;   
+}
+```
+* If you do that and you reload, now you see the circle is very tiny because now and that's important, the entire circle, without the outermost part, so in this case the red and the blue area, have a total of combined diameter of 20 pixels, so that's basically the width of the shape. (radial7)
+
+* Now this only works for the circle, for the ellipse, if you use that which would be the default, t
+```css
+#product-overview {
+    background-image: radial-gradient(ellipse 20px at 20% 50%, red, blue, green);
+    width: 100%;
+    height: 528px;
+    padding: 10px;
+    margin-top: 43px;
+    position: relative;   
+}
+```
+
+* his actually doesn't work because what would the 20 pixels be referring to? (Refer : radial8).
+
+* Of course you could add two values here and reload, now you again create a circle though, so you could add different values to turn this back to a non-circle.
+
+```css
+#product-overview {
+    background-image: radial-gradient(ellipse 80px 30px at 30% 50%, red, blue, green);
+    width: 100%;
+    height: 528px;
+    padding: 10px;
+    margin-top: 43px;
+    position: relative;   
+}
+```
+* So with two values, you can also style the ellipse, give it a certain width and height like that, first value is width, second value is height (Refer : radial9).
+
+* but there also are some keywords in case you don't want to do it like that.You can also add something like farthest side.
+
+```css
+#product-overview {
+    background-image: radial-gradient(ellipse farthest-side at 30% 50%, red, blue, green);
+    width: 100%;
+    height: 528px;
+    padding: 10px;
+    margin-top: 43px;
+    position: relative;   
+}
+```
+
+* Now what does this do? Watch the current value (Refer : radial9) and then reload.
+
+* Now what this actually means and you can barely see it, that the ending shape and that simply means until it transitions to the outermost color, so in case of two colors after the first color or in case after three colors as we have it here, after the second color, that the ending shape and you can barely see it,(Refer : radial10). the outer rings of the blue color touch the farthest side, so the side furthest away from the center, from the position of the element, this barely touches this side (Refer : radial10)
+
+* and on the other hand, you would have closest-side to reduce the size, 
+
+```css
+#product-overview {
+    background-image: radial-gradient(ellipse closest-side at 30% 50%, red, blue, green);
+    width: 100%;
+    height: 528px;
+    padding: 10px;
+    margin-top: 43px;
+    position: relative;   
+}
+```
+* now the outermost circle of the blue color and again that's hard to see but you can see there is still some non-perfect green part here (Refer : radial11)
+this touches the closest side and it also concerns top and bottom by the way.
+
+* and you can also not use the sides but the corners.
+
+```css
+#product-overview {
+    background-image: radial-gradient(ellipse closest-corner at 30% 50%, red, blue, green);
+    width: 100%;
+    height: 528px;
+    padding: 10px;
+    margin-top: 43px;
+    position: relative;   
+}
+```
+
+* Closest corner for example ensures that the outermost ring touches the closest corner (refer : radial12).
+
+```css
+#product-overview {
+    background-image: radial-gradient(ellipse farthest-corner at 30% 50%, red, blue, green);
+    width: 100%;
+    height: 528px;
+    padding: 10px;
+    margin-top: 43px;
+    position: relative;   
+}
+```
+
+*  farthest corner allows you to control that it touches the farthest corner.(refer : radial13)
+
+* So these are some great defaults you can use to control the size of your radial gradient 
+
+*  What you can still do is you can define color stops like blue after 70%, you can do that to change where it should transition to green and so on
+
+### Stacking Multiple Backgrounds
+
+* So we had to look at gradients and I did mention that we can use multiple backgrounds,
+
+* so how does this look like? For the background shorthand or also with multiple background image and color assignments, we can set multiple backgrounds for one and the same element.
+
+* This of course only make sense if the backgrounds have some form of transparency to them, be that images with the transparent parts or gradients with transparent colors,otherwise you will only see the topmost background but you can add multiple backgrounds.
+
+* Important though, only one solid color can be used and it will always be the bottommost background. You can now use how many background images you want to use though, you are not limited regarding that, you can add multiple background images and keep in mind, gradients count as images
+
+* So let's see this in action in our project. Back there on the starting page,
+
+```css
+background: url("./images/freedom.jpg")  left 10% bottom 20%/cover no-repeat border-box, #ff1b68; 
+```
+* #ff1b68 is a fallback if image can't be loaded.
+
+* and I also want to add a linear gradient.
+
+```css
+#product-overview {
+    /*background : linear-gradient(position,color(color start with 60% transparency) color stop of 10%, for fully transparency we added transperant), imageURL image-background-properties , showcolorifimagefails */
+    /* linear-gradient color so I want to start at the bottom and I want to go from light transparent grey to a fully transparent look. */
+    background: linear-gradient(to top, rgba(80,68,18,0.6) 10%, transparent), url("./images/freedom.jpg") left 10% bottom 20%/cover no-repeat border-box, #ff1b68;
+}
+```
+* i used rgba and then I will use 80, 68, 18, that will be a brownish greyish color which fits the general color theme of the image
+
+* to a fully transparent look but here I also add 60% opacity only so that we have some transparency, and then again, I go to full transparency.
+
+* Now I'll also add a color stop, so before the comma, after my rgba function, I'll add 10%, so that I don't have an even transition but that I leave my color here relatively early. then follwed by that we used transparent keyword for fully transparency
+
+*  we reload, we actually see that the bottom now also has this light golden brownish look. (Refer : multi1);
+
+* here you see both a linear gradient in action as well as the stacking of backgrounds in action.
+
+### Understanding Filters
+
+* What is a filter?
+
+* Here is a div element, doesn't have any content but let's say it has some styles that turn it into a box we can see, by adding a background color, brown maybe and also width and height, left out here but let's say it has this, then we would see a box which looks like that (Refer : filter1).
+
+* Now we can add a filter with the filter property and use one of the pre-defined filter functions to change the look of that element and its content,(Refer : filter2) for example the blur filter would take a pixel value and would blur the box (refer filter3). That is what filters are,
+
+```css
+div{
+    background: brown;
+    filter: blur(10%);
+}
+```
+* they allow us to change the visual appearance of an element by applying a filter, like blurring, grayscale or changing the contrast.
+
+* A list of all available filters can be found in the last lecture of this module but for now, let's simply see a filter in action.(refer : https://developer.mozilla.org/en-US/docs/Web/CSS/filter)
+
+* so therefore filters are a quick and easy way of changing the visuals of something and you can also apply more than one filter as you can see.
+
+* Now let's simply see this in action and let's apply a filter, I want to do this on our packages page.
+
+* we already have background image let me first position this image with center/cover, so that we can add more of the image
 
 ```css
 .background {
-    background: url("../images/plans-background.jpg");
-    width: 500px
-    height: 500px;
-    position: fixed; /* without position image you can't see image there */
-    /* the image should be positioned behind our actual content on the website,*/
-}
-```
-
-* If we do that and now reload the page, yes then we can see as expected hopefully that it kind of works because as we learned already, with this value, we take the image or the element out of the actual document flow and therefore it doesn't exist for the other elements and because of that, it is positioned, well at the moment, above the other elements,(Refer : website-position1).we will fix that soon but generally we're coming closer to where we want to be.
-
-* Now we can go back and also change the height and width to 100% right here, like this and like that, let's see if it works now and as we can see, the image indeed covers the entire viewport, so that's basically working now but if I now increased the width, well we can also see that the image is not correctly sized. At the moment the image is just displayed in its original size and as the viewport is smaller, well the image could actually also be a bit smaller. However we will dive deeper into background sizing in the next module,
-
-* therefore for the moment we will keep that solution and continue our work.
-
-* The important thing for the moment though is that we added this background image but it's called a background image but somehow, it is displayed in front of the other images and that's actually not the way it should be displayed.
-
-### Understanding the Z-Index
-
-* So why is our background image not a real background image? Well if we think back about what we did so far, we were able to position our elements along the x-axis with left and right and along the y-axis with top and bottom.
-
-* Now as we can see right here, we also need a possibility to position our elements along the z-axis.Now the great thing is that we can do this in CSS and for that we need a new property, the so-called z-index.
-
-* Now before we apply the property, there are some important things we have to understand first. 
-
-* I said, the z-axis position can be changed by adding a z-index, so that's the property we need. 
-
-* This property has different values, by default every element on our website has a value of auto-applied for the z-index, the auto value is equal to zero.If we don't change anything else but this is what you normally can assume, auto is equal to zero
-
-* and this zero now defines the starting point from a y-axis perspective for the elements on a website. This means if you want to position an element above this package class, then you could simply apply a z-index of one, of two, of 10, of 100,it doesn't matter
-
-* if you want to position that element below this class, then you can add -1, -100 and so on, I think you saw the pattern.
-
-* But, here comes the but, adding z-index to elements which don't have any position property applied and by that, I mean a position property with a value different from static, for these elements, the z-index doesn't have any impact, so I could add z-index 100 right here,
-
-* if I go back and reload the page, still the background image will be on top of all the other elements.
-
-* This means this default style for the elements without any position property is just there and it's important to know that it's basically equal to zero but if you want to change it, you have to apply the position property.
-
-* As I told you, the default value for the elements is zero and as the background image should be behind these packages we have, so behind these default elements, we could add -1 for example
-
-```css
-.background {
-    background: url("../images/plans-background.jpg");
+    background: url("../images/plans-background.jpg") center/cover;
     width: 100%;
     height: 100%;
     position: fixed;
     z-index : -1
 }
 ```
-* Let's go back and reload the page to see if this worked, yes it did and this makes sense right because now we said that the z-axis, so the z-axis value defined by the z-index should be smaller than 1, -1 in our case, therefore it should be displayed behind these packages.(Refer : website-position2)
 
-* so we changed it for the background class again, then we could see that the background image is again on top of our packages and on top of the navigation bar, can you see it? If I add a z-index of 0 right here, then the background image is on top of the packages.
-
-* This makes sense right because with that, both have the same z-index but we learned already that by adding position fixed, the element is taken out of the document flow and therefore displayed above the existing elements, this is clear
-
-* but why does the z-index of 0 lead to the situation that this navigation bar is displayed on top of the background image?? 
-
-* but adding a z-index of 1 or 100, it doesn't matter in that case leads to a situation that the background image is on top of that nav bar.
-
-* Well let's change it back to zero and think about the default value of the z-index for this background class because it's the same as for the normal elements. The default value for this z-index is also auto or zero in that case and the same thing is also true for our navigation bar,
+* Now we see it's actually a quite colorful image with that green plant. now let's remove some of that color and let's add a tiny grayscale.You could of course also blur it but that might be hard to your eyes in the end.
 
 ```css
-/* shared css */
-.main-header {
-    position: fixed;
+.background {
+    background: url("../images/plans-background.jpg") center/cover;
+    /* The grayscale function takes a percentage, defining how much we want to turn it to grey, 100% is maximum*/
+    filter: grayscale(100%);
     width: 100%;
-    background: #2ddf5c;
-    padding: 8px 16px;
-    /* z-index: 0;  defult value is zero */
-}
-
-```
-* So the z-index doesn't drive this behavior, what drives this behavior though in case we have two positioned elements with the same z-index is simply the order in the HTML file.
-
-* So if we go to our index.html file in the packages folder, we can see that the background is the first element and after the background comes the header.Therefore the header comes later in our code and therefore the header is displayed above our background, it's as simple as that.And with that we now understood the core concept of the z-index,
-
-* There is one other important concept, the stacking context. that we will see soon..
-
-### Adding a Badge to our Package
-
-* So how can we now add a badge to our package ?? 
-
-* Now we added HTML for recommeded badge
-
-```html
-<h2 class="package__badge">RECOMMENDED</h2>
-```
-
-* This looks like this now, well not really beautiful yet but we will see how we can change that but at least we have our recommended text already here. The question now is, how can we change the position because that's what this module is about.
-
-```css
-.package__badge {
+    height: 100%;
     position: fixed;
-    top:50px;
-    left: 400px;
-    margin: 20px;
+    z-index : -1
 }
 ```
-* as you can see, this is a lot of trial and error and in the end, the core problem is that the recommended badge would be related to the viewport and if we scroll down, well it would scroll with the page as fixed, definitely not the behavior we want to have for such a badge.
+* with that if we reload we got a fully greayed image (refer filter4)
 
-* So maybe there is another value for our position property which brings us closer to the behavior we want.
+* We can do that but I don't want to go as far, so maybe 40% looks good here. So if we take 40% and we reload, now we still got some color but it's a little bit more grayish and of course feel free to play around with that and possibly add more filters to other parts of this app if you want to.
 
-* The good news is there is because we can simply change position fixed to position absolute, like that. Now that we changed it to absolute,
+* This is how easy you can use the filter property, as you can see, really not that difficult to use.
+
+* if you do scroll down to the very bottom (MDN filter doc), you'll see the browser compatibility and there, you see that basic support for filters is missing in Internet Explorer, it's available in Edge but not in the Internet Explorer. So if you still have to support that, you might not be able to use filter or you have to use a polyfill or implement some other fallback or only use filter in cases where it doesn't matter if it doesn't get applied, where it just enhances the look but doesn't do something it absolutely depends on.
+
+### Adding & Styling SVGs - The Basics
+
+* Now one popular form of images or icons is svg for scalable vector graphics.
+```css
+<svg viewBox="0 0 512 512">
+    <path style="fill:#F09B24;" d="M344,248h-32V112c0-4.418-3.582-8-8-8h-40c-4.418,0-8,3.582-8,8s3.582,8,8,8h32v128h-32  c-4.418,0-8,3.582-8,8s3.582,8,8,8h32v128h-32c-4.418,0-8,3.582-8,8s3.582,8,8,8h40c4.418,0,8-3.582,8-8V264h32c4.418,0,8-3.582,8-8  S348.418,248,344,248z"
+    />
+    <path style="fill:#8E9AA9;" d="M264,64H8c-4.418,0-8,3.582-8,8v80c0,4.418,3.582,8,8,8h256c4.418,0,8-3.582,8-8V72  C272,67.582,268.418,64,264,64z"
+    />
+    <path style="fill:#7C899B;" d="M24,144c-4.418,0-8-3.582-8-8V64H8c-4.418,0-8,3.582-8,8v80c0,4.418,3.582,8,8,8h256  c4.418,0,8-3.582,8-8v-8H24z"
+    />
+    <rect x="152" y="96" style="fill:#B8E3A8;" width="88" height="32" />
+    <g>
+        <polygon style="fill:#7EC97D;" points="152,96 152,128 166,128 198,96  " />
+        <polygon style="fill:#7EC97D;" points="220,96 188,128 240,128 240,96  " />
+    </g>
+    <path style="fill:#56677E;" d="M240,136h-88c-4.418,0-8-3.582-8-8V96c0-4.418,3.582-8,8-8h88c4.418,0,8,3.582,8,8v32  C248,132.418,244.418,136,240,136z M160,120h72v-16h-72V120z"
+    />
+    <g>
+        <path style="fill:#435670;" d="M32,136c-4.418,0-8-3.582-8-8V96c0-4.418,3.582-8,8-8s8,3.582,8,8v32C40,132.418,36.418,136,32,136z   "
+        />
+        <path style="fill:#435670;" d="M56,136c-4.418,0-8-3.582-8-8V96c0-4.418,3.582-8,8-8s8,3.582,8,8v32C64,132.418,60.418,136,56,136z   "
+        />
+        <path style="fill:#435670;" d="M80,136c-4.418,0-8-3.582-8-8V96c0-4.418,3.582-8,8-8s8,3.582,8,8v32C88,132.418,84.418,136,80,136z   "
+        />
+        <path style="fill:#435670;" d="M104,136c-4.418,0-8-3.582-8-8V96c0-4.418,3.582-8,8-8s8,3.582,8,8v32   C112,132.418,108.418,136,104,136z"
+        />
+        <path style="fill:#435670;" d="M128,105c-4.418,0-8-3.582-8-8v-1c0-4.418,3.582-8,8-8s8,3.582,8,8v1   C136,101.418,132.418,105,128,105z"
+        />
+        <path style="fill:#435670;" d="M128,136c-4.418,0-8-3.582-8-8v-1c0-4.418,3.582-8,8-8s8,3.582,8,8v1   C136,132.418,132.418,136,128,136z"
+        />
+    </g>
+    <path style="fill:#8E9AA9;" d="M264,208H8c-4.418,0-8,3.582-8,8v80c0,4.418,3.582,8,8,8h256c4.418,0,8-3.582,8-8v-80  C272,211.582,268.418,208,264,208z"
+    />
+    <path style="fill:#7C899B;" d="M24,288c-4.418,0-8-3.582-8-8v-72H8c-4.418,0-8,3.582-8,8v80c0,4.418,3.582,8,8,8h256  c4.418,0,8-3.582,8-8v-8H24z"
+    />
+    <rect x="152" y="240" style="fill:#B8E3A8;" width="88" height="32" />
+    <g>
+        <polygon style="fill:#7EC97D;" points="152,240 152,272 166,272 198,240  " />
+        <polygon style="fill:#7EC97D;" points="220,240 188,272 240,272 240,240  " />
+    </g>
+    <path style="fill:#56677E;" d="M240,280h-88c-4.418,0-8-3.582-8-8v-32c0-4.418,3.582-8,8-8h88c4.418,0,8,3.582,8,8v32  C248,276.418,244.418,280,240,280z M160,264h72v-16h-72V264z"
+    />
+    <g>
+        <path style="fill:#435670;" d="M32,280c-4.418,0-8-3.582-8-8v-32c0-4.418,3.582-8,8-8s8,3.582,8,8v32C40,276.418,36.418,280,32,280   z"
+        />
+        <path style="fill:#435670;" d="M56,280c-4.418,0-8-3.582-8-8v-32c0-4.418,3.582-8,8-8s8,3.582,8,8v32C64,276.418,60.418,280,56,280   z"
+        />
+        <path style="fill:#435670;" d="M80,280c-4.418,0-8-3.582-8-8v-32c0-4.418,3.582-8,8-8s8,3.582,8,8v32C88,276.418,84.418,280,80,280   z"
+        />
+        <path style="fill:#435670;" d="M104,280c-4.418,0-8-3.582-8-8v-32c0-4.418,3.582-8,8-8s8,3.582,8,8v32   C112,276.418,108.418,280,104,280z"
+        />
+        <path style="fill:#435670;" d="M128,249c-4.418,0-8-3.582-8-8v-1c0-4.418,3.582-8,8-8s8,3.582,8,8v1   C136,245.418,132.418,249,128,249z"
+        />
+        <path style="fill:#435670;" d="M128,280c-4.418,0-8-3.582-8-8v-1c0-4.418,3.582-8,8-8s8,3.582,8,8v1   C136,276.418,132.418,280,128,280z"
+        />
+    </g>
+    <path style="fill:#8E9AA9;" d="M264,352H8c-4.418,0-8,3.582-8,8v80c0,4.418,3.582,8,8,8h256c4.418,0,8-3.582,8-8v-80  C272,355.582,268.418,352,264,352z"
+    />
+    <path style="fill:#7C899B;" d="M24,432c-4.418,0-8-3.582-8-8v-72H8c-4.418,0-8,3.582-8,8v80c0,4.418,3.582,8,8,8h256  c4.418,0,8-3.582,8-8v-8H24z"
+    />
+    <rect x="152" y="384" style="fill:#B8E3A8;" width="88" height="32" />
+    <g>
+        <polygon style="fill:#7EC97D;" points="152,384 152,416 166,416 198,384  " />
+        <polygon style="fill:#7EC97D;" points="220,384 188,416 240,416 240,384  " />
+    </g>
+    <path style="fill:#56677E;" d="M240,424h-88c-4.418,0-8-3.582-8-8v-32c0-4.418,3.582-8,8-8h88c4.418,0,8,3.582,8,8v32  C248,420.418,244.418,424,240,424z M160,408h72v-16h-72V408z"
+    />
+    <g>
+        <path style="fill:#435670;" d="M32,424c-4.418,0-8-3.582-8-8v-32c0-4.418,3.582-8,8-8s8,3.582,8,8v32C40,420.418,36.418,424,32,424   z"
+        />
+        <path style="fill:#435670;" d="M56,424c-4.418,0-8-3.582-8-8v-32c0-4.418,3.582-8,8-8s8,3.582,8,8v32C64,420.418,60.418,424,56,424   z"
+        />
+        <path style="fill:#435670;" d="M80,424c-4.418,0-8-3.582-8-8v-32c0-4.418,3.582-8,8-8s8,3.582,8,8v32C88,420.418,84.418,424,80,424   z"
+        />
+        <path style="fill:#435670;" d="M104,424c-4.418,0-8-3.582-8-8v-32c0-4.418,3.582-8,8-8s8,3.582,8,8v32   C112,420.418,108.418,424,104,424z"
+        />
+        <path style="fill:#435670;" d="M128,393c-4.418,0-8-3.582-8-8v-1c0-4.418,3.582-8,8-8s8,3.582,8,8v1   C136,389.418,132.418,393,128,393z"
+        />
+        <path style="fill:#435670;" d="M128,424c-4.418,0-8-3.582-8-8v-1c0-4.418,3.582-8,8-8s8,3.582,8,8v1   C136,420.418,132.418,424,128,424z"
+        />
+    </g>
+    <path style="fill:#F7C14D;" d="M424,168c-48.523,0-88,39.477-88,88s39.477,88,88,88s88-39.477,88-88S472.523,168,424,168z" />
+    <path style="fill:#FFDB66;" d="M424,184c-39.701,0-72,32.299-72,72s32.299,72,72,72s72-32.299,72-72S463.701,184,424,184z" />
+    <path style="fill:#69788D;" d="M484.893,314.16C476.393,274.588,451.922,248,424,248s-52.393,26.588-60.893,66.16  c-0.605,2.82,0.354,5.749,2.511,7.664C381.731,336.124,402.465,344,424,344s42.269-7.876,58.381-22.176  C484.539,319.909,485.498,316.98,484.893,314.16z"
+    />
+    <path style="fill:#56677E;" d="M434.053,249.171C430.768,248.403,427.411,248,424,248c-27.922,0-52.393,26.588-60.893,66.16  c-0.605,2.82,0.354,5.749,2.511,7.664c3.383,3.002,6.979,5.703,10.734,8.125C384.904,286.243,407.373,255.378,434.053,249.171z"
+    />
+    <path style="fill:#69788D;" d="M424,192c-17.645,0-32,14.355-32,32s14.355,32,32,32s32-14.355,32-32S441.645,192,424,192z" />
+    <path style="fill:#56677E;" d="M432,248c-17.645,0-32-14.355-32-32c0-6.783,2.128-13.076,5.742-18.258  C397.444,203.53,392,213.138,392,224c0,17.645,14.355,32,32,32c10.862,0,20.471-5.444,26.258-13.742  C445.076,245.872,438.783,248,432,248z"
+    />
+
+</svg>
+
+```
+* Now we applied these svg inside our div we could see the icon but its litter bigger(refer: svg1)
+
+* Now you can style svg too, this is exactly what I want to do with you now. However we will not dive into the depths of styling svg because as it turns out, you can even select the svg elements themselves and start styling these. So you could go in there and start styling the colors the svg lines and so on by overwriting that fill color here,this is something a bit more advanced and more related to svg than CSS.
+
+* Now we got that key feature image part here and let's simply add a padding in there of let's say 20 pixels. Now if we do that and we reload, this looks much better
 
 ```css
-.package__badge {
-    position: absolute;
-    top:50px;
-    left: 400px;
-    margin: 20px;
+.key-feature__image{
+    background-color: #ffcede;
+    width: 128px;
+    height: 128px;
+    border: 2px solid #242424;
+    border-radius: 50%; 
+    margin: 0 auto;
+    padding: 20px; /* to adjust svg icon*/
 }
 ```
-* but let's scroll down and as we can see, if we scroll down now, the element is no longer stuck to the viewport, Well for absolutely positioned elements, the positioning context is defined based on two cases.
-
-* 1.If none of the ancestors, so of the parent elements, has a position property applied, well then the positioning context of the element is simply the HTML element.
-
-* 2.If we have the second case that we have any position ancestors, then the closest ancestor which has the position property applied is the positioning context for this element.
-
-* Now let's see what is the case in our situation. If we simply change top 50 pixels to top zero once again, like that and reload the page
-
-```css
-.package__badge {
-    position: absolute;
-    top:0;
-    left: 400px;
-    margin: 20px;
-}
-```
-
-* well we can see that our element apparently is stuck to the HTML element (top of the screen - website-position3) because that's actually the element that wraps the entire website.
-
-* If we would change that and now add a position property to our package class 
-
-```css
-.package{
-    position: absolute;
-    width: 80%;
-    margin: 16px 0; /* 16px to top and bottom and 0 to left and right*/
-    border: 4px solid #0e4f1f;
-    border-left: none;
-}
-```
-* package class is an ancestor to package__badge
-
-* If we reload the page right now, well this kind of crashes our entire website (website-position4) because now all the packages are displayed with an absolute value and as we know, this takes all the elements out of the document flow and therefore, we have this mess.
-
-* But isn't there another position value that we could apply that doesn't crash our entire website?
-
-* Well yes it is and we'll have a look at this value later but for the moment, we will simply apply it to our package class right here and this value is relative, like that.
-
-```css
-.package{
-    position: relative; /* relative position*/
-    width: 80%;
-    margin: 16px 0; 
-    border: 4px solid #0e4f1f;
-    border-left: none;
-}
-```
-* With that if we reload the page, we can see two interesting things already.
-
-* Apparently the relative value doesn't take our elements out of the document flow (website-position5) but as I said, we'll dive deeper into that later
-
-* the second interesting thing is that the positioning context of our recommended element right here (website-position5) now changed to the closest ancestor which has a position property applied
-
-* So what have we seen so far? The fixed and the absolute value are quite comparable in general, both take the elements out of the document flow if you apply these values to these elements.
-
-* but for the fixed value, the positioning context always is the viewport, 
-
-* for the absolute value, the positioning context depends.If you don't have any ancestors with a positioning property applied, then the positioning context
-is the HTML element,
-
-* If you have ancestors with the position property applied, then the element, will be positioned in relation to the closest ancestor which has such a position property applied.
-
-* With that, we basically made sure that our badge is at least positioned inside the right package but we didn't position the badge itself.
-
-### Styling & Positioning our Badge with "absolute" and "relative"
-
-* So the badge is inside our package but it doesn't look good and it's not positioned correctly (website-position5),
-
-```css
-.package__badge {
-    position: absolute;
-    top:0px;
-    left: 400px;
-    margin: 20px;
-    font-size: 12px;
-    color: #fff;
-    background-color: #ff5454;
-    padding: 10px
-}
-```
-* The general style is fine with that, what I don't like though is the position but as we learned how this works now, we have the absolute position but we are in the positioning context of the package,
-
-```css
-.package__badge {
-    position: absolute;
-    top:0px;
-    right: 0;
-    margin: 20px;
-    font-size: 12px;
-    color: #fff;
-    background-color: #ff5454;
-    padding: 10px
-}
-```
-* our badge is now positioned correctly inside our package, it is positioned in the right package.
-
-* The problem though is that if we scroll down now, we can see that our package is above our navigation bar but we know how to fix this, right?
-
-* If we go back and have a quick look at our shared.css file, we can see that the main header has a z-index of 0. If we change that to 1 
-
-```css
-.main-header {
-    position: fixed;
-    width: 100%;
-    background: #2ddf5c;
-    padding: 8px 16px;
-    z-index: 1;
-}
-```
-* so above the standard, then we can see that if we reload the page, that the navigation bar stays on top and our package scrolls smoothly below it. With that, our project looks quite cool actually and we understood fixed and absolute positioning,
-
-* we also had a quick look at relative positioning. But as I said, there are some more details that I would like to share with you about this relative positioning.
-
-### Diving Deeper into Relative Positioning
-
-* So what can we do with this relative positioning now?
-
-* why don't we just start and add the relative position to our first child, so to this navigation bar(Refer - Relative position folder)
-
-```css
-.parent .child-1{
-  position: relative;
-}
-```
-
-* nothing changes basically, the element stays or behaves the same way it did before when we didn't apply that value.
-
-* We saw though in the project also that with this position property, we can of course change the positioning context of other elements, so of children of this element but as we don't have any children right here, there is not a lot that we can change right now.
-
-* But the cool thing is that if we now go back and add for example top let's say 50 pixels and left 50 pixels, like that
-
-```css
-.parent .child-1{
-  position: relative;
-  top:50px;
-  left:50px;
-}
-```
-
-* then we can see that the element suddenly moves (Refer :relative-Position1) and why is this happening? 
-
-* Well we saw for the fixed and absolute values that the elements are taken out of the document flow and then positioned relatively to the viewport or as we saw it, to the HTML element or to the closest ancestor which has the position property applied. 
-
-* For the relative value, this is different because the positioning context is the element itself and at the same time, the element is also not taken out of the document flow.
-
-* So what basically happened right here with our element is that we moved it down from its initial position, which was right here by 50 pixels from the top and then 50 pixels from the left, that's really important (Refer :relative-Position1). 
-
-* With the relative value, you simply push your element from the current position down from the top by 50 pixels and from the left by 50 pixels.
-
-* let's do this quickly, like that and reload the page, then you can see that the element moves from the right to the left by 50 pixels. So that's important to keep in mind, for the fixed and absolute values, the top, left, bottom and right properties specify a distance to the parent element basically, so to the containing block
-
-* but for the relative positioning, this simply defines how this element should move from the current position.
-
-* And as we can move the element basically wherever we want to, so we could also add top 300 pixels right here, well this can lead to the following situation (Refer : relative-Position2).
-
-* We basically move the relative element right here out of the actual parent.(Refer : relative-Position2).so of our parent class
-
-* Now you might want this behavior but there are probably situations where you say yes I want to move my element a little bit to the left, to the right, to the bottom, wherever but I want to make sure that it doesn't leave this parent or at least that it's not visible anymore as soon as it leaves the parent element right here. will see that in next task.
-
-### Working with "overflow" and Relative Positioning
-
-* So we saw how relative positioning works and we also saw that we can move our element out of the parent. Now to avoid this behavior, we can simply go to our parent element with the class parent right here and now add overflow hidden 
-
-```css
-.parent {
-    background: white;
-    padding: 20px;
-    border: 5px solid black;
-    margin: 0;
-    overflow: hidden;
-  }
-```
-* because this will exactly do what the property already indicates, it will hide the element once it's outside of our parent (Refer : Relative-overflow-hidden)
-
-* as soon as the element moves out of the parent element, it's invisible. This can be a behavior you want or not but at least it allows you to make sure that you don't place elements anywhere on your website.
-
-* revert all changes and lets imagine as fresh , But for the similar scenario as above  Lets say you have postion relative in your parent element with top value as 500 then the screen looks like the parent moved top 500 from the body
-
-* Now you know a solution that if you try to apply overflow hidden to the body it should work right ?? will it work ?? no it won't hidden why is this happening??  (Refer : Relative-body-overflow-hidden-issue) 
-
-* Well this is due to a default behavior of CSS. If you apply the overflow hidden declaration to the body element, this will simply be passed onto the HTML element and the consequence of that is, well you don't have the overflow hidden declaration on your body element,
-
-* We can directly apply overflow hidden to the html we won't get any changes ie it won't hidden..This is just a default behavior of CSS
-
-* !!!! we cannot change that unfortunately. What we can do though is we can simply take the chance and also add overflow hidden to our "both body and html".with this change you could see the elements hidden from body.(Refer : Relative-body-overflow-hidden-solved) 
-
-* now, the overflow hidden declaration is not passed onto the HTML element because it already has such a declaration, why would it need it twice, doesn't make sense and because of that, this is working.
-
-* It would also work if you add overflow auto by the way in html, as you can see, same behavior, the element cannot be displayed outside the parent which is the body element in our case.
-
-* This is just some quick tip that I wanted to show you in case you have a situation like that. If your parent is not the body element, this is not a problem at all but if this is the case, then you can solve this issue with this little fix.
-
-* With that, we now understood the relative positioning, so there is only one value left that we should have a look at, sticky positioning. we wil see that next
-
-### Introducing "sticky" Positioning
-
-* Let's have a look at sticky positioning. For that, I prepared another example for you,(Refer sticky position folder)
-
-* what we can see right here are basically three different elements, we can inspect it right here, we have three parent classes and inside this classes, we have a class country with the country and two cities, two separate classes again. If we scroll through that page, we can see that there is nothing spectacular actually.(Refer : Sticky-Position-1)
-
-* Now with that, let's start adding this position sticky declaration now
-
-*  I don't explain a lot on purpose because I first want to show you what it does and then why it is doing what it does,
-
-```css
-.parent .country {
-    background: #fa923f;
-    color: white;
-    padding: 10px;
-    border: 5px solid black;
-    margin: 10px;
-    position: sticky;
-}
-```
-* If we now reload the page and scroll around, nothing changed 
-
-* but if we now add another property a well-known property, top and say maybe 20 pixels, let's see if this changes the behavior of sticky. If you load again and now scroll down,
-
-* oh what was that, can you see it? The USA, so the country element doesn't move in the beginning,you can see it but as soon as it touches a certain limit apparently, it moves downwards and behaves like a fixed element,
-
-* So what can we see right here, what is sticky doing?
-
-* Well sticky is basically a hybrid or a combination of relative and fixed 
-
-* because if we now again remove top 20 pixels, we saw that and reload the page, nothing changes,
-
-* so we basically added a position property which doesn't change the position in the document flow or which changes the position of the element at all, like relative does
-
-* but as soon as we add the top property right here, the element behaves like a fixed element as soon as we reach a certain border. 
-
-* Now the border is reached depending on our position of the viewport.
-
-* If we change top 20 pixels to top 0, like that, I think you probably believe me that the relevant border is the distance between the viewport and can you see it, the border of our USA element right here. If we move down, it sticks right here and the same thing can be observed, nothing changes for 0 value
-
-* can you see it? As soon as we reach our border of the France element, it moves down, same thing is true for Germany. So that's the first thing,
-
-* apparently we can specify a distance between our element and the viewport and as soon as we reach this distance, the element behaves as fixed, I think we understood that.
-
-* The interesting thing at the same time though is that the element simply stops being fixed as soon as it reaches the end of the content of its parent element and that's the second interesting behavior of sticky
-
-* And as you can see, the body element doesn't have an impact at all, the parent also doesn't have an impact, the only impact is only as I said this viewport
-but to end this fixed behavior, the end of the content inside the parents is the important factor.
-
-* And we won't dive deeper into it in this  because sticky is a rather new value for the position property, so I think it's important to understand why it is there and how it works but browser support is not perfect yet,
-
-* Therefore using sticky right now depending on your needs is maybe not the best idea but as this browser support might improve or will improve in the future, knowing sticky and also having a basic idea of how it works is definitely helpful.
-
-### Understanding the Stacking Context
-
-* So what is this stacking context? For that,refer stacking context.
-
-* what we can see are three parent elements, so we have the navigation, the headline and contact us and inside the headline, we have three children, image one, image two and image three.(refer - stacking-context-1)
-
-* really important thing though is that we applied position fixed to all parent elements and that's also the reason why navigation is at the bottom, then we have the headline on top of it and then contact us on top of the other elements.
-
-* we know that these are fixed elements,
-
-* we know that these are taken out of the document flow,
-
-* they all have z-index of zero and because of that, the order in the HTML document defines the order these are displayed along the z-axis
-
-* which is totally correct because we can see that navigation is the first, then headline, then contact us, so contact us is the one positioned at the top.
-
-* We can also change that, this is also something that we learned, so we could for example go to our headline right here and now add a z-index of one for example, like that.
-
-```css
-.headline {
-    background: rgb(77, 77, 248);
-    top: 150px;
-    left: 150px;
-    width: 270px;
-    height: 200px;
-    z-index:1;
-}
-```
-* Now hedlines will come to the top (refer - stacking-context-2)
-
-* So this is what we know so far, nothing new, I just wanted to make sure that we have the same starting point because stacking context comes into play when we play around with these children right here 
-
-```html
-<div class="headline">headline    
-    <div class="image-1">image-1</div>
-    <div class="image-2">image-2</div>
-    <div class="image-3">image-3</div>
-</div>
-```
-
-* because let's say that we apply another z-index for our contact us form which is 100, like that.
-
-```css
-.contact-us {
-    background: rgb(69, 214, 69);
-    top: 180px;
-    left: 320px;
-    width: 180px;
-    z-index: 100;
-}
-```
-* With that, we know that contact us is back on top again (Refer : stacking-context-3)
-
-* but let's now focus onto these three child images
-
-* because what happens if I also apply position fixed to all three child images and then apply a z-index to one of these images for example that is above the z-index of the Contact Us element.
-
-```css
-.image-1 {
-    top: 200px;
-    left: 230px; 
-    position: fixed;
-}
-
-.image-2 {
-    top: 230px;
-    left: 260px;
-    position: fixed;
-}
-
-.image-3 {
-    left: 300px;
-    top: 260px;
-    position: fixed;
-}
-```
-* we know that so far and that image three is on top of these elements.(Refer :  stacking-context-4)
-
-* This means if I would go back and add a z-index to image 2 let's say of one again, then image 2 will be positioned on top of these images.(refer : stacking-context-5)
-
-```css
-.image-2 {
-    top: 230px;
-    left: 260px;
-    position: fixed;
-    z-index: 1;
-}
-```
-
-* If I will change the value to -1 for example, like that, well then the element is below the other elements, so image 2 cannot be moved below the actual headline element, below its parent
-
-```css
-.image-2 {
-    top: 230px;
-    left: 260px;
-    position: fixed;
-    z-index: -1;
-}
-```
-* but what happens now if I change the z-index again and as I said a few seconds ago, make it higher than the one we have for contact us? Contact us right here has z-index of 100 and let's now say I add a z-index of 1000 right there, this is far above the one we have for contact us.
-
-```css
-.image-2 {
-    top: 230px;
-    left: 260px;
-    position: fixed;
-    z-index: 1000;
-}
-```
-
-* If we go back and reload the page, you can see that image 2 is again above the other two images but it's still below contact us.(refer : stacking-context-7)
-
-* Why is this happening? Well the reason for that is simply the stacking context and what does this mean?
-
-* Well basically we aligned all our parent elements along the z-axis, that's what we know and by adding position fixed to these, each element has its own stacking context.
-
-* This means for the elements inside the headline element, the z-index will only have an impact onto the order of these elements inside the headline element 
-
-* but the general order of the headline element below contact us, this is defined by the z-index that we apply to the headline element 
-
-* the positioning of the parent elements has nothing to do with these z-indices, for these parent elements, only the z-index of the parent elements itself has an impact. And this is the stacking context
+* Refer other SVG course for some other better understanding..
