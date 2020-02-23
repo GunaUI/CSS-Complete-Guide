@@ -7,13 +7,20 @@ body {
     margin: 0;
 }
 
-/* html{
-    margin : 30px;
-} */
+.backdrop {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.5);
+}
 
 .main-header {
-    position: fixed;
     width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
     background: #2ddf5c;
     padding: 8px 16px;
     z-index: 1;
@@ -29,11 +36,14 @@ body {
     text-decoration: none;
     font-weight: bold;
     font-size: 22px;
-    /* height: 22px; */
+    height: 22px;
+    /* width: 20px; */
     display: inline-block;
 }
-.main-header__brand img{
-    height: 22px;
+
+.main-header__brand img {
+    height: 100%;
+    /* width: 100%; */
 }
 
 .main-nav {
@@ -88,7 +98,7 @@ body {
 }
 
 .main-footer__links {
-    list-style: none; /* Remove li bullet style */
+    list-style: none;
     margin: 0;
     padding: 0;
     text-align: center;
@@ -96,13 +106,12 @@ body {
 
 .main-footer__link {
     display: inline-block;
-    margin: 0 16px; /* 0 to top and bottom  but I want have some distance between the list items which are in the same line due to inline block,
-    so margin left and right could be 16 pixels. */
+    margin: 0 16px;
 }
 
 .main-footer__link a {
     color: white;
-    text-decoration: none; /* To remove the default link style*/
+    text-decoration: none;
 }
 
 .main-footer__link a:hover,
@@ -110,29 +119,23 @@ body {
     color: #ccc;
 }
 
-/* Gerneric button css*/
 .button {
     background: #0e4f1f;
-    color: #fff;
-    /*  we could set the font family but then we would keep the other overwritten font values, so I will target the overall font property which is also just a shortened
-    for setting a couple of textproperties in one step and I will set it to inherit. */
-    /* Do you remember inherit? Inherit was a keyword, a value which forces the inherited styles to be applied. So instead of using the browser defaults
-    it now will actually prioritize inheritance, though technically that's not what happens, it just looks at what it would have inherited and directly assigns these styles*/
-    /* so that we actually use the font family and the font defaults we have on our page and we set up in our body.*/
+    color: white;
     font: inherit;
-    border: 1.5px #0e4f1f solid;
+    border: 1.5px solid #0e4f1f;
     padding: 8px;
     border-radius: 8px;
     font-weight: bold;
-    cursor: pointer; /* with pointer, you get that hand icon whenever your cursor is over */
+    cursor: pointer;
 }
 
 .button:hover,
-.button:active{
-    background: #fff;
+.button:active {
+    background: white;
     color: #0e4f1f;
 }
 
-.button:focus{
+.button:focus {
     outline: none;
 }
