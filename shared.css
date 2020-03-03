@@ -201,13 +201,6 @@ main {
   cursor: pointer;
 }
 
-.button[disabled]{
-  cursor: not-allowed;
-  border: #a1a1a1;
-  background-color: #ccc;
-  color: #a1a1a1;
-}
-
 .button:hover,
 .button:active {
   background: white;

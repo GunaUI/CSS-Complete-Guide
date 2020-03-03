@@ -8,11 +8,11 @@ main {
     color: #ff5454;
 }
 
-.signup-form{
+.signup-form {
     padding: 1rem;
 }
 
-.signup-form label{
+.signup-form label {
     font-weight: bold;
 }
 
@@ -26,24 +26,24 @@ main {
 
 /* .signup-form input[type="checkbox"] */
 .signup-form input[id*="terms"],
-.signup-form input[id*="terms"] + label /* this select (all) lable which directly following this input selector */
-{
+.signup-form input[id*="terms"] + label {
     display: inline-block;
-    vertical-align: middle
+    width: auto;
+    vertical-align: bottom;
 }
 
-.signup-form input:not([type="checkbox"]), /* All in inputs which are not of type checkbox will receive these styles */
+.signup-form input:not([type="checkbox"]),
 .signup-form select {
     border: 1px solid #ccc;
-    padding: 0.2rem 0.5rem; /*top-bottom and left-right*/
-    font: inherit; /*We want to use the same font used in rest of the page*/
+    padding: 0.2rem 0.5rem;
+    font: inherit;
 }
 
 .signup-form input:focus,
 .signup-form select:focus {
     outline: none;
-    background-color: #d8f3df;
-    border-color: #2ddf3c
+    background: #d8f3df;
+    border-color: #2ddf5c;
 }
 
 .signup-form input[type="checkbox"] {
@@ -68,13 +68,13 @@ main {
     background: #faacac;
 }
 
-.signup-form button[type="submit"]{
+.signup-form button[type="submit"] {
     display: block;
     margin-top: 1rem;
 }
 
-@media(min-width: 40rem){
-    .signup-form{
+@media (min-width: 40rem) {
+    .signup-form {
         margin: auto;
         width: 25rem;
     }
