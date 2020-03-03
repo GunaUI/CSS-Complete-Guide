@@ -724,3 +724,4 @@ text-decoration: none;
 Web Safe Fonts: https://www.cssfontstack.com/
 Google Fonts: https://fonts.google.com/
 The "line-height" property: https://developer.mozilla.org/en-US/docs/Web/CSS/line-height
+Refer : font.pdf
