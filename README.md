@@ -1,727 +1,1506 @@
 # CSS-Complete-Guide
 
-## Section 12 : Working with Text and Fonts
+## Section 13 : Adding Flexbox to our Project
 
-###  Comparing Generic Families & Font Families
+###  Flexbox Intro
 
-* So we have generic families and we have font families, what's the difference?
-
-* Well a generic family is something like this, serif or sans-serif, we also have cursive.We also have Monospace and we have Fantasy,I made Fantasy a bit gray because it's not the most usual generic family you could use, we'll still have a look at it though (Refer Font1)
-
-* but the thing is that these generic families are a kind of a headline which therefore define a specific attribute of the fonts that are inside this generic family.
-
-* For example, the cursive generic family includes fonts which are cursive and by saying include, this brings us to the font families because that's actually more specific and these are actually the different fonts we have inside our generic family.(Refer Font1)
-
-* For serif for example, this could be Times New Roman or Georgia, so both are part of this generic family, the serif family and as you can see in the different font families, Times New Roman and Georgia both have these serifs in them but they look different though.(Refer Font1)
-
-* We also have other font families which are part of the sans-serif generic family, this could be Helvetica or Verdana, these are of course all just examples, we have a lot more font families for all our generic families. The thing is that for these fonts, both don't have any serifs. Again as the generic family indicates and that's this general attribute or characteristic these font families which are part of a specific generic family are sharing.(Refer Font1)
-
-* For cursive, as we can imagine, we have this cursive style, well probably not the most beautiful one but still, this is for example Brush Script and Mistral(Refer Font1)
-
-* we have Monospace, so we have Courier New and Lucida Bright(Refer Font1)
-
-* and for Fantasy, I didn't get any font families, as I said, it's a pretty uncommon generic family as I would say. Nevertheless, we'll also cover that throughout this module.
-
-* We have generic families which kind of define a specific core attribute and inside these generic families, we have multiple font families which share this common attribute of course but nevertheless, look different.
-
-###  Understanding the Browser Settings
-
-* I would like to show you that you can find or where you can find the generic families and the font families in your browser.
-
-* if we simply go to our preferences right here and then go down to this customize fonts menu
-
-* then we can see some interesting things actually because we can see that we have a standard font which is the font that will be applied as a standard by the browser and inside this font, we can select different font families.
-
-* These are not generic families, these are already font families. OK, so that's what we can see, that's the standard behavior,
-
-* we will see how we can change that, how we can impact that, we'll have a look at that throughout the module.
-
-* Alternative to standard font, we can also see that we have a serif font right here.This is a generic family now, for this generic family,we can now also select a font family.(Refer : font2) Important, his list right here also includes font families which are not part of the sans-serif generic family, for example Verdana, we saw that this is actually a sans-serif font. However, you can select the font you want to have for your serif font family right here.
-
-* We've got the same thing for sans-serif right here and we got the fixed width font generic family which is basically the Monospace family we saw on the slide. However, this is what we can see in the browser, so we have these different fonts available right here.
-
-* but the actual question is now what will actually be displayed, which font will be used by the browser?
-
-* Because we can see that we can select generic families right here, we can also select font families, we have the standard font, so what's the font that will be displayed in the end.
-
-* Let's have a look at that because we have multiple options to have an impact on that because the starting point is of course this one, we are basically browsing onto our website and want to display it.
-
-* Now the default behavior, the one right here is basically defined by the browser, that's what we saw, this is this standard font and what I mean by default behavior?
-
-* Well the default behavior simply means that we didn't specify any kind of font family in our CSS code because with that, the browser will simply choose the standard font that we applied and use the font family that is selected in the browser, that's the default behavior that we have.
-
-* Now one alternative we have is this one, we can define a generic family in our CSS code right here. With that, we could use one of the other options we saw because we had this standard font, this was option one but then we could also see that we could choose different font families for the different generic families in the browser settings and with that, we could tell the browser to please choose a specific generic family, sans-serif for example and then select the font family that was chosen in the browser settings,that's the second option we have. (Refer : font3)
-
-* The third option will be that we specify a font family, in contrast to that, this will not be influenced directly by the browser settings because in the browser settings, we have different font families available but we could also select a font family in our CSS code which is not available by default in the browsers of our users.(Refer : font3)
-
-* Because of that, we have three different options again, where to retrieve these font families from. (Refer : font3)
-
-* The first option would be this one, the font family we specify in the CSS code is saved locally on the user's computer.(Refer : font3)
-
-* Now as you can already imagine, this can lead to a lot of problems because the user's computer is a local computer and therefore, we cannot control which font families are installed, which ones are not, so the chances are quite high that our website, at least the fonts in our website will look different for a lot of users.We'll have a look at that though and see how we can implement some fallbacks to ensure that we can at least specify a generic family to make sure that the page looks at least kind of what it was intended to. So that's the first option, not the best one probably, (Refer : font3)
-
-* then we have the second option, we can use web fontss and this is what we actually do in our project here because as we saw, we import our fonts that we used on the website from Google fonts with a so-called web font,so basically, we retrieve the font from a third party. We did that already, nevertheless we'll also have a closer look at it in this module.(Refer : font3)
-
-* And then we have a third option, the third option simply means that we retrieve the fonts that we want to apply, the font family from a server and this could be for example our own server, so the server where our website is hosted.Therefore, we again have the control of the font families and make sure that the user can display these families, nevertheless if these are available in the browser or if these are saved to the computer and with that, we can ensure that the website looks as intended for most of our users.(Refer : font3)
-
-### Using the Default Font Families
-
-* So we understood that we have different ways to add different font families or generic families to our website.
-
-* In our course we imported the font family from google fonts, So basically, we use a so-called web font right now.We will also keep this web font for the entire website.
-
-* but I would like to change this default font family right here for our package info class.
-
-* In our project index.html we can see 
-
-```html
-<link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
-```
-
-* I will not delete them because Google still uses web fonts but the important thing is that this is the import we have to make sure that the fonts are available to all our users.
-
-* In shared.css we can see that 
+*  it's the modern way to change the way our elements are displayed, so it's basically another value for the display property but a really special value which allows us to add a lot more flexibility to our elements. Refer: https://css-tricks.com/snippets/css/a-guide-to-flexbox/
 
 ```css
-body {
-  font-family: "Montserrat", sans-serif;
-  margin: 0;
-}
-```
-
-* So we already imported "Montserrat" in index.html we used the same in our body css.Now with that, we made sure that our entire website basically uses this font family 
-
-* As we already discussed the first way to display fonts is the default way, so basically let the browser decide what font family it should display.
-
-* Now what will happen if i comment this font family ??
-
-```css
-body {
-  /* font-family: "Montserrat", sans-serif; */
-  margin: 0;
-}
-```
-
-* if we now reload the page, we can see some interesting things. The first thing we see is that our nav bar kind of crashed.(Refer : font4)
-
-* What's the reason for that? Well the font family that now is supplied by default, we will in a few seconds find out which one this is, simply needs more space, more width than the family we had before, our web font.
-
-* If we change our dirty fix for nav this will work
-
-```css
-.main-nav {
+.main-header > div {
   display: inline-block;
-  text-align: right;
-  /* width: calc(100% - 44px); */
-  width: calc(100% - 70px);
   vertical-align: middle;
 }
 ```
-* this is our dirty fix for the moment, so we will keep it to 44 for now because the nav bar is not our actual focus.I just wanted to show you that we could fix that easily but it's not the purpose of this module now.
 
-* now we can go back to our actual problem. And the actual problem is not a real problem because we actually simply commented out the font family, 
-so at the moment we don't have any font family applied in our code and still we saw that the font changed.(Refer font4). This is new font this is not our actual website font.
-
-* Let see what is this font, you can't find this in our style tab of font family,  but if we go to our computed tab and then scroll down a bit, right here to our font family, this one, you can see that Verdana is now applied.
-
-* And if you remember when we had a look at the browser settings, Verdana was somewhere there.
-
-* Let's have a look and go back to the settings, right here and indeed, our standard font is now Verdana. This means if I change this to Times New Roman for example and go back to our website, you can see that the font family now changed to Times New Roman but I think this is really ugly, so let's switch it back to Verdana maybe, like that.
-
-* So as you can see, if we don't add the font family property to our code on the website, then the default browser setting is the one that defines the font family
-
-* The disadvantage of this approach is of course that as I said in the beginning on the slide, the font family then totally depends on the user settings and with that, you have no control at all of the font family that will be displayed on your website.
-
-### Understanding the "font-family" Syntax
-
-* our font-family declaration right here, the values follow a certain pattern obviously
+* have a look at this display inline block part, this is something we could change with flexbox because inline block is a nice way to change the position of elements but flexbox can make things like that easier.
 
 ```css
-body {
-  font-family: "Montserrat", sans-serif;
-  margin: 0;
+.main-nav {
+    display: inline-block;
+    text-align: right;
+    width: calc(100% - 44px);
+    vertical-align: middle;
+  }
 ```
+* we have our calculation right here with the pixels in it, well I'm not sure if that's the best way to create your website because wouldn't it be great to make sure our navigation items, so these items right here, are aligned the way they are right now but without having this strange calculation right there which is not nice to change and which definitely is not the best way to write our code right here.
 
-* because the first value right here, this one, is the font family that we want to address.
+* For example, if we scroll down here to testimonial info, we have the display inline block repeated right here and right there and that's also part of the code that I would like to get rid of. 
 
-* Please note the capital letter right here and the quotation marks, the quotation marks are actually not necessary all the time right here, you have to add them though if your font family consists of multiple separate names and so therefore, you have whitespaces, then it's required, 
+* So our goal basically is to make the code right here leaner or better in the shared.css file, for example this one and also get rid of all our display inline block declarations or properties,
 
-* we could also delete those, like tha and if we now reload the page, we can see that it would still work.
+* So these are all the small things I would like to change, I would like to get rid of the display inline block declaration, I would like to make sure that small issues like these are changed and therefore, I would like to show you what flexbox is, how it works and how we can use it to make our code leaner and more efficient in the end and better to read and interpret.
 
-```css
-body {
-  font-family: Montserrat, sans-serif;
-  margin: 0;
-```
-* Nevertheless, you can add them all the time, it's not a problem actually.
+### Understanding Flexbox
 
-* and after this font family, we have this sans-serif right here and as we learned, sans-serif is a generic family and this already shows you the general pattern how you should write this declaration.
+* So what is flexbox actually? Well as I said, flexbox allows us to change the way our elements are displayed and using flexbox is actually quite simple
 
-* You first start with the most specific thing you have and the most specific thing you have is basically your font family. This could by the way not only be one family, this could also be two or more families,
+* because to use flexbox, we simply have to add a specific property to our element, to which element? We'll dive into that in a few seconds.
 
-* for example we could use Verdana right here, let's also add the quotation marks, like that and then add sans-serif at the end
+* This property we need is the display property, we talked about that property already, it's that display block, inline or inline block thing where we can change the behavior of our elements and if we now use the display property in connection with this value right here, the flex value, (Refer :flex-intro)
 
-```css
-body {
-  font-family: "Montserrat", "Verdana", sans-serif;
-  margin: 0;
-```
+* then we create the following:
 
-* What will simply happen then is your browser will look for Monserrat, in case you can't find it, you will apply the Monserrat font family. If they can't find it, he will jump to the next font family, Verdana. If it cannot find this one, he will jump through the next one and so on and so on and in the end, he will simply fallback to this fallback, the generic family and then simply apply a font family out of the generic family you defined.
+* we create a flex container and that's the first important thing we have to understand. If we apply display flex to an element, this element will be turned into a so-called flex container.
 
-* Now what I simply mean by that is if we would fallback to sans-serif, the browser would select Helvetica in our case because we specified in the browser settings that if the generic family that should be displayed based on their code is sans-serif, then use the Helvetica font family please.
+* Now as the name indicates, a container has to contain things and that's exactly what happens right here because inside our flex container, we should have other nested elements and these elements are the so-called children and these children are also named flex items.
 
-* that's actually the core idea of the syntax of this font family property. You would define the property of course, then you define the first font family you would like to have, then the second one, as many as you would prefer actually
+* So that's the first thing we have to keep in mind, we have an element, normally a parent element with the display flex declaration, this parent will become the so-called flex container after we applied this declaration and all elements inside this container are children of the parent of course and at the same time, flex items. Now that's the first step,
 
-* but in the end, you'll specify a generic family because with that, you always make sure that the text on the website can be displayed and the text that should be displayed should at least be part of a generic family of your choice. 
+* the second step is that once we turned our elements into such a flexbox construct as I would call it, we can apply different properties to both, our parent, ie our flex container and our children, ie our flex items.
 
-* What we didn't have a look so far at until this point is the difference between having the font family saved on the user's computer as a web font or retrieved from a server.
+* For the parent, we can apply the flex-flow property, the justify-content property, the align-content property and the align-items property, we'll of course dive into all these properties throughout this module.
 
-###  Working with Locally Saved Fonts
+* The same thing is true for our flex items, for these, we can also apply properties. The properties right here we have are order, flex and align-self,
 
-* So let's have a look at this first method now, at this first source for our font families, the font family which is saved locally on our user's computer.
+* The problem now is that this is a very abstract construct now for you and at the moment, it's probably not clear how we can use the combination of this flex container and these flex items and these properties to change the way our elements are displayed.
 
-* Because you might say that so far throughout this module, we didn't have a problem with the font families at all because basically, our browsers supported all of the font families we used. 
+* Therefore, we will forget about the flex items for the first part of this module and really focus onto the actual flex container and the corresponding properties because with that, you will quickly understand the core concept of flexbox and then we will be able to dive deeper into the flex items.
 
-* But the problem or it's not a problem but the thing we have at the moment is that in Chrome right here, we have a lot of default font families which are supported and that's awesome.
+### Creating a Flex Container
 
-* but what's not so awesome is that we cannot control the browser our website visitors are using. Therefore, in case your website visitor doesn't use Chrome, with the approaches we use so far except for the web font of course but with the general approach of simply adding a font family to our code, chances are that not all our users will be able to receive the font and therefore, the fallback will be applied.
-
-* because the problem is, if you google for CSS font stack right here and then click onto this link (https://www.cssfontstack.com), then you can see that the so-called website fonts only include a limited amount of font families because these are the generic families right here and the corresponding font families that are installed locally on your machine.
-
-* So just by using a Windows machine, chances are quite high that Arial Black is installed on your computer by default,the same thing is true if you're using a Mac.and if you go down right here for example to serif, you can see that Bodoni, this one right here is not installed at all on the Mac.
-
-* Vice-versa, we see for this Didot, I don't know how it's pronounced to be honest, that this font family is not installed at all on Windows machines but on many Macs and this is what you have to keep in mind.
-
-* so just by adding this font family property without adding a web font like we did right here, so if we would delete that and just add the font family like that, the only two things we would rely on is that either our user has this font family installed on his machine, maybe by default or afterwards or that our browser knows this font family.
-
-* The problem with these approaches is of course, again we cannot control neither of that two factors because we cannot force our users to install a font family and we cannot force our users to use a specific browser.
-
-* So one option you always have of course if you want to make sure that you will reach a large audience with your font family is to go to cssfontstack.com and check for the font families available right here because with that, you can of course make sure that a lot of your users should have this font family installed on their machines and therefore, should be able to see your website the way you intend it to look like.
-
-* But of course that's not the best approach because we don't want to be limited by the default font families installed on the machine.
-
-* Therefore, we used this web font right here which we imported from Google fonts
+* Refer flexbox theory folder
 
 ```html
-<link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+<div class="flex-container">
+    <div class="item-1">div</div>
+    <div class="item-2">w=250px</div>
+    <div class="item-3">h=250px</div>
+    <div class="item-4">w/h=300px</div>
+    <div class="item-5">w=350px</div>
+    <div class="item-6">w=350px</div>
+</div>
 ```
+* we have our div right here, the div with the class flex container,this is basically this wrapping element and inside this container,
 
-### Working with Google Fonts
+* we have six different divs. Each div has an own class, so from item 1 to item 6, so we basically have six so-called flex items in the end and each item has different content. (Refer: flex1). we have div with different height and width.
 
-* So let's have a look at web fonts. As I said, we use these already right here on our website but I think it makes sense to have a look at it step-by-step now. How can we first find such a web font?
+* You will see throughout this module why this information is important, therefore I added it right here. 
 
-* Well, one good source is Google fonts. For that, you can simply for, well Google fonts right here and if you then click onto the link (https://fonts.google.com/), you can find a huge list of a lot of different font families available right here.
+* So what does it take now to create such a flex container?
 
-* Lets add roboto font style in package/index.html 
-
-```html
-<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-```
+* we simply have to add our display property as flex
 
 ```css
-.package__info {
-    padding: 1rem;
-    border: 1px solid #0e4f1f;
-    font-size: 1.2rem;
-    color: #0e4f1f;
+.flex-container {
     background: white;
-    font-family: 'Roboto', sans-serif;
+    padding: 10px;
+    border: 5px solid black;
+    display: flex;
 }
 ```
+* After added flex if we reload (Refer : flex2)
 
-* If we do that now and go back to our website and reload the page right here, you can see that the font family changed (Refer : font5)
+* The first thing and the most obvious one is that our elements are now displayed in one row, so not according to the typical block level element behavior that we saw so far
 
-* and the really cool thing now is that if we go to our settings right here again in Chrome and have a look at the font families available, you can see that Roboto right here is not available and this shows us that we were now able to import a totally new font family from Google fonts and with the way we did it right here, this would also work for other users.
+* and we also see that the elements, "except" for the third one, use the entire height available in the parent element. The height is then actually defined by this fourth element right here, as you can see with the 300 pixels height and all the other elements follow this value because we didn't define a height for the rest except for this fourth item.
 
-* It doesn't depend on the browser you're using or on the fonts you have installed on your machine, it simply depends on the availability of these fonts at Google fonts.
+* Another thing we see is that if we decrease the width right here, we can see that the width of the elements decreases, as you can see, up to here, up to the point where the content, this one right here or that one needs the space inside the element.(Refer : flex3)
 
-* So this is one way, how we can import web fonts to our website, but the problem with that way is, and that's what we just saw, we have to add it to each HTML file that we have because otherwise, the font is not available on the page we want to have it and this can definitely cause errors,
+* If we increase the width, we can see that the parent element increases and basically behaves like a normal block level element.(refer : flex4)
 
-* so there might be a better alternative, how to add such web fonts.
+* So that's the first thing we did and very important, with applying display flex, we also turned our flex container class right here into such. So this is now a flex container and all the items inside this container, so the six items are now flex items.This automatically happened just because we added display flex to the parent.
 
-* The good thing is if we go back to Google fonts right here, we can see that the alternative we have is the @import method right here. This allows us to import the font in the CSS file right here by using this command right here,
-
-```css
-/* we could add this import in our shared css file*/
-@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
-```
-* because we know that each index.html file as we can see it right here refers to the shared.css file,
-
-* Now with this import we no need html tag for this google font we could remove that.
-
-* if we did everything correctly, then well we shouldn't see a change. So let's reload and as you can see, it's still working and that's why I personally prefer this import method because it helps us to avoid mistakes and easier to understand.
-
-### Understanding Font Faces & "font-style"
-
-* font weight- what does this mean?
-
-* Let us go back to our website and then let us add font weight.
+* Lets change flex to inline-flex and see how this works. !!!! not inline block but inline flex.
 
 ```css
-.package__info {
-    padding: 1rem;
-    border: 1px solid #0e4f1f;
-    font-size: 1.2rem;
-    color: #0e4f1f;
+.flex-container {
     background: white;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 400;
+    padding: 10px;
+    border: 5px solid black;
+    display: inline-flex;
 }
 ```
 
-* you basically have numbers from 100 to 900, where a bigger number is equal to a bolder or fatter weight of the font, and then you have bolder for example which basically means that it is bolder than the inherited font. We already talked about inheritance throughout this course, therefore I will not dive deeper into that,
+* If we apply that and reload the page, you can immediately see what happens right now because in contrast to the display flex declaration, we now basically cannot change the size of our elements (its not rezising if we increase or decrease) because the size is now simply predefined by the actual width that was defined and also the parent element doesn't change its size anymore, it just uses the space that is required to display all the content, so basically, it behaves like an inline element. (Refer : flex5).
 
-* what I will dive deeper into are these numbers because basically, the numbers as I said allow you to specify the weight of your font and a number of 400 is the equivalent you could say to a normal font weight, so you could also write normal, right here like that,
+* What is still interesting though is that the height.
 
-* this would be then a number of 400 and a number of 700 would be bold, so the one down here. Now what happens if we add something like 900 here for example? Well let's see, if we go back to our page right here and reload it
+* is still used according to the definition of the fourth item right here. We'll dive deeper into the reasons for that later throughout this module but the important thing to keep in mind for now is that we basically can apply display : flex or display : inline-flex to our parent element, this will then become the flex container and the elements inside this flex container will become the flex items.
 
-* you can see that nothing is happening and this is actually strange, right because if we go back to Google fonts right here, you can see that 900, this right here is actually defined.
-
-* The problem is that we only imported so far the regular font face, so this regular 400 font face. So what we did is basically we have Roboto 400 right here, if you want to use 900 you should add 900 also in that google font then you could see 
+* However, let's change back the value to flex for now because we will probably use that throughout this module.So if we reload now, we can see that the block level behavior is back again 
 
 ```css
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,900&display=swap');
-```
-* Now this added both 400(default) and 900 as font weight.with that, we now told our code that we want to import the Roboto top font family with the 400 and
-900 font face, that's important.
-
-* Now we can use font-weight 900
-
-* if we need font style of italic 
-
-```css
-@import url('https://fonts.googleapis.com/css?family=Roboto:100i,400,900&display=swap');
-```
-* Now we could use "font-style: 'italic'"
-
-* in case if i remove i from "100i"
-
-```css
-@import url('https://fonts.googleapis.com/css?family=Roboto:100,400,900&display=swap');
-```
-
-* If I now would go back and reload the page, you can see the styling changes but it only barely changes and the reason for that is that the browser is able to kind of add an italic style to our website, even though we didn't specify this individual font face
-
-### Importing our Custom Fonts
-
-* So the last option we have is adding our own fonts to our website.
-
-* We can download any font our custom font, Now to import this onto our website, we simply have to go to our CSS file.
-
-* As I will only use it in our packages.css file, I will add it right here on top of the page.
-
-```css
-@font-face {
-    font-family: "AnonymousPro";
-    src: url("anonymousPro-Regular.ttf") format("truetype"); /* URL should match */
-    /*ttf- true type font*/
-}
-
-/* for anonymousPro-Bold you need to import seperately */
-@font-face {
-    font-family: "AnonymousPro"; /* bold version of AnonymousPro */
-    src: url("anonymousPro-Bold.ttf") format("truetype"); /* URL should match */
-    font-weight: 700; /* if we didn't specify font-weight Bold font will be applied whatever your font-weight you apply, since this is (bold) loaded after Regular, so it will take bold as updated font not regular to diffrentiate this as seprate you need to specify font-weight*/
-}
-```
-* if we didn't specify font-weight Bold font will be applied whatever your font-weight you apply, since this is (bold) loaded after Regular, so it will take bold as updated font not regular to diffrentiate this as seprate you need to specify font-weight.
-
-* After this included we could use AnonymousPro as font family
-
-```css
-.package__info {
-    padding: 1rem;
-    border: 1px solid #0e4f1f;
-    font-size: 1.2rem;
-    color: #0e4f1f;
+.flex-container {
     background: white;
-    font-family: 'AnonymousPro', sans-serif;
-    font-weight: 700;
-}
-```
-* reload the page, you can see that we now use our imported custom font that we used. And this is really cool actually.
-
-### Understanding Font Formats
-
-* Other than ttf, we have "woff - web open font format"
-
-* if you read the description of "woff", this is a compressed true type or open type font and the first thing that's really good about that is, well if it's a compressed format, it's smaller and therefore it makes our website faster.However we can see that the woff format is compressed, which is great and that the browser support is also quite awesome.
-
-* In addition to the "woff format", we also have "woff2" right here, As you can see, this provides an even better compression but we can see
-that browsers support for the IE is not there at all and also Safari support is limited.
-
-* Incase if you all these format of font files just add it like below
-
-```css
-@font-face {
-    font-family: "AnonymousPro";
-    src:  url("anonymousPro-Regular.woff2") format("woff2"),
-          url("anonymousPro-Regular.woff") format("woff"),
-          url("anonymousPro-Regular.ttf") format("truetype");
+    padding: 10px;
+    border: 5px solid black;
+    display: flex;
 }
 ```
 
-* and with these formats, you're actually quite safe when it comes to your custom fonts. There are also other formats to be honest like eot (embedded open type font) well you can see what I mean. We don't have any browser support at all,(https://caniuse.com/)
+###  Using "flex-direction" & "flex-wrap"
 
-### Diving into Font Properties
+* So which properties did we apply automatically? Well we applied two properties:
 
-* So let's dive into some font properties now that we have applied them and see which impact they have onto our fonts.
+* the first one is flex direction, that's the first property we had and the default value for this property is "row".
 
-* For that, I will now go to the customers page maybe, right here, so that we can see the font on a different page
+* The second property we applied is flex wrap, this one right here with an initial value of no wrap, that's basically what happened automatically just by applying display flex right here.
 
-```css
-.testimonial__text {
-    margin: 0.2rem;
-    /* font-size: 40px; */
-    /* font-variant: small-caps; */
-  /* font-strecth: ultra-condensed; */
-}
-```
-* Another property that has a direct impact onto the way our text is displayed is this one, font variant, if we reload the page, you can see that basically the height of our font did not change but all our small characters that we had before were now changed to capital ones.So that's also just a property that basically impacts the style or the look of the font we have right
-
-* Another property we have is font stretch, this one right here.There you can see that you can select different stretch levels, so which define the way our font is displayed, and if I would now apply ultra condensed for example right here and reload our page, you can see that the font looks exactly the same way it looked before.
-
-* The problem with that font stretch property is that it is supported by browsers nowadays, so that's not the problem but each stretching level has to be part of a separate font face and as this is not true for a lot of fonts, we will not dive deep into it.But as I said, the browser support is good as we can see it also also down here but the problem is that the font availability is not the best.
-
-### Adding "letter-spacing"
-
-* For the letter spacing property, we have to use lengths as a value, so this can be either pixels or rem, I will use pixels now because I think it's easier to see like that, so let's say we use 5 pixels as letter spacing.
+* If we change default behaviour of no-wrap to wrap
 
 ```css
-.testimonial__text {
-    margin: 0.2rem;
-    letter-spacing: 5px;
+.flex-container {
+    background: white;
+    padding: 10px;
+    border: 5px solid black;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap /* here we are changing to wrap from default behaviour*/
 }
 ```
 
-* A more interesting property is the next one, this is whitespace,
+*  If we now decrease the window size..
 
-* For whitespace, we have no lengths but we have properties like normal, like that.
+* Actually you can see two interesting things by the way because the first thing is, as soon as the element would have to reduce its width below the defined value, so in this case 350 pixels for example, the element is wrapped and jumps into the second row.(Refer : flex6)
 
-* If we apply normal, well as you can imagine, this will show us the text in its initial status but with this whitespace,
+* The second interesting thing is that the height of the element also changed now because in the first row, it simply adapted to the height we had defined right here (fourth div). So this was the maximum height, therefore all the other elements after fourth div adapted to that.
 
-```css
-.testimonial__text {
-    margin: 0.2rem;
-    white-space: nowrap;
-}
-```
-* Now if we change this from normal to no wrap, like that, then we can see as the name already indicates, that no wrapping takes place.
+* Now that the element is in the second row or the new row, it doesn't behave like that anymore and simply uses the height it needs to simply display the content.
 
-* This means the entire text in our element will be displayed in one line and the width of our window doesn't have any impact on that, as the name says, this is no wrap.
+* If we reduce that more further, you can see that all elements are wrapped one after another, like that and in the end, we have displayed it all like this in one column.(Refer : flex7)
+
+* If you would further decrease it, you could see that the behavior again follows the one we saw in the beginning, that the width would be reduced up to the point where the space is needed by the actual content.
+
+* we have another value "wrap-reverse"
 
 ```css
-.testimonial__text {
-    margin: 0.2rem;
-    white-space: pre;
-}
-```
-
-* If we change this to pre, like that, then we cannot see a difference right here, but if we have text in paragraph(enter key) you can see we have this paragraph and we see this indention that we have right here. This is all automatically created by that value,
-
-```css
-.testimonial__text {
-    margin: 0.2rem;
-    white-space: pre-wrap;
+.flex-container {
+    background: white;
+    padding: 10px;
+    border: 5px solid black;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap-reverse;
 }
 ```
 
-* we also have another one which would be pre-wrap, this one right here. If we use this one and we load the page, then you can see that we have a line break right here but that's simply due to the reason that the space is not enough right here but as soon as we increase the size again, we can see that we have our project in one line and after our project where we added a paragraph, we start in a new line and then the next break of course is right here because these words right here don't fit into one line.
+* So if we would do this now and reload the page, like that, then you can see that the order simply was mixed up.(Refer : flex8), Now the div, so the first item right here is at the bottom end the item 6 is at the top
 
-* The last value would have is pre-line,
+* and if I now increase the width again, you can see that the behavior will turn back to the behavior we had in the beginning (1-6) 
+
+* but that's important, the height as you can see it right here is now not displayed from the top to the bottom but now it starts right here and simply uses the height as it is defined right here for 250 pixels up to this point. (Refer : flex9)
+
+* So that's what we can change with this flex wrap property, it basically defines if our items should wrap and how they should wrap 
+
+* However, what about flex direction?
 
 ```css
-.testimonial__text {
-    margin: 0.2rem;
-    white-space: pre-line;
+.flex-container {
+    background: white;
+    padding: 10px;
+    border: 5px solid black;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap-reverse;
 }
 ```
-* let's have a look at what happens right then. If we use pre-line right here, like this and we load the page, now you can see that the lines are filled whenever possible because before, we saw that this line right here was empty
+ * That's also a really interesting value because if we change just from row to column right here, like
 
-### Changing the Line Height
+ * now reload the page, then you can see a lot of changes because actually, our elements now behave the way we would our block level elements expect to behave.(Refer : flex10)
 
-* So what is the line height property? 
+ * We have the div right here for example which has no width specified, so it simply uses the entire space available right here, the same thing is true for the third div right here but our other divs of course which have a specified width only are displayed up to the point that is defined by this width,
 
-```css
-line-height:2 ;
-```
- * if we change that to two, then height should be 38. because we take our actual font size which is the 19.2 pixels calculated based on the 1.2rem and 19.2 pixels times the two (19.2 * 2) we added right here is 38.4 and then the decimals are not considered, therefore we have 38 pixels of line height right here.
+ * If I now decrease the width, can you see it? The elements are not displayed below that value, however the other elements,for example this one right here which don't have any width defined now reduced the size even below the point that is actually required by the content
 
- * By default, the line height depends on the font family we are using. If we change that behavior and add the line property with a value of two for example, then this will always refer to the font size and as the font size, in our case at least, is the same for all font families, we have the same line height no matter which font family we are using.
- 
- * Now of course we are not only limited to using this number, we can also use pixels like 32 pixels for example and if I now reload the page, as you can imagine,
+ *  we also have column reverse for example,
 
  ```css
-line-height:32px ;
-```
-* What's of course also possible is using percentages.
-
-* However, I would always recommend not using percentages like here but simply using the numbers like we did it before because percentages sometimes lead to an unexpected behavior when it comes to inheritance
-
-### Applying "text-decoration" & "text-shadow"
-
-* So what can we do with text decoration and text shadow?
-
-```css
-.package__info {
-    padding: 1rem;
-    border: 1px solid #0e4f1f;
-    font-size: 1.2rem;
-    color: #0e4f1f;
+.flex-container {
     background: white;
-    text-decoration: underline;
+    padding: 10px;
+    border: 5px solid black;
+    display: flex;
+    flex-direction: column-reverse;
+    flex-wrap: wrap-reverse;
 }
 ```
-*  we can see that, well as expected probably, the text is underlined.If we have underline, we probably also have overline
+
+* partially kind of the way we saw it for the flex wrap. If I now reload, you can see that the items are now displayed from the bottom, right here, to the top but in the reverse order
+
+* Now as you can imagine, if we have column reverse, we also have row reverse right here like that
 
 ```css
-.package__info {
-    padding: 1rem;
-    border: 1px solid #0e4f1f;
-    font-size: 1.2rem;
-    color: #0e4f1f;
+.flex-container {
     background: white;
-    text-decoration: overline;
+    padding: 10px;
+    border: 5px solid black;
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap-reverse;
 }
 ```
-* we can see that now we have an overline for our text right here.
+* and if I now go back and reload this one, then as you can probably imagine, we can see that the div starts right here, so the first item and the last item is displayed to the left.(Refer : flex11)
 
-* well we can probably also line through our text right here. Let's see if this also works,it will strike lines 
+* If I decrease the width right here, then you can see it also follows this wrapping behavior, so that in the end, this is the last item in the row which will be displayed on top then because it wraps from left to right basically.(Refer : flex12)
+
+### Understanding the Importance of Main Axis & Cross Axis
+
+* So what happened here, what did we do by applying flex direction to our parent element, to our flex container and what does this have to do with the main axis and the cross axis?
+
+* Well this is our starting point, right, we had our flex container and we applied the flex direction property with a value of row.
+
+* Now what happened then is, basically this is the default value as I said, is that our starting point for the main axis is the left top corner of our element basically or of our website !!!.
+
+* Now if the main axis goes from the top left to the top right, well then the cross axis which, that's important, always has the same starting point as the main axis goes from the top left to the bottom left corner of course.(Refer : flex13)
+
+* So that's basically the default behavior, how our flex items are displayed then. They are displayed in a row, so along the main axis and from left to right.(Refer : flex13)
+
+* Now in addition to row, we also applied another value, we applied flex direction row-reverse.(Refer : flex13)
+
+* and if we think about the way row behaves, so from the top left to the top right for the main axis, then row reverse simply behaves the other way round.It starts in the right top corner and goes to the left top corner and the cross axis starts also in the right top corner, as I said, they always have the same starting point and goes to the right bottom corner.(Refer : flex13)
+
+* That's actually the first thing we have to understand about these two axis, we have a main axis and a cross axis and depending on the value we apply to the flex direction property, the starting point and the finishing point of these two axis changes.(Refer : flex13)
+
+* Now let's go back to the code and play around with that a bit to really get a better feeling for it
+
+* With full screen the elements will move from top left to right(main axis), if you recude screen to smaller size, element will move from top to bottom(cross axis)
+
+* For row-reverse the starting point for both the axis is top right, but if I now reduce the width, as you can see it right here, the first flex item stays on top because keep in mind, the starting point is still the top right corner but all the other elements are then aligned along the cross axis, so from top to bottom right there.(Refer: flex14)
+
+* So that's what we have to understand now basically, with this flex direction, we can have an impact onto this main and cross axis and this is only flex direction row and row reverse.(Refer: flex14)
+
+* but we also had flex direction column and column reverse.(Refer: flex14)
+
+* if we again take our flex container and now apply flex direction column? Well then and that's also another important thing, the starting point is exactly the same that we had before for flex direction row, it's still the top left corner but now the main axis as you can see goes from top to bottom and the cross axis goes from left to right and that's really crucial to understand because we will need that concept throughout this module.(Refer: flex14)
+
+* The flex direction basically defines if our main axis is the row, so from left to right or right to left with row reverse or if the main axis is from top to bottom or, that's the second thing we can see right now, if we add flex direction column reverse or from bottom to top, starting from the left lower corner.(Refer: flex14)
+
+* So that's the tricky thing right here maybe but it's actually quite easy to remember. (Refer: flex14)
+
+    * If the flex direction is row, then the starting point is the top left corner and the row defines the main axis.
+    * With row reverse, the starting point is the right top corner and the main axis is of course the row. 
+    * If the flex direction is column, then the starting point is again the top left corner but the main axis now goes as the direction indicates, along the column.
+    * and if we have column reverse, then the starting point is the bottom left corner and the main axis is again the column.
+
+* if we change the flex-direction as column
 
 ```css
-.package__info {
-    padding: 1rem;
-    border: 1px solid #0e4f1f;
-    font-size: 1.2rem;
-    color: #0e4f1f;
+.flex-container {
     background: white;
-    text-decoration: line-through;
+    padding: 10px;
+    border: 5px solid black;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap-reverse;
 }
 ```
+* and reload our page right here, you can see exactly what we just saw on the slide. The main axis now starts in the top left corner and the items are aligned along the main axis.Now that's important, the main axis now goes from top to bottom.
 
-* We can of course also more specify the line we want to have, we could add dotted right here for example to create a dotted line, like this. So you can see, now we have the dotted line,
+* If I would go back now and change it to column reverse like that and reload the page again, then the starting point is the bottom left corner right here
+and as we can see, the items are again aligned along our main axis which is now this one right here.
+
+* So with that, we saw the core concept behind flex direction,it allows you to define the way our elements are displayed and really important, to also specify the main and the cross axis and the main and cross axis is a really important concept that we need to understand now because it has an impact onto other properties we can use. 
+
+* If we for example go back right here and change our flex direction to row again, like that and now go back and reload the page, we could already see that if I increase the width, that the elements, so the height of the elements, simply adjust to the largest elements, so the one with the largest height you could say and well so far, we simply accepted this behavior
+
+* but the thing is that we can change this behavior, so also the height and default behavior our elements have right here.For that, we need additional properties and we need to understand the concept of main versus cross axis.
+
+### Working with "align-items" & "justify-content"
+
+* Before we dive into this property I just talked about, I just wanted to add some information to flex direction and flex wrap.
+
+* because you could also write these two properties in a shorthand and this shorthand is called flex flow.
 
 ```css
-.package__info {
-    padding: 1rem;
-    border: 1px solid #0e4f1f;
-    font-size: 1.2rem;
-    color: #0e4f1f;
+.flex-container {
     background: white;
-    text-decoration: line-through dotted;
+    padding: 10px;
+    border: 5px solid black;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /* flex-flow: row wrap; */
 }
 ```
-* this can of course also be applied with all the other values we had, for example underline, overline, line-through..
 
-* you could also choose a color of your choice, for example red right here
+* this would basically be the shorthand for flex direction, the row and flex wrap, the wrap.
+
+* I will just stick to the separate properties because I think it's easier to read and better to learn.
+
+* However which property am I referring to now to ensure that this behavior, so that the height will always follow the maximum height defined right here?
+
+* Well, this property is align items, like that and the default value for align items 
 
 ```css
-.package__info {
-    padding: 1rem;
-    border: 1px solid #0e4f1f;
-    font-size: 1.2rem;
-    color: #0e4f1f;
+.flex-container {
     background: white;
-    text-decoration: line-through dotted red;
+    padding: 10px;
+    border: 5px solid black;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /* flex-flow: row wrap; */
+    align-items:stretch;
 }
 ```
-* Another really nice line type is also this one here, so if we change dotted for wavy. 
+* If we apply that and reload the page, you can see nothing changes, we simply have the same behavior that we had before.(refer : flex15)
+
+* If I change this value now to center, like that and reload the page again, then you can see that the height suddenly changed (refer : flex16)
 
 ```css
-.package__info {
-    padding: 1rem;
-    border: 1px solid #0e4f1f;
-    font-size: 1.2rem;
-    color: #0e4f1f;
+.flex-container {
     background: white;
-    text-decoration: underline wavy red;
+    padding: 10px;
+    border: 5px solid black;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /* flex-flow: row wrap; */
+    align-items: center;
 }
 ```
-* This will create wave kind of lines ~~~ instead of dotted
 
-* we need to apply text-decoration for both apply and remove default text decoration.
+* because with this align items property right here, we can have an impact onto the height of our elements and this is totally wrong.
+
+* I'm just saying that because this is what you could think right here once you see that but if we now apply our knowledge and this knowledge was that if we change the flex direction from row to column, that this means the main axis also changes, so let's add column right here, like that and reload the page,, then you can see that it didn't really impact the height, it simply centered our flex items along the cross axis.(Refer : flex17)
+
+* That's really important because our cross axis, right now we have flex direction column, so this means our cross axis goes from left right here to the right and as you can see right here in the center, we now centered our items.
+
+* If I change it back to row now right here, like that and reload the page, we centered our items along the cross axis, which is now from the top left corner to the bottom left corner.(Refer : flex18)
+
+* Now let me change it back to column though because I want to show you something else because if we apply another value for our align items property right here
 
 ```css
-text-decoration: none;
-```
-* So don't forget to use text decoration for both, to add such a decoration of course but also to remove a default decoration, like we did it menu.
-
-* Another property in connection with the text is the text shadow,
-
-```css
-.package__info {
-    padding: 1rem;
-    border: 1px solid #0e4f1f;
-    font-size: 1.2rem;
-    color: #0e4f1f;
+.flex-container {
     background: white;
-    text-shadow: 5px 7px; /* offset to the x-axis(5px)   offset to the y-axis(7px)*/
+    padding: 10px;
+    border: 5px solid black;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    /* flex-flow: row wrap; */
+    align-items: flex-start;
 }
 ```
+* if I reload that, the items are now centered at the beginning,(refer : flex19) 
 
-* if I reload the page, yes this looks interesting but probably not as we intend it to look.(Refer : font6)
-
-* I think we need two additional things; we need a blur radius or a blur at least to blur the actual text because it should be a shadow and not a copy of the text and then we need maybe a different color also.
+* well flex start, of our cross axis. Again, the cross axis now is from top left to the top right.We could also use flex end 
 
 ```css
-.package__info {
-    padding: 1rem;
-    border: 1px solid #0e4f1f;
-    font-size: 1.2rem;
-    color: #0e4f1f;
+.flex-container {
     background: white;
-    text-shadow: 5px 7px 2px gray; /* offset to the x-axis(5px)   offset to the y-axis(7px) blur-of-2px gray color*/
+    padding: 10px;
+    border: 5px solid black;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    /* flex-flow: row wrap; */
+    align-items: flex-end;
 }
 ```
-* With that if we reload we can see our shadow looks better(Refer : font7)
+* if reload the page now, you can see the items are now centered along the cross axis but at the end of it.(Refer : flex20)
 
-* You could also set an offset of 0 if you want to, like this and like that, right, would also not be a problem,
+* If I would change the flex direction back to row, like this right here and reload the page, then it is centered as you can see, at the end of the cross axis which now again goes from the top left corner to the bottom left corner.(Refer : flex21)
+
 
 ```css
-.package__info {
-    padding: 1rem;
-    border: 1px solid #0e4f1f;
-    font-size: 1.2rem;
-    color: #0e4f1f;
+.flex-container {
     background: white;
-    text-shadow: 0px 0px 2px gray; /* offset to the x-axis(0px)   offset to the y-axis(0px) blur-of-2px gray color*/
+    padding: 10px;
+    border: 5px solid black;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /* flex-flow: row wrap; */
+    align-items: flex-end;
 }
 ```
-### Understanding the "font" Shorthand
 
-* So how does the font shorthand work?
+* And what you can see right now of course is that now it has again an impact onto the height but keep in mind that this is only due to the fact that our cross axis now goes from the top to the bottom and that the items are aligned to the bottom now, so flex end, that's really important to keep in mind right here.(Refer : flex21)
 
-* Now for the font shorthand, we can use different values, there are values which are optional and some values are a must.Additionally, the order of the values is important, so it needs to have the right order to work correctly.
+* So with that, we saw that align items always refers to the cross axis!!!.
 
+* and now the question we might ask ourselves is, OK but what about the main axis?
+
+* Now we can of course also define the position of our items along the main axis or along the main and cross axis in combination. For that, let me first maybe increase the height of our container a bit and change align item to center 
 
 ```css
-.package__info {
-    padding: 1rem;
-    border: 1px solid #0e4f1f;
-    /* font-size: 1.2rem; */
-    color: #0e4f1f;
+.flex-container {
     background: white;
-    font: italic small-caps 700 1.2rem/2 "AnonymousPro", sans-serif ; /* font-style(optional) font-variant(optional) font-weight(optional) font-size(must)/line-height(optional) font-family(must) */
-    /* font size and font family must otherwise this shorthand font won't work*/
+    padding: 10px;
+    border: 5px solid black;
+    height: 800px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
 }
 ```
-* that's important has to be positioned ahead of the font size.
+* if we reload,  we have the cross axis from top to bottom, so the items are centered right here (Refer : flex22), and as you can see, they are kind of starting to the left, to the beginning or at the beginning of the main axis,
 
-* The important thing is that the font variant right here, this one and the font weight are positioned ahead of the actual font size, that's really important to keep in mind.
-
-* that's actually the first purpose of this font shorthand. You can combine all these different properties and corresponding values, like that.
-
-* As I said, keep in mind to start with these three properties in case you have them, then continue with the font size in combination with the line height and then add the font family always as the last property or value right here in the shorthand.
-
-* Another way to use this form shorthand is to refer to system fonts, now what does that mean?
-
-* These system fonts or system font values simply refer to default font families which are applied to different parts of your operating system,
-
-* this could be fonts which are used in menus for message boxes or for status bars for example.
-
-* Now talking about menus, if I now add menu right here, like that and reload the page, you can see that the font change to a font that is used for menus on the Mac(Refer : font8)
+* If I now add another property which is called justify content,
 
 ```css
-.package__info {
-    padding: 1rem;
-    border: 1px solid #0e4f1f;
-    /* font-size: 1.2rem; */
-    color: #0e4f1f;
+.flex-container {
     background: white;
-    font: menu;
+    padding: 10px;
+    border: 5px solid black;
+    height: 800px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify:content;
 }
 ```
-*  Another value would for example be a status bar 
+* if I now would also apply a value of center to it, like that and reload the page, then you can see that the items are now both centered along the cross axis because of align items and at the same time, centered along the main axis because of justify content.(Refer : flex23)
+
+* If we would now change the flex direction to column again
 
 ```css
-.package__info {
-    padding: 1rem;
-    border: 1px solid #0e4f1f;
-    /* font-size: 1.2rem; */
-    color: #0e4f1f;
+.flex-container {
     background: white;
-    font: status-bar;
+    padding: 10px;
+    border: 5px solid black;
+    height: 800px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify:content;
 }
 ```
-* So that's the second option we have when using this font shorthand, it's either a shorthand as I showed you previously or you can also refer to such default system fonts.
+*  and therefore, kind of switch the main axis and cross axis, like that, then you can see this behavior right here (Refer : flex24) because basically the space we have is not enough for our flex container.
 
-
-### Loading Performance & "font-display"
-
-* So what is the font display property and how does it impact the loading performance of our fonts?
-
-* And that's important, by our fonts, I'm referring to our custom fonts that we imported by using @font-face. Keep that in mind,font display only works in connection with that.
-
-* However, font display is a property as you can imagine and for this property, we can apply different values which impact the loading behavior of our custom fonts.
-
-* (Refer: font9)The values we can have are swap, block, fallback, optional or if we don't set anything, then it will be set to a value of auto by default, Auto simply means that the browser our visitor is using will automatically choose a value of his choice.
-
-* So what do these values mean now? Well, let's have a look.
-
-* We basically have two different situations while the loading process of the font takes place. This is the so-called block period,this one right here 
-
-* and the swap period, that one. Now what do these mean and how are they different for the different values that we can apply? 
-
-* For the swap value, we don't have any kind of block period.
-
-* Now what does this mean, block period and why don't we have a block period right here for this swap value?
-
-* Well to understand the block period, imagine the following situation: our user is visiting our website so the content has to load, now as the fonts are not displayed immediately, we could have such a block period. In this block period, the space where our text would be displayed would be reserved with an invisible fallback font face and that's important.
-
-* The font face will not be visible at the moment but the space for it would be reserved, this would be a block period,
-
-* so we basically would have the styling or the general structure of all our websites visible, so a box which would contain text already has almost the correct height and is visible but no text would be displayed because the font is an invisible fallback, that will be a block period.
-
-* Now if we don't have such a block period which is the case for the swap, the fallback right here would be immediately visible, this means once our users browses our website, boom, the fallback will be there.
-
-* After that, we have a swap period and the swap period as the name already indicates, simply is the period where the browser has the ability to change or to swap the fallback font style that was loaded with the actual fonts style that we have, for the swap value, this period is infinite.
-
-* This simply means no matter how long it takes, if our browser manages to load our custom font that we want to display, it will swap it with the fallback, if it cannot change it, the fallback will just stay there.So that's the first value, that's swap,
-
-* now what about block now?
-
-* Well for block, we have a short block period, this means this invisible font is loaded, so there is no text displayed but we have a placeholder that is reserving the space and after that, the behavior actually follows the swap value. We load the fallback and once we can load it, the browser will change the fallback with the custom font that we created.
-
-* The third value is the fallback, the fallback case a very short block period, so we have this invisible font family displayed but only for a really minimum amount of time, then we have the fallback and then now it gets interesting, we only have a short swap period. So there is only a short window of time where the browser has the chance to load our custom font right here and to change it with our fallback.
-
-* If the browser is able to do that within this swap period, this short swap period, he can change it with the custom font otherwise, the fallback will be displayed as long as our site is displayed for the visitor.So that's the difference.
-
-* For the fallback, there was only a short opportunity to change the fallback with the custom font, for swap and block, the loading of the custom font or attempt to load the custom font lasts forever basically, as long as the user is on our website.
-
-*  Now optional is the last value that we have, for optional, we also have a very short block period and then this thing right here, then we don't have a swap period because the optional value simply allows the browser to choose what you should do and this basically depends on the internet connection speed.
-
-* if the browser decides that our connection is good, he might decide to immediately load the custom font.
-
-* If we have a worse connection which is not fast enough, the browser might decide to use the fallback and therefore, not load our custom font.
-
-* This decision cannot be reversed, of course if we reload the page, it can but as soon we stay on the website as a user, we will only see the fallback for example if the internet connection is not good enough.
-
-* Now the last value, auto, lets the browser make the entire decision. At the moment, most browsers choose block then, so if you don't set a font display, auto be applied and then it will use block, the one we saw right here as a second option.
-
-* Now the problem with this font display and this performance topic is that the fonts we are using right here load really fast, so to be honest.
-
-* How to use this ?
+* So if I increased height a bit more maybe, let's say to 1300, something like that, let's see, yes now it's sufficient,(Refer : flex25)
 
 ```css
-@font-face {
-    font-family: "AnonymousPro";
-    src:  url("anonymousPro-Regular.woff2") format("woff2"),
-          url("anonymousPro-Regular.woff") format("woff"),
-          url("anonymousPro-Regular.ttf") format("truetype");
-    font-display: fallback;
-    /* font-display: block; */
-     /* font-display: swap; */
-    /* font-display: optional; */
+.flex-container {
+    background: white;
+    padding: 10px;
+    border: 5px solid black;
+    height: 1300px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify:content;
 }
 ```
-* but the downside is this font-display not having better browser compatibility.
 
-* Dive Deeper into Selected Topics
+* So you can see now basically that we now have the cross axis from left to right, right here which is specified by align items and we have the main axis now from top to bottom, which is specified by justify content.
 
-Web Safe Fonts: https://www.cssfontstack.com/
-Google Fonts: https://fonts.google.com/
-The "line-height" property: https://developer.mozilla.org/en-US/docs/Web/CSS/line-height
-Refer : font.pdf
+* So if I say justify content flex end right here once again.
+
+```css
+.flex-container {
+    background: white;
+    padding: 10px;
+    border: 5px solid black;
+    height: 1300px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify: flex-end;
+}
+```
+
+* reload the page, you can see that the items now start at the end of the main axis,(Refer : flex26)
+
+* and if I would now change align items to flex start 
+
+```css
+.flex-container {
+    background: white;
+    padding: 10px;
+    border: 5px solid black;
+    height: 1300px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify: flex-end;
+}
+```
+
+* If you reload you can see that the items are not displayed at the beginning of the cross axis which is from left to right now, as we have flex direction column, that's important to keep in mind and our main axis goes from top to bottom, here we have flex end for justify content right here.(Refer : flex26)
+
+* Lets center 
+
+```css
+.flex-container {
+    background: white;
+    padding: 10px;
+    border: 5px solid black;
+    height: 1300px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify: center;
+}
+```
+
+* So align items, justify content, main axis, cross axis, oh my God, that's a bit too much.It's actually not because let's just summarize that in easy words now
+
+* because what we basically did is we applied a flex direction of row,
+    * We basically had a main axis going from the top left corner to the top right corner,
+    * the cross axis went from the top left to the bottom left,
+    * Now then we added justify content as a property
+    * and we added align items as a property
+    * In case of flex direction row, justify content simply defines the positioning of our flex elements along the main axis. 
+    * Align items simply defines the positioning along the cross axis of our elements,
+
+* so in combination of justify content, align items and flex direction, we kind of have a lot of control about our items (Refer: flex28), 
+
+* then we applied flex direction column. With that, We change basically the main axis of our flex container 
+    * because now, the cross axis takes over the place of the initial main axis
+    * and with that, the main axis goes from the top left corner to the bottom left corner. 
+    * From a justify content and the align items perspective,
+    * we could also say that these two switched their positions 
+    * because align items now simply defines the positioning of the elements along the cross axis which is now basically along the row you could say 
+    * and justify content defines the element position along the main axis, which is now the column, just remember that.
+
+* So in the end, you can actually easily memorize that by saying that justify content refers to the main axis and the main axis depends on the flex direction and the align items refers to the cross axis,that's it actually.(Refer : flex29)
+
+* But still we have lot of other values for align-items and justify-content. Please refer MDN flexbox for deep dive
+
+* Now I will not dive into all of these values because to be honest, I think it's important to understand the basic concept but then you can play around with the values right here
+
+* but one interesting value I would like to show you though is this one right here, align items baseline and we change the flex direction back to row, then
+reload the page, then you can see something interesting.
+
+```css
+.flex-container {
+    background: white;
+    padding: 10px;
+    border: 5px solid black;
+    height: 1300px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify: center;
+}
+```
+
+* The items are now no longer aligned right here to the top for example of the boxes but they are aligned to the baseline of the actual content, can you see it?(Refer : flex30). This right here is the bottom of the x and that's the same position that the h=250px right here has.So that's the align items baseline declaration. we can also use for example.
+
+### And What About "align-content"?
+
+* So time to have a look at the last property in connection with the flex container and this property is called align content,so basically, a combination of align items and justify content.
+
+```css
+.flex-container {
+    background: white;
+    padding: 10px;
+    border: 5px solid black;
+    height: 1300px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify: center;
+    align-content: center;
+}
+```
+* If we do that and reload our page, nothing changed, but if we now decrease the size, can you see the difference? (Refer : flex31), Can you see the difference? Align content allows us to align our items along the cross axis.
+
+* As for the other properties, we have different values available for align content, 
+
+* So this is center, with that we centered our items but we can also add something like flex start once again, like this, 
+
+```css
+.flex-container {
+    background: white;
+    padding: 10px;
+    border: 5px solid black;
+    height: 1300px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify: center;
+    align-content: flex-start;
+}
+```
+
+* and if now reload the page, you can see that the items are positioned at the beginning of the cross axis.(Refer : flex32)
+
+* If I increase the size, it jumps back to this behavior because keep in mind, we have align items and justify content center, so this is basically what we see right here but as soon as we have our second line available right here, the align content property will come into play.
+
+* We also have other values for it, for example we have space between.
+
+```css
+.flex-container {
+    background: white;
+    padding: 10px;
+    border: 5px solid black;
+    height: 1300px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify: center;
+    align-content: space-between;
+}
+```
+* The space between our elements is now simply used in a way that the elements in the first row are positioned at the beginning of our cross axis and that the second row is positioned at the end of our cross axis,(Refer : flex33) it's also a nice way to display values like that differently.
+
+### Improving the Navigation Bar with Flexbox
+
+* Always keep in mind, the structure that we want to follow is always the one that a parent element should become a flex container.
+
+* and with this flex container, we want to be able to define the behavior of the items inside this flex container.
+
+* So let's start with the header now, this right here, our main header class. Now inside this main header class, we basically have two elements.
+
+* We have the div right here, this one which mainly contains our hamburger button which is not visible right now but only the mobile view and we have our anchor tag which includes our image right here. So that's the first item,
+
+* the second item is our main nav class, so the navigation bar with these buttons right here.
+
+* Now, wouldn't it be a good starting point to turn this main header class into a flex container and with that, get the control of these two elements in here? so lets apply our flex to our main header to make that as flex container
+
+```css
+.main-header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #2ddf5c;
+  padding: 0.5rem 1rem;
+  z-index: 1;
+  display: flex;
+}
+```
+
+* If we do that and reload our page, we can see we have some change already up here, not the perfect change yet but we'll do it step-by-step, so let's see what exactly we have to improve. What we can see right here as a first improvement definitely is that we have to align our items inside of the flex container along the cross axis. (Refer : flex34)
+
+* You remember, we applied display flex now, this means our flex direction is row, so from left to right, our main axis is also left to right, the cross axis
+therefore is top to bottom and if we align our items along the cross axis, then these should be centered.
+
+```css
+.main-header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #2ddf5c;
+  padding: 0.5rem 1rem;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+}
+```
+* If you reload yes now menu aligned properly (Refer : flex35)
+
+* Another thing that we could already apply is the following: if we consider the way our logo right here and these buttons are displayed, then we see that there is some space between in here and if you look at the structure, you have one element and another one, so two flex items
+
+* and if we think back about our space between the value we used for align content 
+
+* then why don't we just use, not align content, but justify content now because remember, we want to position the elements along the main axis, which in our case is this one, so we need to use justify content and justify content right here would simply be space between, like that.
+
+```css
+.main-header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #2ddf5c;
+  padding: 0.5rem 1rem;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content:space-between;
+}
+```
+
+* If we reload that though, we cannot see a lot of change for the moment because the code is not cleaned up yet but let's keep that for now and see if it works the way it should work because normally, we should have this element, then the space between and then the other elements which should actually follow the look of our navigation bar right here(Refer : flex36)
+
+*  let's have a look at the CSS code and see what else we have. We have this main header div selector right here with display inline block and vertical align middle, so this basically targets the div right here which contains the button and our logo.
+
+```css
+/* Now actually, we don't need that anymore because this is now a flex item,*/
+.main-header > div {
+  display: inline-block;
+  vertical-align: middle;
+}
+```
+* Without the above code it will work fine now, because this is now a flex item, so if we delete that, let's have a look, and reload the page, this looks fine,let's go to the mobile view, this also looks fine. So for the moment, we don't have a problem, this seems to work correctly.
+
+* So we already got rid of that code right here, of that main header div selector and we added flexbox right here. So that's a nice first step as I would say.
+
+* Now let's go through the code and see if we have additional display inline block declarations in here and yes we have, we have it right here for the main header brand selector.
+
+* Let's see, this is the anchor tag which contains the actual image in the end. Now this anchor tag or these elements are basically part of this div flex item now, so we should actually also be able to get rid of that code right here.
+
+```css
+.main-header__brand {
+  color: #0e4f1f;
+  text-decoration: none;
+  font-weight: bold;
+  /* display: inline-block;
+  vertical-align: middle; */
+}
+```
+
+* Let's see and reload the page and now we have an issue because now the image uses 100% of the height of the parent element (Refer : flex37)
+
+* basically and this was the anchor tag but as we remove this display inline block declaration from it, we cannot refer to this element anymore and therefore, the 100% height is not correct anymore. But we can easily solve this by not adding the height to the anchor tag, right here
+
+* but simply changing it right here for our actual image because if the image has now a height of 2.5rem
+
+```css
+.main-header__brand img {
+  /* height: 100%; */
+  height: 2.5rem; /* previously this 2.5rem is specified in .main-header__brand*/
+}
+```
+
+* and if we load the page, we can see that it works fine now.Because now we simply say that the image height should not refer to that anchor tag because that's not possible but simply to the image itself and therefore, this looks alright actually.
+
+* let's also see if this works in the mobile view, there we have a problem (Refer : flex38)
+
+* but let's see, we have the toggle button, so this is this class right here which has vertical align middle applied.So if we apply it now also to our image right here, middle like that 
+
+```css
+.main-header__brand img {
+  height: 2.5rem;
+  vertical-align: middle;
+}
+```
+* reload our page, then we can see that this is now also aligned and yes, I think this looks good actually.(Refer : flex39) 
+
+* Let me quickly summarize what we did so far, we basically turned our main header into a flex container and now we have these two items as flex items and with that, we were also able to get rid of the display inline block declarations we had inside of these items because the positioning now is controlled by the flex container
+
+* and with that, we could make our code really a lot leaner already. So let's go down and let's see where else we have display inline block, right here, main nav item.
+
+```css
+.main-nav__item {
+  display: inline-block;
+  margin: 0 1rem;
+}
+```
+* these are the single items we have which are part of this unordered list right here(Menu items)
+
+* and if I look at this structure right now, I think we can easily improve that by also adding flexbox right here(Ul - main-nav__items)
+
+*  because we know that main header is a flex container which contains the div and this main nav class but inside this main nav class, we could create another flex container, main nav items, the plural right here which contains the single flex items right here, so the packages, customers and start hosting buttons.
+
+```css
+<header class="main-header">
+    <div>
+        <button class="toggle-button">
+            <span class="toggle-button__bar"></span>
+            <span class="toggle-button__bar"></span>
+            <span class="toggle-button__bar"></span>
+        </button>
+        <a href="index.html" class="main-header__brand">
+            <img src="images/uhost-icon.png" alt="uHost - Your favorite hosting company">
+        </a>
+    </div>
+    <nav class="main-nav">
+        <ul class="main-nav__items">
+            <li class="main-nav__item">
+                <a href="packages/index.html">Packages</a>
+            </li>
+            <li class="main-nav__item">
+                <a href="customers/index.html">Customers</a>
+            </li>
+            <li class="main-nav__item main-nav__item--cta">
+                <a href="start-hosting/index.html">Start Hosting</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+```
+
+* So how does this work? Keep in mind, main nav items should be flex container, the item, singular, should be the single items.so from the single list items and now simply add display flex right here to our main nav item selector.
+
+```css
+.main-nav__items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+}
+
+.main-nav__item {
+  /* display: inline-block; */
+  margin: 0 1rem;
+}
+```
+* If we do that and we load the page, we can see that this didn't crash it entirely but our menu mis aligned.(refer : flex40), this is due to main-nav media query, let us comment
+
+```css
+
+@media (min-width: 40rem) {
+  .toggle-button {
+    display: none;
+  }
+
+  .main-nav {
+    /* display: inline-block;
+    text-align: right;
+    width: calc(100% - 44px);
+    vertical-align: middle; */
+  }
+}
+
+```
+
+* we already display none this menu for mobile view, 
+
+```css
+.main-nav {
+  display: none;
+}
+```
+* So we have to enable this as flex in media query 
+
+```css
+
+@media (min-width: 40rem) {
+  .toggle-button {
+    display: none;
+  }
+
+  .main-nav {
+      display: flex;
+    /* display: inline-block;
+    text-align: right;
+    width: calc(100% - 44px);
+    vertical-align: middle; */
+  }
+}
+
+```
+
+* However if I reload the page now, you can see a really cool thing because now we basically got our structure back and even better,
+
+*  if I now look at the mobile view, because actually we work mobile first, right and click onto this hamburger, then I don't like this look right here, because wouldn't it be better if these three buttons would be centered right here? (Refer: flex41)
+
+*  if we look at the classes for that, we have this class right here
+
+```css
+<nav class="mobile-nav">
+        <ul class="mobile-nav__items">
+            <li class="mobile-nav__item">
+                <a href="packages/index.html">Packages</a>
+            </li>
+            <li class="mobile-nav__item">
+                <a href="customers/index.html">Customers</a>
+            </li>
+            <li class="mobile-nav__item mobile-nav__item--cta">
+                <a href="start-hosting/index.html">Start Hosting</a>
+            </li>
+        </ul>
+    </nav>
+```
+* this brings us to your challenge now.
+
+* Turn the mobile nav items class into a flex container and add the properties in a way that the flex items right here are displayed below each other, like that but in the center of the page
+
+```css
+.mobile-nav__items {
+  width: 90%;
+  height: 100%;
+  list-style: none;
+  margin: 10% auto;
+  padding: 0;
+  /* text-align: center; */
+  display: flex;
+}
+```
+* So with display flex being added, let's see and reload the page, (Refer: flex42) mobile menu crashed/misaligned
+
+* But if we now first say that our flex direction should not be the default value but column because that's what we want to have right here, the buttons should be displayed below each other,
+
+```css
+.mobile-nav__items {
+  width: 90%;
+  height: 100%;
+  list-style: none;
+  margin: 10% auto;
+  padding: 0;
+  /* text-align: center; */
+  display: flex;
+  flex-direction:column;
+}
+```
+* Now keep in mind, we change the flex direction to column, this means the main axis goes from top to bottom, so we need to add justify content center,
+
+```css
+.mobile-nav__items {
+  width: 90%;
+  height: 100%;
+  list-style: none;
+  margin: 10% auto;
+  padding: 0;
+  /* text-align: center; */
+  display: flex;
+  flex-direction:column;
+  justify-content: center;
+}
+```
+* if we reload content wil be aligned center(Refer : flex44)
+
+* And if we now add align items to align the items along the cross axis which is from left to right in our case because we have flex direction column,
+
+```css
+.mobile-nav__items {
+  width: 90%;
+  height: 100%;
+  list-style: none;
+  margin: 10% auto;
+  padding: 0;
+  /* text-align: center; */
+  display: flex;
+  flex-direction:column;
+  justify-content: center;
+  align-items : center;
+}
+```
+* if we reload items will  be aligned center perfectly (Refer : flex45)
+
+### Improving the Footer
+
+* Now this is the footer, inside the footer we have the nav, then we have a class and then we have an unordered list with two list items.
+
+```html
+<footer class="main-footer">
+    <nav>
+        <ul class="main-footer__links">
+            <li class="main-footer__link">
+                <a href="#">Support</a>
+            </li>
+            <li class="main-footer__link">
+                <a href="#">Terms of Use</a>
+            </li>
+        </ul>
+    </nav>
+</footer>
+```
+* we will turn our main footer links class, so this one right here into a flex container
+
+
+```css
+.main-footer__links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+```
+
+* And with that, we actually turned this footer into a flexbox or flex container, flex item construct.(Refer : flex46)
+
+*  The only thing we have to change of course is the desktop view now
+
+* well what do we have to change actually? Well, we simply have to go down right here to our main footer link right here, so that's basically the same links again and delete display inline block because that's not required anymore as we have flex items. With that, let's see, no change,
+
+```css
+@media (min-width: 40rem) {
+  .main-footer__link {
+    /* display: inline-block; */
+    margin: 0 1rem;
+  }
+
+  .main-footer__links {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+```
+* we use justify content to position the elements in the center of the flex container, like that
+
+* and with align items which we have right here, center, we make sure that our elements are positioned in the center along the cross axis.
+
+* With this our footer works fine with flexbox (Refer : flex47)
+
+### Flexbox and the Z-Index
+
+#### Flexbox and the Z-Index
+* In the position module we learned that adding the z-index  to an element only has an effect, if the position  property with a value different from static  was applied to this element.
+
+* One exception from this behaviour is flexbox: Applying the z-index  to flex-items (so the elements inside of the flex-container) will change the order of these items even if no position  property was applied.
+
+* You will need the z-index  for flex-items in the following assignment, so keep that special behaviour in mind.
+
+### Adding Flexbox to the Customers Page
+
+* So let's turn the customers page into a flexbox construct and to be honest, we actually don't have a problem right here in the mobile view, this looks totally right, we only need flexbox right here to make sure that the desktop view is displayed like that. For that, we simply have to focus onto the media query regarding the testimonial class and turn it into a flex container once we are in the desktop view and then add the properties we need to make sure that the content is displayed correctly. 
+
+```css
+@media (min-width: 40rem) {
+    .testimonial {
+        margin: 3rem auto;
+        max-width: 1500px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+    .testimonial__image-container {
+        /* display: inline-block;
+        vertical-align: middle; */
+        width: 66%;
+    }
+    .testimonial__info {
+        /* display: inline-block;
+        vertical-align: middle; */
+        width: 30%;
+    }
+}
+```
+* However with that, as I just said, the flex container part is finished. Now in the next lecture, we'll have a look at the flex items because we worked with the flex items as part of the flex container but we can also specifically target the flex items and change the way they are displayed.
+
+### Using the "order" Property for a Flex Item
+
+* it's now time to dive deeper into the flex items and the corresponding properties,(Refer : flex48)
+
+* Lets dive into our flex theory project
+
+* I will first change justify content to flex start, like that because I want to make sure that these elements are aligned to the left so we have a bit more space to the right,
+
+```css
+.flex-container {
+    background: white;
+    padding: 10px;
+    border: 5px solid black;
+    height: 1300px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /*flex-flow: row wrap;*/
+    align-items: center;
+    justify-content: flex-start;
+    align-content: center;
+}
+```
+
+* If we reload the items are aligned left (Refer : flex49)
+
+* then I will also delete align content because we talked about it already and I don't think we need it anymore.
+
+```css
+.flex-container {
+    background: white;
+    padding: 10px;
+    border: 5px solid black;
+    height: 1300px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /*flex-flow: row wrap;*/
+    align-items: center;
+    justify-content: flex-start;
+    /* align-content: center; */
+}
+```
+
+* As you can see, this doesn't make a difference right here. So as you saw, we have different properties which we can apply to our flex items and that's the first important thing we have to understand.
+
+* So far, we only worked in the flex container here but this time or in this part of the module, we will work on the single element, so on the specific selectors right here that we want to change.
+
+* Now what can we change? 
+
+* Well let's for example say we want to change the order of these elements and we could say that the fourth element, so this one right here should be positioned at the beginning,
+
+* so in front of our div right here. For that, we simply have to go to item four, the fourth element right here and now write the order property,
+
+```css
+.item-4 {
+    background: #f5c096;
+    color: white;
+    padding: 10px;
+    border: 5px solid black;
+    margin: 10px;
+    width: 300px;
+    height: 300px;
+    order: 0;
+}
+```
+* The order property can have different values, the default value for order is simply 0.So if I apply this to our item four, nothing changes because order zero is applied to all elements and will not change a thing.
+
+* Now if we change order zero to order one though, like that, if I now reload the page, well you can see that the element we applied the order property to is now positioned at the end.(Refer : flex50)
+
+* what does 'at the end' mean?
+
+* Well keep in mind we have a flex direction of row, so the main axis goes from left to right, so at the end of this main axis right here(right)
+
+* but this also means if our other elements have an order of zero and one positions the element at the end of the other elements, well then if we will change it to -1 right here for example, like that and reload the page, we can position it in front of the other elements and that's actually the core logic that we have for this order property.(Refer : flex51)
+
+* It allows us to change the order of the elements that the elements initially have based on the code in HTML and by adding numbers, we simply say that the bigger number we apply to the order, the later the element will be positioned.
+
+* An important thing to keep in mind though is, if I now change our flex direction right here from row to row reverse for example like that, then this will of course also change the order accordingly. Now this element is displayed first on the screen because it's the last element, remember our main axis starts right here from right to left, so at the end of the main axis and the element with the lowest order value, so this one right here is positioned at the beginning of the main axis right here but at the end of the page now if you read our page from left to right. This is also true if we change the flex direction to column right here, that's of course also possible
+
+* if we do that like this and reload our page, then you can see that the element with the lowest order value is positioned first and the element with the highest order last
+
+* if we now apply column reverse, then as you can hopefully imagine now, it will be displayed like that because this will now be positioned at the end of the main axis which now goes from the bottom left corner to the upper left corner.
+
+* Now with that, we understood the first property
+
+### Working with "align-self"
+
+* So what's the next property we can use in connection with the flex items? Well this property is close to a property we already used so far on the flex container,
+
+* now let me show you the property. For that, I will now add it right here to our third item, so this is basically this orange box right here
+
+```css
+.item-3 {
+    background: #ff9640;
+    color: white;
+    padding: 10px;
+    border: 5px solid black;
+    margin: 10px;
+    height: 250px;
+    align-self: flex-start;
+}
+```
+* If we do that, go back and relod the page, you can see that the element is, that's important, positioned in relation to the cross axis. (Refer : flex52)
+
+* So the cross axis, right here we have flex direction row so our cross axis starts in the upper left corner and goes to the lower left corner, therefore flex start will pin the item right here.(Refer : flex52)
+
+* If we will change align self to flex end, not like that, maybe written correctly like this .
+
+```css
+.item-3 {
+    background: #ff9640;
+    color: white;
+    padding: 10px;
+    border: 5px solid black;
+    margin: 10px;
+    height: 250px;
+    align-self: flex-end;
+}
+```
+* and reload the page again, it will be at the end (Refer : flex53)
+
+* The important thing though and the difference in contrast to align items is that align items of course referred to all elements, that's the difference but align self allows us to define the position of a single element which is part of a flex container of course.
+
+* As always, I will not dive into all values we have for this align self property just because again, I think that understanding the core concept is more important than trying out all the values.
+
+### Understanding "flex-grow"
+
+* So what is flex grow, how can we use it?
+
+* If we looka at the image we prepared two equal elements here, the last one's width, the width of 350 pixels and as you might imagine, I had a good reason to do that because I will now show you flex grow with the example of these two items.(Refer : flex54)
+
+```css
+.item-5 {
+    background: #d3c0b1;
+    color: white;
+    padding: 10px;
+    border: 5px solid black;
+    margin: 10px;
+    width: 350px;
+    flex-grow:1;
+}
+
+.item-6 {
+    background: #d3c0b1;
+    color: white;
+    padding: 10px;
+    border: 5px solid black;
+    margin: 10px;
+    width: 350px;
+    flex-grow:0;
+}
+```
+
+*  Keep in mind, the default value for flex grow is 0 for item 6 and of course also for all the other items.so our item right here with flex grow zero doesn't increase the width as soon as it hits its maximum of 350 pixels but if I now inspect the other element, we can see that it has a width of 383 pixels now and this is interesting, right?
+
+* Because just by adding this flex grow value of one, the element used the remaining space available because otherwise if we would increase the width of the page, we would have space available if this would be limited to 350 pixels and simply occupies this space because we added flex grow one right here.
+
+```css
+.item-5 {
+    background: #d3c0b1;
+    color: white;
+    padding: 10px;
+    border: 5px solid black;
+    margin: 10px;
+    width: 350px;
+    flex-grow:1;
+}
+
+.item-6 {
+    background: #d3c0b1;
+    color: white;
+    padding: 10px;
+    border: 5px solid black;
+    margin: 10px;
+    width: 350px;
+    flex-grow:4;
+}
+```
+* if we reload now item 6 grow (Refer : flex55)
+
+* because the last item now became the one with the biggest width, Now we can see that this item-5 has a width of 400, this one (item-6) has a width of 556.
+
+* Now how is this calculated?
+
+* Well basically, what happens from a mathematical perspective is the remaining space is calculated first, so if we increase the width, we would have an empty space right here which is not occupied by elements and this space has a certain width, then this space will be divided by five because we have one for this element and four for this element. So we basically have five parts, how this remaining total space should be divided. Well and one part of this remaining space, so one-fifth of it will be applied to our first element right here, so round about 50 pixels and then we have the remaining four-fifths, so round about 200 pixels which will be added to that last item.
+
+* So what we basically see right here is by increasing the width of our page, we had a remaining space of 250 pixels that must be distributed between these two flex grow items right here. As we have flex grow one for this item, one-fifth is applied to this item and four-fifths are applied to this last item, so that's how it works.
+
+```css
+.item-5 {
+    background: #d3c0b1;
+    color: white;
+    padding: 10px;
+    border: 5px solid black;
+    margin: 10px;
+    width: 350px;
+    flex-grow:1;
+}
+
+.item-6 {
+    background: #d3c0b1;
+    color: white;
+    padding: 10px;
+    border: 5px solid black;
+    margin: 10px;
+    width: 350px;
+    flex-grow:1;
+}
+```
+
+* If I now would add flex grow one to this element right here also, like that and if I reload the page again,then you can see that both elements now have a width of round about 425 pixels because this simply means again we have a free space of 250 pixels which will then be split into two parts, one right here and one right there and then equally distributed.
+
+* If i change the flex container's flex-wrap from no-wrap to wrap
+
+```css
+.flex-container {
+    background: white;
+    padding: 10px;
+    border: 5px solid black;
+    height: 1300px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /*flex-flow: row wrap;*/
+    align-items: center;
+    justify-content: flex-start;
+    align-content: center;
+  }
+```
+
+* and reload our page, then nothing happens right here but if I decrease the size, we can see that as soon as we hit the defined width of 350 pixels, the element will be wrapped into the second line and interestingly, this element then occupies the entire space of this second line.(Refer : flex56)
+
+* Now why is this happening?
+
+* as soon as you apply a flex grow which is larger than zero, a single element which will be wrapped into the second line will occupy the entire space as we can see it right here. So this is the last thing about flex grow and let me change flex wrap back to no wrap right here
+
+### Applying "flex-shrink"
+
+* So what is flex shrink?
+
+* with no-wrap flex container if we apply flex-shink
+
+```css
+.item-5 {
+    background: #d3c0b1;
+    color: white;
+    padding: 10px;
+    border: 5px solid black;
+    margin: 10px;
+    width: 350px;
+    flex-shrink:1;
+}
+.item-6 {
+    background: #d3c0b1;
+    color: white;
+    padding: 10px;
+    border: 5px solid black;
+    margin: 10px;
+    width: 350px;
+    flex-shrink:0;
+}
+```
+* the default value for flex shrink is 1. Now if I change flex shrink right here to zero for example for our last item (item-6), then you can see that now, the element cannot shrink anymore.(Refer : flex57) So as you can see, it only shrinks up to the 350 pixels width we defined but as soon as it hits this value, it cannot decrease its width
+
+* If we add flex shrink to our item right here, this item will not become smaller than the defined width it has. So this is flex shrink 0,
+
+```css
+.item-5 {
+    background: #d3c0b1;
+    color: white;
+    padding: 10px;
+    border: 5px solid black;
+    margin: 10px;
+    width: 350px;
+    flex-shrink:1;
+}
+.item-6 {
+    background: #d3c0b1;
+    color: white;
+    padding: 10px;
+    border: 5px solid black;
+    margin: 10px;
+    width: 350px;
+    flex-shrink:4;
+}
+```
+
+* It allows you first to specify if an element is allowed to shrink, as we saw with the default value of 1, all elements can indeed shrink, with a value of zero, you can ensure that this is not possible and if you add a flex shrink value which is different from zero, it first allows us to allow our elements to shrink but if we apply a bigger shrink value to different elements, then this will also define how much more one element is allowed to shrink when comparing it to another element and that's actually what we can do with flex shrink.
+
+### Comparing "flex-basis" vs "width" & "height"
+
+* let me then add this property and the name of this property is flex basis,
+
+* Now what is the flex basis? The flex basis simply defines the size of an element, and now it's really important, depending on the main axis.
+
+* So flex basis is not the width or the height, it can basically be both which is simply dependent on the flex direction and let me say that one more time that's the reason why understanding the concept of main and cross axis and how this is changed is really  crucial right here.
+
+* However at the moment, we have a flex direction of row, so the main axis goes from left to right,
+
+* we also have defined a width. Now with that, if I can now add a value of let's say 200 pixels to our fifth item right here,
+
+```css
+.item-5 {
+    background: #d3c0b1;
+    color: white;
+    padding: 10px;
+    border: 5px solid black;
+    margin: 10px;
+    width: 350px;
+    flex-basis: 300px;
+}
+```
+* then if the flex basis refers to the main axis and defines the size of our element dependent on the main axis,
+
+* well then if we reload the page, we should see that our element has a width of 296.94 pixels,that's not equal to 300.
+
+* But keep in mind what we learned in the last lecture, we learned that the default value for flex shrink is 1 and this basically allows our element to shrink in here.
+
+* Therefore, as we now are in a view which is kind of smaller than the initial one, as you can see it right here, we don't have these 300 pixels If I now increase the size, you can see we have the 300 or if we go back right here and add back flex shrink of zero and maybe do the same thing for the last item again, because I think it makes things a bit clearer now, like that
+
+```css
+.item-5 {
+    background: #d3c0b1;
+    color: white;
+    padding: 10px;
+    border: 5px solid black;
+    margin: 10px;
+    width: 350px;
+    flex-shrink:0;
+    flex-basis: 300px;
+}
+.item-6 {
+    background: #d3c0b1;
+    color: white;
+    padding: 10px;
+    border: 5px solid black;
+    margin: 10px;
+    width: 350px;
+    flex-shrink:0;
+}
+```
+* if we reload the page, no matter what we do right here, we will have 350 pixels for our last item and 300 pixels as defined by the flex basis for the fifth item.
+
+* So that's what happens right here: if we defined a flex basis and our flex direction is set to row, the flex basis will overwrite this default width property.
+
+* If we use the default value for flex basis which would be auto, this one right here, it will simply apply the width right here, as we can see, like that it's 350 pixels because flex basis as I said will fallback to the width value right here.
+
+* The problem is that while I'm saying it will fallback to the width value, this is only correct because the main axis is now from left to right and therefore equal to the width.
+
+* Now let's have a look at what happens if we change the flex direction to column and with that, we change our main axis of course which is now from top to bottom.
+
+```css
+.flex-container {
+    background: white;
+    padding: 10px;
+    border: 5px solid black;
+    height: 1300px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    /*flex-flow: row wrap;*/
+    align-items: center;
+    justify-content: flex-start;
+    align-content: center;
+  }
+
+  .item-5 {
+    background: #d3c0b1;
+    color: white;
+    padding: 10px;
+    border: 5px solid black;
+    margin: 10px;
+    width: 350px;
+    flex-shrink:0;
+    flex-basis: auto;
+}
+```
+* So if we save that, keep in mind, we have a width defined but no height defined and the flex basis is auto,
+
+* this one right here has of course the width applied of 350 pixels as defined and the width is just as high as we need it for the content to be displayed
+
+```css
+.item-5 {
+    background: #d3c0b1;
+    color: white;
+    padding: 10px;
+    border: 5px solid black;
+    margin: 10px;
+    width: 350px;
+    height:200px;
+    flex-shrink:0;
+    flex-basis: auto;
+}
+```
+* but this means that if I now add a height right here like that, let's say of 200 pixels, like that and reload the page, then you can see that our fifth item now exactly has this height (200px) because flex basis is set to auto.
+
+* So the flex basis will fallback to the default value set for the main axis and that's important. If the main axis goes from left to right, this will be the width right here, if the main axis goes from top to bottom, then this will be the height.
+
+* At the same time, this also means that if we define a value for the flex basis, let's say of 300 pixels now, like that, this value will be applied because the fallback only comes into play if we set flex basis to auto. If we define the flex basis, it will overwrite, as we can see right here, either the height if the main axis goes from top to bottom or the width if the main axis goes from left to right or right to left of course and that's actually the basic concept of flex basis.
+
+* Some other important things about flex basis: we can also use values like percentages for example, let's say we use 10% right here.
+
+```css
+.flex-container {
+    background: white;
+    padding: 10px;
+    border: 5px solid black;
+    height: 1300px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /*flex-flow: row wrap;*/
+    align-items: center;
+    justify-content: flex-start;
+    align-content: center;
+  }
+.item-5 {
+    background: #d3c0b1;
+    color: white;
+    padding: 10px;
+    border: 5px solid black;
+    margin: 10px;
+    width: 350px;
+    flex-shrink:0;
+    flex-basis: 10%;
+}
+```
+
+* So that's also what you can apply to the flex basis. So using percentage values for the flex basis is also possible.
+
+* Now let me summarize what we learned about the flex basis now.
+
+* The important thing is that the flex basis always refers to the main axis. If flex basis is set to auto, the fallback will either be the width if the main axis goes from left to right or right to left or the fallback will be the height in case the main axis goes from top to bottom or bottom to top.That's the first thing that we have to keep in mind.
+
+* The second thing we have to keep in mind is that the flex basis property and all these properties we saw right here can only be applied to flex items. Therefore, we need a parent element which is a flex container and which has the display flex or inline flex value applied.
+
+* And the last important information is that we also have a shorthand for the properties we just talked about because instead of writing flex grow, flex shrink and flex basis, we could simply say that we write flex,
+
+```css
+.item-5 {
+    background: #d3c0b1;
+    color: white;
+    padding: 10px;
+    border: 5px solid black;
+    margin: 10px;
+    width: 350px;
+    flex: 0 1 auto; /*  grow(default0) shrink(default1) basis(default auto) */
+}
+```
+
+### Dive Deeper into Selected Topics
+
+Flexbox and browser compatibility: https://caniuse.com/#search=flexbox
+The theory behind flexbox: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox
+The flex container: https://developer.mozilla.org/en-US/docs/Glossary/Flex_Container
