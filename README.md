@@ -1,616 +1,361 @@
 # CSS-Complete-Guide
 
-## Section 16 : Transitions & Animations in CSS
+## Section 17 : Writing Future-Proof CSS Code
 
-### Understanding and Applying Transitions
+###  CSS Modules & Their Working Groups
 
-* Transitions are a kind of built-in animation you could say. Transitions are added by adding one property, transition and specifying which other property, like the opacity or the position of an element should be watched and should be animated if it changes.
+* CSS is split up into modules. You got a module on media queries, you got a module on selectors, you got a module on animations and so on.
 
-* So here's an example; we got a box and we actually want to move that towards us with transform and translate set let's say, then we could animate that change (Refer : animation1)
+* you'll find a link to this page which gives you an
 
-* We tell the transition property, and we'll apply it in practice in a second,  which properties to change, if there should be a delay, how should animate it, so over which time and how fast it should move through that time. So should we start fast and end slow, start slow and end fast, these are all things we can define.
+overview over the different working groups that work on new CSS features, sorted by these modules
 
-* let's dive into this in a concrete example. In our main.css file, we got that modal selector, now this is obviously responsible for that modal we got on our page. Right now, we're always using display none to not show it, let's actually change this and let's make sure we don't show it by adding opacity zero instead, opacity zero simply makes it invisible, the difference is it's now still part of the document flow and opacity, unlike display, is a property we can watch with a so-called transition.
+basically.
+
+Now on this page, you see which groups exist and also what the current state of the results of that group
+
+is,
+
+for example if it's a recommendation, which means browsers should implement that and they regularly do
+
+that or if it's just a draft which browsers may implement but which they don't have to yet or which
+
+is not necessarily recommended to them yet.
+
+So you can scroll through that list and find out which groups exist and you can always click into one
+
+of these groups, like CSS transitions and read more about their work, what it's all about, what they
+
+plan, which syntax they'd like to see and so on.
+
+This can be really interesting but this also is something you don't regularly do, unless you work for
+
+a browser vendor.
+
+This is a nice place to dive deeper if you really want to go super deep into a specific feature
+
+but generally, this is just what the browsers have to implement in the end and what MDN, the Mozilla
+
+Developer Network which we referenced quite a bit in this course, typically summarizes and makes more
+
+digestible.
+
+Still, this is the original work or these are the summaries, the protocols of the original work groups
+
+and this can be a nice place to dive deeper in case you're interested.
+
+* you could refer https://www.w3.org/TR/#tr_Cascading_Style_Sheets__CSS__Working_Group
+
+### Using CSS Variables
+
+*  CSS variables. Now what does this mean?
+
+* Consider this case; we get CSS code where we get different selectors and let's say they share some common functionality, like a color which you reuse. This could also be some unit though, this could be something like 1rem which you use again and again, CSS variables are a relatively new feature which allow you to put that reused value into a variable which you defined with this strange looking syntax, --my-color. Now this is a property which kind of exists, the browser understands that this now should become a custom variable and then you can reuse that variable with that var function. (Refer: future1)
+
+* Also note that the variable here is defined in that root pseudo selector, which in the end refers to the entire document or to every element, you could also place it on a specific element selector but then this variable would only be usable within that selector.
+
+* So with the snippet you see here, you define it once and you can use it everywhere in your document, everywhere on your page.(Refer: future1)
+
+* And there also is a special syntax which you see at the very bottom where we provide a second value, this is a fallback value in case the variable is not defined yet.(Refer: future1)
+
+* Be aware, this is not a fallback value for browsers which don't support variables because they won't even understand the var function, this really is just a fallback for cases where you reference a variable and for some reason, it isn't set yet maybe because you forgot to import some other file where you defined it, then this fallback value will kick in, not in browsers which don't support variables.
+
+* Speaking of browser support, if we check caniuse for CSS variables, we see that browser support is generally pretty good but Internet Explorer doesn't support it at all.
+
+* Now let's see them in action in our project. Back in our project, if we open the shared.css file, we see a couple of values that we repeat all over again.
+
+* Well actually, I'm not going to replace everything with CSS variables, this is something you can definitely do though but I want to focus on colors. Be aware that you could use them for units like rem and so on too
+
+* but we can already see that we reused colors, for example in that shared.css file if we scroll through it from top to bottom, this red color, we're using it twice here already.
+
+* and if we scroll down further, we see that we also reuse that green color, so here, we can also see that.
+
+* So it sounds like a good idea to put that green color and that red color into a CSS variable,let's do that. All the way at the top, even above that universal selector,
 
 ```css
-.modal {
-  position: fixed;
-  /* display: none; */
-  opacity: 0;
-  z-index: 200;
-  top: 20%;
-  left: 30%;
-  width: 40%;
-  background: white;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+:root {
+  --dark-green: #0e4f1f;
+  --highlight-color: #ff1b68;
 }
+
+.main-nav__item a,
+.mobile-nav__item a {
+  text-decoration: none;
+  color: var(--dark-green); /* variable */
+  font-weight: bold;
+  padding: 0.2rem 0;
+}
+
+.mobile-nav__item--cta a {
+  color: white;
+  background: var(--highlight-color); /* variable */
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+}
+
 ```
 
-* So opacity zero is how I now want to hide the modal, let's also add a transformation and let's use translateY to move it on the y-axis with -3rem as a value, so this will move the element up by 3rem.
+### Understanding & Using Vendor Prefixes
+
+* Now let's stay in that world, obviously our users are able to use different browsers and different browsers implement new features differently and at different speed.
+
+* Once a certain feature reaches recommendation state, you saw that earlier in this module, it should be implemented in all browsers equally
+
+* but until then, each browser might not implement it or implement some of its features or maybe implement some features differently than other browsers do, simply to try how it works, how the users of that browser use that feature and so on.
+
+* For this, we got vendor prefixes.
+
+* This is a mechanism which allows browser vendors to implement an upcoming feature in an early version without breaking the feature when it finally gets released,
+
+* here's an example, flexbox. We add it by setting display to flex and nowadays, the support for this is pretty good.
+
+* A few years ago when that standard was brand new and in very active development, browsers started to implement flexbox step-by-step by implementing prefixed versions of the flex value,
 
 ```css
-.modal {
-  position: fixed;
-  /* display: none; */
-  opacity: 0;
-  transform: translateY(-3rem); /* transform translateY*/
-  z-index: 200;
-  top: 20%;
-  left: 30%;
-  width: 40%;
-  background: white;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+.container {
+  display: -webkit-box;  /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+  display: -ms-flexbox;  /* TWEENER - IE 10 */
+  display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+  display: flex;         /* NEW, Spec - Firefox, Chrome, Opera */
 }
 ```
- * Now you might ask, why am I doing this, we're not seeing it anyways? Well you'll see why and of course you could always move the element up with top but transform is what you should use if you plan on animating that movement
+* Now the interesting thing here is these are special values which only work in some browsers, for example webkit box works in older versions of Safari, webkit flex in newer versions, MS flexbox in Internet Explorer and Edge.
 
- * because it is watchable with transition and it's hardware accelerated, it's awesome for animations or for transitions to be precise, so let's add these two properties to modal.
+* So these values are not understood by other browsers but they don't need to understand it because they either already implement the flex value or their own prefixed version.
 
- * Now the idea is that we change these two properties with Javascript.  You remember, earlier, we added code to show the modal when we click on select a plan by simply adding that open class.
+* Why do we use these prefixes at all, why don't they just all use flex?
 
- * Now in that open class if we have a look at this again, we can find it in the shared.css file, we set display block to important.
+* Because if the standard then changes or becomes finalized and they therefore all implement the same specification, then if they suddenly overwrite the flex value to now work different than it used to be, a lot of websites that were early adopters of that technology would get broken. Therefore they have their early adopter implementation, the prefixed version which they don't change even if the standard changes or becomes final and then they implement their final version once that is the case.
 
- ```css
- .open {
-     display : block !important;
- }
- ```
-  
-  * Now this doesn't really matter anymore because right now for the modal at least, we don't use the display value anymore but we can also still leave it. More importantly, what I want to do here is, I want to set the opacity to one here and use transform with translateY and set it to zero.
+* So now they got different implementations and this allows you a developer to use these features ahead of time, it also ensures that your webpage won't suddenly break and it also, that's another advantage, allows you to safely implement a certain feature which will still work, at least to some extent, even in older browsers because let's say an older version of Safari already supported flexbox with webkit box but didn't support it with display flex.
 
-```css
- .open {
-     display : block !important;
-     opacity : 1 !important;
-     transform: translateY(0) !important;
- }
- ```
- * Now this simply sets it back to its original position as defined in the document flow.So when we open the modal, it should be moved to that place.
+* Well, if you also provide that vendor prefix, it will understand this, it won't understand the other values for display but it will then just ignore them, that's how the web works and therefore, you can still use flexbox even in that older version, even though it doesn't support flex yet.
 
- * let's go back to our project and reload and now if I click choose plan, we see the modal again. Just as before, there is no animation or anything like that at all (Refer : animation2)
+* So vendor prefixes are really great as they allow us to implement new features ahead of time and even support older browsers.
 
- * but now, we can set up a so-called transition. For this, we go to the main.css file and we add a new property which is named transition. 
+* Now let's see that in action on our website, how would we implement such prefixes? It's actually recommended to implement prefixes for flexbox, so let's do that.
 
- * Now the transition property is able to take a couple of values, to be precise, you can define up to four values here, a list of four values.
+* Let's search for a flex value in our shared.css file, like here and the correct way of implementing this would be to specify the display property a couple of times and the final standard, the default one should be at the very bottom, 
 
-* The first one is absolutely required and that is, which property do you want to watch? You can watch all with the all keyword, then the transition will be played whenever a transitionable property changes
+* because your code is parsed from top to bottom, so they will start with the older versions and that's important so that the older versions don't overwrite the newer ones and if they understand the newer one, it will just overwrite the older ones which they also might have understood, otherwise if they don't understand the newer one one but an older one they'll use that. If they don't understand any of these, well it just won't work.
 
 ```css
-.modal {
-  position: fixed;
-  opacity: 0;
-  transform: translateY(-3rem);
-  transition : all ;
-  z-index: 200;
-  top: 20%;
-  left: 30%;
-  width: 40%;
-  background: white;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+.main-footer__links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: -webkit-box;  /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+  display: -ms-flexbox;  /* TWEENER - IE 10 */
+  display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+  display: flex;         /* NEW, Spec - Firefox, Chrome, Opera */
+  flex-direction: column;
+  align-items: center;
 }
 ```
+* This is the correct setup, this one overwrites the legacy versions, so if a browser understands the new one, it will use that one, if it doesn't, maybe one of these can kick in.
 
-* but here, I could also enter opacity and transform as values, so two values separated with a comma in this case,
+### Which Prefixes Should You Use?
 
-```css
-.modal {
-  position: fixed;
-  opacity: 0;
-  transform: translateY(-3rem);
-  transition : opacity, transform ;
-  z-index: 200;
-  top: 20%;
-  left: 30%;
-  width: 40%;
-  background: white;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
-}
-```
+* So we had a look at these vendor prefixes, the question then of course comes up is, which prefix should you use? Refer : http://shouldiprefix.com/
 
-* if you have more than one value, you need to separate them with a comma. You then also define the duration over which you want to play an animation when one of these properties changes or when a property changes and you define that duration directly after the property you're watching
+* this gives a nice indication, it also links to caniuse which you also should use to find out where prefixes are needed, so if we quickly check the flexbox page on caniuse, you can click show all to also see all browser versions and there for example for older Chrome versions, you'll also see that there is partial support with the webkit prefix and the same is true for other browsers too.
 
-* so let's say .5 seconds after opacity. By the way, instead of .2s for seconds, you could also write 200ms, this is all supported.
+* So here you can see which prefixes might be needed to support these older versions and that should I prefix page is of course a really great source to get a quick overview. There, you see which features do not need prefixes and which ones should be prefixed and then you even see the syntax you should use, so this is a really valuable resource which helps you write code that works in more browsers.
 
-```css
-.modal {
-  position: fixed;
-  opacity: 0;
-  transform: translateY(-3rem);
-  transition : opacity 0.2s, transform 500ms;
-  z-index: 200;
-  top: 20%;
-  left: 30%;
-  width: 40%;
-  background: white;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
-}
-```
-* let's also transform this over let's say 500ms too, So please note that you set different durations for the different properties you're transitioning over. Of course if you just want to animate one, you would just animate one by simply removing the second one, if you animate more than one, you need to separate the lists with commas though.
+* However, clearly it is very cumbersome to check this for every feature you add and for manually adding all these prefixes, thankfully there is a tool for that, auto prefixer. Refer : https://autoprefixer.github.io/
 
-* So this is now defining what we animate and over which time we want to animate or transition to that new value and CSS will automatically interpolate the value you're coming from,
+* This is a tool which automatically fetches a list of properties you should prefix and then adds these prefixes to your code, so it simply runs over your code and adds the prefixes and you specify which browsers you want to support and based on that list of browsers you want support, it does the prefixing. So let's see this in action.
 
-* so opacity zero translate -3rem to the value you're going to, so opacity 1, translateY is 0.
+* If you scroll over that, you'll see multiple ways of including it, you can include it in your gulp or a webpack workflow for example, this is the way it's used most often by the way but if you don't have such a tool or workflow and we don't have one, you can also just google for CSS auto prefixer again and you'll find auto prefixer online. Now if you open this page, you can just paste your code into this page. Refer : https://autoprefixer.github.io/
 
-* With that, we can already save this and now reload our page and now if I click 'choose plan', you actually see there's some nice animation and there also is the animation if I close it because it automatically reverses this or plays it in the other directions so to say. 
+* and it would then, on the right, give us the prefixed version of that code. So as you see, it automatically added a lot of prefixes, for example for grids and so on and now we could just grab that code on the right and put it back into our code or maybe even better than that, into a separate version, 
 
-* In the end, what it does is it simply transitions smoothly from your starting value to your end value and this is a very easy way of adding a nice looking animation.
+### Detecting Browser Support with @supports
 
-* you can also add a timing function which allows you how fast it should go through that duration. It'll always take 200ms but you can tell it to start fast and end slow with ease out,
+* We saw vendor prefixes, sometimes you can't implement a vendor prefix for a certain feature though or maybe you can implement vendor prefixes but some browsers which your users might use don't even support these prefixed versions.
+
+* So some features simply aren't implemented in some browsers, now the supports query can help with that.
+
+* It looks a bit like a media query but it's @supports and the condition simply is a property value pair where you can simply check if that property and also that value, that's important, the value is not ignored, if that is supported by the browser.
+
+* So in the end the browser simply checks, can I read and use that? If the browser can't, then it will not execute the code between the curly braces, if it can, it will do so. (Refer : future2)
+
+* This is of course especially useful if you've got a bunch of code which depends on one feature, for example you want to use the grid and obviously the grid itself depends on the grid being available but maybe you've got some other code too which assumes that everything is positioned in a grid, maybe your font size is adjusted accordingly or if some elements get a width of 100% so that they look good in the grid. Well, all of that is something you don't want to apply if the browser doesn't support it and therefore, a supports query can be really useful. (Refer : future2)
+
+* Let's see how it works in our code. Back in our code and here I'm in the regular shared.css file
+
+* what could we check with our supports query? Well obviously, we could check if we can really use a grid. Now the good thing about our page is even if a browser doesn't support the grid, it will still look good because for example, our main layout is simply a one column grid, so if the grid is not supported, elements are just positioned beneath each other.
 
 ```css
-.modal {
-  position: fixed;
-  opacity: 0;
-  transform: translateY(-3rem);
-  transition : opacity 0.2s ease-out, transform 500ms ease-out;
-  z-index: 200;
-  top: 20%;
-  left: 30%;
-  width: 40%;
-  background: white;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
-}
-```
-* now it will become slower towards the end or with ease-in for example, it'll start slower and end faster.
-
-* Now last one but not least, you can also set a delay, you simply add a fourth value like one second, this would mean it will start one second before it starts with that transition.
-
-```css
-.modal {
-  position: fixed;
-  opacity: 0;
-  transform: translateY(-3rem);
-  transition : opacity 0.2s ease-out 1s, transform 500ms ease-out;
-  z-index: 200;
-  top: 20%;
-  left: 30%;
-  width: 40%;
-  background: white;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
-}
-```
-
-* So now if I click the button, nothing happens for one second and then it plays this animation, for some use cases, this can also be helpful,
-
-### CSS "transition" Property Deep Dive
-
-* The transition  property is used as see in the previous video:
-
-* transition: WHAT DURATION DELAY TIMING-FUNCTION; 
-
-#### Example:
-
-```css
-transition: opacity 200ms 1s ease-out; 
-```
-* Can be translated to: "Animate any changes in the opacity  property (for the element to which the transition  property is applied) over a duration of 200ms. Start fast and end slow, also make sure to wait 1s before you start".
-
-* Instead of this shorthand, you can also specify the four individual properties:
-
-* 1) transition-property  (https://developer.mozilla.org/en-US/docs/Web/CSS/transition-property => transition-property: opacity; 
-
-* 2) transition-duration  (https://developer.mozilla.org/en-US/docs/Web/CSS/transition-duration) => transition-duration: 200ms; 
-
-* 3) transition-timing-function  (https://developer.mozilla.org/en-US/docs/Web/CSS/transition-timing-function) => transition-timing-function: ease-out; 
-
-* Possible timing function values are: ease-out , ease-in , linear , cubic-bezier()  and a couple of others. See the above link as well as the next lecture for more details.
-
-* 4) transition-delay  (https://developer.mozilla.org/en-US/docs/Web/CSS/transition-delay) => transition-delay: 1s; 
-
-* You can read the official MDN article on CSS transitions here: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transitions/Using_CSS_transitions
-
-### Working with Timing Functions
-
-*  We can think of the timing or the duration of the transition as a function. 
-
-* At the beginning, no time passed and that transition also has a completion state of 0% but as we play the animation, it transitions from 0% completion to 100% over the given time and for this specific function here, it temporarily even has a higher completion in the end completion. This is also possible, you could have functions where you for example one to change the scale of an element and in-between, you actually have a bigger scale than at the end, to have a bumping effect. This is something you can easily build with CSS animations
-
-* Now regarding the transition timing functions, if you google for CSS timing functions, you'll find a really helpful site easeing functions cheat sheet, easings.net and there, you'll find a lot of values or timing functions and if you hover over them, there's also a demo animation playing showing you how this actually will look like. Refer : https://easings.net/
-
-* Refer : https://easings.net/#easeInCubic
-
-* This allows you to enter your own timing function with four parameters defining that function, this essentially defines a function of time and completion and sites like this are really great to create such a timing function.
-
-*  Even better, in the Chrome developer tools, if you inspect your modal here and you inspect the properties, you can see that timing function here and there's this button. You can find that strange button next to each timing function, to any timing function you have. If you click it, you can actually create your timing function in the Chrome developer tools by playing with these handles. Generally, the steeper it's at the beginning, the faster it starts and the slower it ends so to say.
-
-### Transitions & "display"
-
-* Now with the basics of transition set, let's transition the backdrop too. 
-
-* Now there, we'll face a special case which I want to show you. The backdrop which is selected with this backdrop class selector still is shown by setting display none to display block and this happens because we add the open class to the backdrop too when we select the plan for example.
-
-* Now the problem we face is that in that open class, we obviously changed the opacity and display to block and now we could think that we simply go to the backdrop and also don't use display none to hide it but opacity zero instead.
-
-* Then we could add a transition where we watch the opacity and maybe over 200ms or .2s, we animate with a linear timing function so that we always move at the same speed, this is an approach we could take.
-
-```css
-.backdrop {
-  position: fixed;
-  opacity : 0;
-  top: 0;
-  left: 0;
-  z-index: 100;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
-  transition : opacity 2s liner; 
-}
-```
-* If we now reload the page, we notice that we can't click choose plan anymore. Now do you know why that happens?
-
-* This happens because the backdrop now only is invisible, it's not not there. Now since it has a set index of 100, it's actually in front of all the other elements even though we can't see it, that is why we can't interact with any element on our page, clearly an awful user experience.
-
-* Now of course the fix is easy, right? We got our open CSS class selector here and we still set the display block there, so all we got to do is go to that backdrop again and besides using the opacity, we can use display none together with the opacity.
-
-```css
-.backdrop {
-  position: fixed;
-  display: none;
-  opacity : 0;
-  top: 0;
-  left: 0;
-  z-index: 100;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
-  transition : opacity 2s liner; 
-}
-```
-
-* With that, we really remove it from the document flow and therefore if we reload, we can interact again. However, if you watch closely, you might notice that the backdrop isn't really animated and this becomes even clearer if we temporarily increase that to two seconds of a duration. Now if we go back and click this plan, this doesn't look like a two second transition to me.
-
-* The reason for this is some special behavior. If you change display, first of all you can't transition that display change, so watching display won't work and second of all, if you change the display from none to something else or the other way around, then your transition isn't going to kick off even if you're also changing some other property which normally would be animatable or transitionable, this is super important to keep in mind.
-
-*  Now if you still want to ensure that this works in this case, you would have to use some hacky workaround where in Javascript, you actually first of all set the backdrop style to block, backdrop style display is set to block and also the other way around for closing it, so in all occasions where we actually have remove the open class, we set that to none and that alone isn't enough,
-
-* so this isn't all we have to do, instead we now also have to delay the start of the code where we add the open class, we can do this with the Javascript set timeout method, there we pass a function which is executed after a given timeout which can be very short, like 10ms, the 10 is a second argument means 10ms. So after 10ms, this function gets executed and there we actually should attach that open class. So now we can copy that and also wrap that backdrop, remove listener with it. So here we want to remove that after 10ms
-
-* what this does is, it ensures that we first of all set display to none or block, whatever we need and then as a second step, we change that, so we add this class or remove it.
-
-* This ensures that CSS doesn't change all the properties in one step and therefore omit the transition but that it actually first of all changes the display which is the crucial part and then it changes the other properties and hence also plays our transition.
-
-* So let's also add it up here where we have backdrop class list add open and with these changes in place, now we should actually be able to reload our page and now we see a nice transition here. 
-
-* Refer : index.html, shared.css and shared.js
-
-```js
-// shared.js
-
-var backdrop = document.querySelector(".backdrop");
-var modal = document.querySelector(".modal");
-var modalNoButton = document.querySelector(".modal__action--negative");
-var selectPlanButtons = document.querySelectorAll(".plan button");
-var toggleButton = document.querySelector(".toggle-button");
-var mobileNav = document.querySelector(".mobile-nav");
-
-// console.dir(backdrop.style['background-image']);
-
-// console.dir(backdrop);
-for (var i = 0; i < selectPlanButtons.length; i++) {
-  selectPlanButtons[i].addEventListener("click", function() {
-    // modal.style.display = "block";
-    // backdrop.style.display = "block";
-    // modal.className = 'open'; // This will actually overwrite the complete class list
-    modal.classList.add("open");
-    backdrop.style.display = "block";
-    setTimeout(function() {
-      backdrop.classList.add("open");
-    }, 10);
-  });
+body {
+  font-family: "Montserrat", sans-serif;
+  margin: 0;
+  padding-top: 3.5rem;
 }
 
-backdrop.addEventListener("click", function() {
-  // mobileNav.style.display = 'none';
-  mobileNav.classList.remove("open");
-  closeModal();
-});
-
-if (modalNoButton) {
-  modalNoButton.addEventListener("click", closeModal);
-}
-
-function closeModal() {
-  //   backdrop.style.display = "none";
-  //   modal.style.display = "none";
-  if (modal) {
-    modal.classList.remove("open");
-  }
-  backdrop.classList.remove("open");
-  setTimeout(function() {
-    backdrop.style.display = "none";
-  }, 200);
-}
-
-toggleButton.addEventListener("click", function() {
-  // mobileNav.style.display = 'block';
-  // backdrop.style.display = 'block';
-  mobileNav.classList.add("open");
-  backdrop.style.display = "block";
-  setTimeout(function() {
-    backdrop.classList.add("open");
-  }, 10);
-});
-```
-
-```css
-.backdrop {
-  display: none;
-  position: fixed;
-  opacity: 0;
-  top: 0;
-  left: 0;
-  z-index: 100;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
-  transition: opacity 0.2s linear;
-}
-```
-* Now of course, that's way too slow, so now we can speed that up to not use 2s but .2s for that opacity transition and now we get a transition on the backdrop too. Definitely a bit hacky but a way of making this work if you need such a behavior and I wanted to share this with you for that reason
-
-* This has one important implication, for that closing function, the timeout, the delay for which you want to wait has to match the delay of your transition or the duration of your transition I should say. 
-
-* So since our transition takes 200ms, here that opacity transition on the backdrop, we need to execute that function which removes the element from the document flow by setting display to none after this 200ms
-
-* and that of course is a bit inconvenient because this means whenever you change the duration here on your transition property, you also need to change it in your Javascript code. This is still a workaround you can use, often thankfully, you don't have a set up where you require this behavior, if you do require it, keep this approach in mind.
-
-### Using CSS Animations
-
-* We had a detailed look at CSS transitions, which make it very easy to animate the transition of a CSS property from one value to another,
-
-* We had a detailed look at CSS transitions, which make it very easy to animate the transition of a CSS property from one value to another,
-
-* so it's still about animating things but with way more control over the animation.
-
-* So if we have a block and we want to move to a bigger block, maybe with a different color, we can of course use a transition but if we want more control, like some in-between step, CSS animations are really what we're looking for.
-
-* In CSS animations, we define so-called keyframes and we got full control what the style of an element is at a given point of time (Refer : animation3)
-
-* For this, I'm back in our project and I want to animate that start hosting call to action button in the top right corner
-
-* Now that button's style is defined in the shared.css file, we can search for CTA here to find our main nav CTA link here and I want to play an animation on that button, right when the page loads, I want it to wiggle around, so to rotate a bit up and rotate a bit down.
-
-* Now with a transition, that's hard to do because it should wiggle, it should move in both directions and it should also stop after a given time but until this it should just iterate between moving up moving down.
-
-* Transition is not really what we're looking for in this case, an animation is what we need and an animation always starts with you defining some keyframes, these are the steps of the animation you want to go through.
-
-* You define keyframes in a CSS file by using @keyframes,so just as you used @media and so on before, @keyframes is a special expression. You define a set of keyframes which you can later use in a CSS animation and you have to give that set a name, the name is totally up to you, can be wiggle for example.
-
-* Now you then add curly braces and in there, the most basic animation simply has a from value, so you add the from keyword and then curly braces and then the to keyword. This essentially allows you to define two keyframes, the starting state and the ending state. 
-
-* Now I want this to rotate, so let's add a transform property here and then maybe rotate set zero, this is where I want to start, so I want to start with the rotation it has initially, which is not rotated at all. Please note that there is no CSS selector in here, just the CSS property, this property will later be applied to any element which receives that set of keyframes as an animation.
-
-* The target state maybe is that we have a transformation of let's say rotate set of 10 degrees, so moved up a little bit.]
-
-```css
-@keyframes wiggle {
-  from {
-    transform: rotateZ(-10deg); /*start keyframe option*/
-  }
-  to {
-    transform: rotateZ(10deg); /*end keyframe option*/
+@supports (display: grid) {
+  body {
+    display: grid;
+    grid-template-rows: 3.5rem auto fit-content(8rem);
+    grid-template-areas: "header"
+                         "main"
+                         "footer";
+    padding-top: 0;
+    height: 100%;
   }
 }
 ```
+* then this code will only run if the grid is supported. So this is one example of how we could use the supports query Please also be aware that you can use multiple conditions, you can use 'and' and 'or' or also 'not', so something like 'and not' to create more complex queries.
 
-* Now important, you can of course use any CSS property here, not just transforme, you can also change the text color with color or the background or whatever you want to do, not every property is animatable but you can still change it,it might just jump to the next value immediately
+* This allows you to build more complex supports queries, most of the time, you just need simple ones like this, so that you are able to use some Next-Gen feature if the browser supports it but that you provide a decent fallback otherwise and the typical setup is of course that you to define the fallback first and overwrite it with your better solution if the supports query does allow access.
 
-* because what happens behind the scenes is that for a CSS animation, CSS will still automatically generate smooth transitions between your starting and target value,
+### Polyfills
 
-* it's way easier to define like five different properties that should be animated than it is with transitions, here you simply add them one after each other. So here we get a simple animation though, just one property which we change and just two states; starting and end state.
+* We stay in the world of things not working in a browser, let's talk about polyfills,
 
-* Now with that keyframes set defined, let's use it as an animation and please note that we say nothing about the duration of the animation here, just where we want to start and end.
+* what is a polyfill? A polyfill is a Javascript package which enables certain CSS features in browsers which would not support it otherwise.
 
-* So let's move up then and let's find our navigation items, here we got the call to action button, Now I'll add a new selector and for main nav item CTA, so only in the main navigation for the call to action button, I want to add that animation by adding the animation property.
+* Now obviously, we learned about vendor prefixes, which help us support older browsers and about the supports query which helps us implementing nice fallbacks.
+
+* Sometimes, there is no prefix we can use because some browsers simply doesn't support a feature, not even with a prefix
+and we also don't want to implement a fallback, we want to use that cool feature which we can use in modern browsers too.
+
+* For some CSS features, so-called polyfills exist. These are Javascript packages which you can download and import into your code and they will simply parse your CSS code and then style your page accordingly with some Javascript logic,
+
+* so they basically implement a certain feature by falling back to other CSS features and kind of replicating that look you want it to have.
+
+* Now polyfills are not available for every CSS feature though, for example for the grid, there are no polyfills because the grid uses some techniques that simply can't be replicated easily with vanilla CSS and Javascript but for some features, polyfills are an option.
+
+* There is something important to keep in mind though, polyfills come at a cost, it's a Javascript package you download, you add and you import into your HTML file. Therefore, your users have to download it and then it will execute, it will parse the DOM, it will manipulate some styles, these all impacts the performance of your page.
+
+* So especially for bigger polyfills because some feature might be very complicated to replicate, you should really consider if implementing a fallback, with supports or something like that, isn't a better solution.
+
+* If you come to the conclusion that it isn't, polyfills are a great tool but you should really use them with care and use them rarely.
+
+* Now to give you an idea about what could be polyfilled when it comes to CSS, for example rems. Older browsers don't support rem, there is a polyfill which you can download and import which will essentially just convert all your rem declarations to pixels which are supported by older browsers too and there are a couple of such polyfills as you can see.
+
+* There are also polyfills for background image related properties and so on. So if you need that feature and you need to support such old browsers, definitely consider using such polyfills.
+
+### Eliminating Cross-Browser Inconsistencies
+
+* So as you probably guessed by now, developing for the web isn't trivial because we need to support many browsers, at least in some of our pages we need to do that.
+
+* Another problem we face besides some features not being supported in some browsers are cross-browser inconsistencies, this means that different browsers use different defaults.
+
+* You remember this default styling some elements get? The default font size of h1 tags, the default font family which gets used, things like that, browsers implement that differently. 
+
+* For some elements, we might have different margins or paddings, different box sizing behavior, that box sizing is set to border box in some browsers for some elements by default for example and so on.
+
+* This is not necessarily bad, different browsers offer different defaults and some users might pick a browser because of some of the defaults it offers but some defaults are also annoying and you want to have a consistent look of your webpage across browsers too.
+
+* Therefore, you can implement some reset libraries like normalize.css, which is a CSS package you add as one of the first imports or as the first import in your HTML file, which basically overwrites some of the global browser defaults.
+
+* So for example, this could set box sizing to border box for all elements or you do that manually of course.
+
+* For example in our code, in the shared.css file, we are doing such a reset with a universal selector where we set box sizing to border box.
 
 ```css
-.mobile-nav__item--cta {
-
-  animation: wiggle 200ms 3s 8 alternate; /*name duration timing-function delay iteration-count direction */
+* {
+    box-sizing: border-box;
 }
 ```
-* and now after three seconds, we actually see that our button starts wiggling here. Now this didn't look like eight times because the alternate swing actually also counts as an iteration,so we got four iterations in each direction. Besides alternate, 
+* This is one of the things normalize.css or other packages like it might do for you, you can of course do it on your own.
 
-* If we now reload, here after three seconds, we can see now it's way more bumpy because now what it actually does is it plays the keyframes in reverse, so it starts with the end state and then moves back and you also got alternate reverse,
+* Now very important to keep in mind, if you use a package like normalize.css which resets a bunch of things, that of course is additional code your users need to download and therefore, this increases the size of your page so to say.
 
-* One interesting other value you can set for animations is filled state. Now the fill states simply defines, should the properties set during the animation, so in our case the transformed property and its value, should that be kept when the animation is finished or not? The default is that it's not keeping that,
+* Still, it might be worth it but there are a lot of arguments these days that maybe it's just better to do that box sizing reset because that really is annoying if it doesn't work like this and not reset anything else but simply overwrite things, like font sizes, like font families or colors if you work with that specific element which actually is affected
 
-* you can also decide that you'd want to keep the starting state which can differ from your normal elements state by the way.
+* because you could also argue that packages like normalize.css reset a lot of styles which might never be used in your page because you never use that element which it resets.
 
-* Here it's the same but of course, you can have an element where you add an animation and the starting state is for example that it has a blue background color,
+* For example if you never use a select element, it doesn't matter to you if the styles for it are reset globally or not.
 
+* So keeping in mind that resetting some features makes sense and that you can do it manually with the star selector or by using packages is definitely something which is important.
 
-* so it immediately starts the animation with that but by default, the element could have a green background color, so then the starting state of the animation would differ from the default state of the element. Anyways you can tell the animation or CSS which values to keep with the fill state which is added as another value to that animation shorthand here and that can be forwards to tell it to keep the final result
+### How to Name CSS Classes
+
+* how should we actually name our class names?
+
+* the class selector is probably the selector you used the most often because it allows you to create reusable styles and even if you only apply a class to one element, you can give it a really expressive name which makes it far easier to understand your CSS code.
+
+* Here are some dos and donts when it comes to class names.
+
+* Dos :  use kebab case, so this is class name style where you use lowercase characters and separate words with dashes. It's important because CSS is case insensitive,
+
+```
+Kebab Case: user-login-count
+```
+
+* Don'ts : so if you use snake case for example, where you have one word and separate the words with uppercase characters this is not something CSS understands, for CSS, snake case with a capital C is the same as snake case with a lowercase c.
 
 ```css
-.mobile-nav__item--cta {
-
-  animation: wiggle 200ms 3s 8 forwards; /*name duration timing-function delay iteration-count direction */
-}
+Snake Case: .user_login_count
+Snake Case (All Caps): .USER_LOGIN_COUNT
 ```
-* but if we remove alternate, you will see that it actually will finish in a rotated state because now it has this bumpy look but it actually finishes rotated because we specified forwards which tells it 'please keep the final property and values you have in the last keyframe here.'
+* So if you got two classes with the same name and you think they are different, they aren't and this can lead to strange behaviors.
 
-* I actually want to have none, so we can set none here, we don't have to do that though, none is the default value.
+* Additionally since you can't use this snake case version, you would have to use really long words without any separators which are hard to read,so use kebab case, it's easy to read, easy to understand and the browser understands it too.
+
+* Do : Another important hint, name your classes by feature, for example.
 
 ```css
-.mobile-nav__item--cta {
-
-  animation: wiggle 200ms 3s 8 none; /*name duration timing-function delay iteration-count direction */
-}
+.page-title
 ```
+* It's very clear what this style will do, we don't know which element your page title is, if it's h1, h2 or a div but this doesn't matter, we know that this probably will refer to the page title.
 
-### CSS "animation" Property Deep Dive
-
-* The animation  property is used as see in the previous video:
-
-* animation: NAME DURATION DELAY TIMING-FUNCTION ITERATION DIRECTION FILL-MODE PLAY-STATE; 
-
-#### Example:
-
-* animation: wiggle 200ms 1s ease-out 8 alternate forwards running; 
-
-* Can be translated to: "Play the wiggle keyframe set (animation) over a duration of 200ms. Between two keyframes start fast and end slow, also make sure to wait 1s before you start. Play 8 animations and alternate after each animation. Once you're done, keep the final value applied to the element. Oh, and you should be playing the animation - not pausing."
-
-* Instead of this shorthand, you can also specify the individual properties:
-
-* 1) animation-name  (https://developer.mozilla.org/en-US/docs/Web/CSS/animation-name => animation-name: wiggle; 
-
-* 2) animation-duration  (https://developer.mozilla.org/en-US/docs/Web/CSS/animation-duration) => animation-duration: 200ms; 
-
-* 3) animation-timing-function  (https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function) => animation-timing-function: ease-out; 
-
-* Possible timing function values are: ease-out , ease-in , linear , cubic-bezier()  and a couple of others. See the above link for more details.
-
-* 4) animation-delay  (https://developer.mozilla.org/en-US/docs/Web/CSS/animation-delay) => animation-delay: 1s; 
-
-* 5) animation-iteration-count  (https://developer.mozilla.org/en-US/docs/Web/CSS/animation-iteration-count) => animation-iteration-count: 8; 
-
-* 6) animation-direction  (https://developer.mozilla.org/en-US/docs/Web/CSS/animation-direction) => animation-direction: alternate; 
-
-* 7) animation-fill-mode  (https://developer.mozilla.org/en-US/docs/Web/CSS/animation-fill-mode) => animation-fill-mode: forwards; 
-
-* 8) animation-play-state  (https://developer.mozilla.org/en-US/docs/Web/CSS/animation-play-state) => animation-play-state: running; 
-
-* You can read the official MDN article on CSS animations here: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations/Using_CSS_animations
-
-### Adding Multiple Keyframes
-
-* let's now add another keyframe though and for that, I'll generally change the notation. Instead of from and to, we can also use percentage values here.that's the same as from and to
+* Don't :  name your classes by the style they're going to apply, for example title blue is a really bad name.
 
 ```css
-@keyframes wiggle {
-  0% {
-    transform: rotateZ(-10deg); /*start keyframe option*/
-  }
-  100% {
-    transform: rotateZ(10deg); /*end keyframe option*/
-  }
-}
+.title-blue 
 ```
-* but now we can add as many in-between steps as we want simply by adding another block, for example with 50% but you can also use 10, 15, whatever you need and now you can define which state your animation should have when it's halfway done.
+* Yes, we can guess that this probably will color the title with a blue color but we can see that by the properties and values you then use in that rule anyways and if you ever change the color of your text to be red, then you probably have to rename your class. So this is a really bad class name, name them by feature instead. (Refer: future3)
 
-```css
-@keyframes wiggle {
-  0% {
-    transform: rotateZ(0); 
-  }
-  50% {
-    transform: rotateZ(-10deg); 
-  }
-  100% {
-    transform: rotateZ(10deg); 
-  }
-}
+* I actually try to follow a convention which is called Block Element Modifier styles, BEM. http://getbem.com/introduction/
+
+* This is a convention which makes sure that we name our classes in a uniform and consistent way across our project and that we also prevent clashes because as you can imagine, the bigger your project gets, the higher the chance of you reusing some class name unintentionally and all of a sudden, you might overwriten the style somewhere else in your page without you noticing it at first.
+
+* Therefore BEM enforces a certain way of naming are classes which should minimize this risk.
+
+* You obviously start with a dot in the selector but then you have the block portion of the name, two underscores, the element portion, maybe two dashes and then an optional modifier. ".BLOCK__ElEMENT--MODIFIER"
+
 ```
-* So now I'll actually start at zero, then halfway through the animation, we'll be at 50% and by the end, we'll be at 100%. Now we got three keyframes and therefore way more control over our animation.
-
-* Now if we go back to our animation property, where we add it to an element, we still have wiggle, we still maybe have that duration, maybe we increased it a bit so that we can see that animation a bit better, we still have the delay and the iteration count maybe.
-
-* now you'll see we have a way better wiggle effect because now we have that in-between step which actually looks way better than using that alternate mode.
-
-* One thing that's good to know is that you can still add a timing function though, you can still add ease out and by the way, the order of these values here doesn't really matter except for duration and delay,since both use seconds or milliseconds, here the duration should come first.
-
-```css
-.mobile-nav__item--cta {
-
-  animation: wiggle 200ms 3s 8 ease-out none;
-}
+.menu-main__item--size-big
 ```
-* isn't it strange to specify ease out or any other timing function if you have perfect control over the way the animation plays?
+* The block here is our main menu, hence menu main, you could of course also name this main menu, we select a single item in that main menu and we select an item which is very big, which should receive some special style because it's big.
 
-* Well the timing function simply is there to decide how the movement between the keyframes should be animated because if you go from transform rotate set zero to transform rotate set -10 degree, this change of course has to be animated and actually, this works exactly as the transition did.
+* The last part, the modifier kind of goes against this rule of not naming classes by style but in the end, this is not the entire class name, the whole thing here is the entire class name.
 
-* So here, it will simply transition from zero to -10 degree and that transition happens over half the time of your animation but that time there, between these two keyframes, this is now affected by the timing function.You can specify linear or any other function you want, like ease out in our case here.
+* Here's another example, we got a selector which selects a button which has no special element, so all buttons but which also has the success modifier.
 
-* So with that if we reload, we might not even see a big difference here because that's really hard to spot but now this is actually animating with an ease out timing function between our keyframes steps.
+* Now mastering this is something which is very hard obviously and you can probably flame me for some of the class names used here but if you follow this pattern in general, you already gain a lot.
 
-### Adding Animations to our Customers Page
+* These classes look a bit ugly but they really help you prevent clashes of class names and once you get into the idea of these class names, they also help you understand what a certain class selector is probably referring to.
 
-* let's make sure we can actually flip a customer if we hover over him
+### Vanilla CSS vs Frameworks
 
-* For that, I'll go to my customers.css file and first of all, I'll create the keyframes for the animation, just as we learned it, that's always the first step.
+* Once you dive deeper into CSS world, you'll find out that so-called CSS frameworks exist, things like Bootstrap.
 
-```css
-@keyframes flip-customer {
-    0% {
-      transform: rotateY(0);
-    }
-    50% {
-      transform: rotateY(160deg);
-    }
-    100% {
-      transform: rotateY(360deg);
-    }
-  }
-```
-* I'll actually create a new selector. Our customers have an ID, customer one has an ID of customer-1. So I'll use that ID selector here, maybe here, doesn't matter, customer 1 and listen to a hover or use that hover pseudo selector but then I actually want to animate a nested element, I want to animate the image container, I want to flip the image, not the entire customer
+* Now what are they and when should you use them? We have vanilla CSS of course, with that I mean CSS code we write with the base features. We write all our styles and layouts on our own if we don't use an extra package.
 
-```css
-#customer-1:hover .testimonial__image-container {
-    animation: flip-customer 1s ease-out forwards;
-  }
-```
+* with extra packages, I mean things like component frameworks, for example Foundation or Bootstrap 4.
 
-* Now if we save that and we reload the page, you can already see it, if we hover over the customer, it flips but the skewness is messed up as you can see. 
+* often they also come with Javascript portion for some interactive elements but in general, they are packages of code which give you prestyled components and utility classes.
 
-* skew() gets removed because we override the transform property during our animation
+* There also are utility frameworks like Tailwind CSS which are also giving you some help, they offer you some styles in which you can build up on, they give you some utility classes but they don't give you prestyled components, they don't do all the work for you.
 
-* So this is something we can fix by going down to our keyframes again and now by animating more than one property, I also want to animate the skewness and since this also is a transform value,
+### Useful Resources & Links
 
-```css
-@keyframes flip-customer {
-    0% {
-        transform: rotateY(0) skew(20deg);
-    }
-    50% {
-        transform: rotateY(160deg) skew(20deg);
-    }
-    100% {
-        transform: rotateY(360deg) skew(20deg);
-    }
-}
-```
-* Now on a mobile device by the way, you don't see this, you have to click on it to trigger that and then click somewhere else because there is no hovering on mobile devices of course.
+* CSS Modules & Working Groups: https://www.w3.org/TR/tr-groups-all#tr_Cascading_Style_Sheets__CSS__Working_Group
 
-###  Using JavaScript Animation Event Listeners
+* CSS Variables: https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables
 
-*  Now when using animations, there actually is a cool extra feature you can use in Javascript, you can listen to certain events connected to your animations, let's connect an event to our call to action button.
+* Vendor Prefixes: https://developer.mozilla.org/en-US/docs/Glossary/Vendor_Prefix
 
-```js
-var ctaButton = document.querySelector(".main-nav__item--cta");
+* Which Vendor Prefixes should you use? => http://shouldiprefix.com/
 
-ctaButton.addEventListener('animationstart', function(event) {
-  console.log('Animation started', event);
-})
+* @supports: https://developer.mozilla.org/en-US/docs/Web/CSS/%40supports
 
-ctaButton.addEventListener('animationend', function(event) {
-  console.log('Animation ended', event);
-})
+* BEM in Detail: http://getbem.com/introduction/
 
-ctaButton.addEventListener('animationiteration', function(event) {
-  console.log('Animation iteration', event);
-})
-```
-* now the event I can listen to of course is a click but regarding animations, we get three interesting animations,
+* An introduction to Bootstrap 4: https://academind.com/learn/css/bootstrap-4-tutorial/
 
-* let's reload the page and now you can see, we get a couple of logs here on the right. We got animation started, then we got a log for each iteration and we got animation ended
-
-* and if you inspect the animation event, you'll find the animation name which was played, so your keyframe set essentially and a couple of helpful properties, like which element was animated and a timestamp.
-
-* For each iteration, you'll find that same information but also useful things, like the elapsed time. Now as you see, the elapsed time of course increases by the same amount for each iteration step.
-
-* This can be super useful if you want to time something in your Javascript code, for example if you want to start something once the animation ended because you got this hook here too of course. 
+* CSS Polyfills: https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-Browser-Polyfills
